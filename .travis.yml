@@ -1,0 +1,30 @@
+language: c
+
+before_install:
+  - pip install --user cpp-coveralls
+
+install:
+ - cd ..
+ - wget http://ftp.de.debian.org/debian/pool/main/l/lcov/lcov_1.11.orig.tar.gz
+ - tar xf lcov_1.11.orig.tar.gz
+ - sudo make -C lcov-1.11/ install
+ - gem install coveralls-lcov
+ - lcov --version
+
+compiler: gcc
+
+script:
+ - cd ${TRAVIS_BUILD_DIR}
+ - chmod +x source/copy_sources_to_unit_test.sh
+ - cd source/Debug
+ - make
+
+after_success:
+ - cd ${TRAVIS_BUILD_DIR}/UnitTest/Debug
+ - make
+ - ./BitOperations_UnitTest.exe -v
+ - cd ${TRAVIS_BUILD_DIR}
+ - lcov --directory . --capture --no-external --output-file coverage.info
+ - lcov --remove coverage.info '*BitOperations_UnitTest*' --output-file coverage.info
+ - lcov --list coverage.info
+ - coveralls-lcov --repo-token ${COVERALLS_TOKEN} coverage.info
