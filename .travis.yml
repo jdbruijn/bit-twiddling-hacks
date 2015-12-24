@@ -4,6 +4,7 @@ compiler: gcc
 
 install:
  - cd ..
+ - sudo apt-get update
  - sudo apt-get install lcov
  - gem install coveralls-lcov
  - lcov --version
