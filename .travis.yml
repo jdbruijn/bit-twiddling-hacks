@@ -7,7 +7,7 @@ addons:
   packages:
    - lcov
 
-before-install:
+install:
  - lcov --version
  - gem install coveralls-lcov
 
