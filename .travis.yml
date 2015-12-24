@@ -1,27 +1,27 @@
 language: c
-
+sudo: false
 compiler: gcc
 
-install:
- - cd ..
- - sudo apt-get update
- - sudo apt-get install lcov
- - gem install coveralls-lcov
+addons:
+ apt:
+  packages:
+   - lcov
+
+before-install:
  - lcov --version
+ - gem install coveralls-lcov
 
 script:
  - cd ${TRAVIS_BUILD_DIR}
  - chmod +x source/copy_sources_to_unit_test.sh
  - cd source/Debug
  - make
-
-after_success:
  - cd ${TRAVIS_BUILD_DIR}/UnitTest/Debug
  - make
+
+after_success:
  - ./BitOperations_UnitTest.exe -v
  - cd ${TRAVIS_BUILD_DIR}
- - pwd
- - ls -la
  - lcov --directory . --capture -b UnitTest/src --output-file coverage.info
  - lcov --remove coverage.info '*BitOperations_UnitTest*' --output-file coverage.info
  - lcov --list coverage.info
