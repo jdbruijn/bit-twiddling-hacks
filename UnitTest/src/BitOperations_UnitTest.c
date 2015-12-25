@@ -44,11 +44,13 @@
  * @testname    bitMask32_masksUpTo32Bit_Generated
  * @testcase    BIT_MASK32(n) creates the correct bit mask for n is 0 to 31.
  * @testvalues
- *  0
- *  1
- *  ...
- *  30
- *  31
+ * | Test argument |
+ * | ------------- |
+ * | 0             |
+ * | 1             |
+ * | ...           |
+ * | 30            |
+ * | 31            |
  */
 TEST
 bitMask32_masksUpTo32Bit_Generated()
@@ -64,11 +66,13 @@ bitMask32_masksUpTo32Bit_Generated()
  * @testname    bitMask32_masksBetween32And64Bit_ShouldFail
  * @testcase    BIT_MASK32(n) fails to create a correct mask for n is 32 to 127.
  * @testvalues
- *  32
- *  33
- *  ...
- *  126
- *  127
+ * | Test argument |
+ * | ------------- |
+ * | 32            |
+ * | 33            |
+ * | ...           |
+ * | 126           |
+ * | 127           |
  */
 TEST
 bitMask32_masksBetween32And128Bit_ShouldFail()
@@ -84,11 +88,13 @@ bitMask32_masksBetween32And128Bit_ShouldFail()
  * @testname    bitMask64_masksUpTo64Bit_Generated
  * @testcase    BIT_MASK64(n) creates the correct bit mask for n is 0 to 63.
  * @testvalues
- *  0
- *  1
- *  ...
- *  62
- *  63
+ * | Test argument |
+ * | ------------- |
+ * | 0             |
+ * | 1             |
+ * | ...           |
+ * | 62            |
+ * | 36            |
  */
 TEST
 bitMask64_masksUpTo64Bit_Generated()
@@ -104,11 +110,13 @@ bitMask64_masksUpTo64Bit_Generated()
  * @testname    bitMask32_masksBetween64And128Bit_ShouldFail
  * @testcase    BIT_MASK64(n) fails to create a correct mask for n is 32 to 127.
  * @testvalues
- *  0
- *  1
- *  ...
- *  126
- *  127
+ * | Test argument |
+ * | ------------- |
+ * | 0             |
+ * | 1             |
+ * | ...           |
+ * | 126           |
+ * | 127           |
  */
 TEST
 bitMask64_masksBetween64And128Bit_ShouldFail()
@@ -124,11 +132,13 @@ bitMask64_masksBetween64And128Bit_ShouldFail()
  * @testname    bitGet_singleSetBitsUpTo64Bit_Generated
  * @testcase    BIT_GET(v, n) correctly returns the set bit for n is 0 to 63.
  * @testvalues
- *  0x0000000000000001, 0
- *  0x0000000000000002, 1
- *  ...
- *  0x4000000000000000, 62
- *  0x8000000000000000, 63
+ * | Test argument 1    | Test argument 2    |
+ * | ------------------ | ------------------ |
+ * | 0x0000000000000001 | 0                  |
+ * | 0x0000000000000002 | 1                  |
+ * | ...                |                    |
+ * | 0x4000000000000000 | 62                 |
+ * | 0x8000000000000000 | 62                 |
  */
 TEST
 bitGet_singleSetBitsUpTo64Bit_Generated()
@@ -146,11 +156,13 @@ bitGet_singleSetBitsUpTo64Bit_Generated()
  * @testcase    BIT_GET(v, n) correctly returns the cleared bit for n is 0 to
  * 63.
  * @testvalues
- *  0xFFFFFFFFFFFFFFFE, 0
- *  0xFFFFFFFFFFFFFFFD, 1
- *  ...
- *  0xBFFFFFFFFFFFFFFF, 62
- *  0x7FFFFFFFFFFFFFFF, 63
+ * | Test argument 1    | Test argument 2    |
+ * | ------------------ | ------------------ |
+ * | 0xFFFFFFFFFFFFFFFE | 0                  |
+ * | 0xFFFFFFFFFFFFFFFD | 1                  |
+ * | ...                |                    |
+ * | 0xBFFFFFFFFFFFFFFF | 62                 |
+ * | 0x7FFFFFFFFFFFFFFF | 62                 |
  */
 TEST
 bitGet_singleClearedBitsUpTo64Bit_Generated()
@@ -167,11 +179,14 @@ bitGet_singleClearedBitsUpTo64Bit_Generated()
  * @testname    bitGetm_multipleSetBitsUpTo64Bit_Generated
  * @testcase    BIT_GET(v, n) correctly returns the set bit for n is 0 to 63.
  * @testvalues
- *  0x0000000000000001 | rand64(), 0
- *  0x0000000000000002 | rand64(), 1
- *  ...
- *  0x4000000000000000 | rand64(), 62
- *  0x8000000000000000 | rand64(), 63
+ * <table class="doxtable">
+ * <tr><th>Test argument 1    </th><th>Test argument 2  </th></tr>
+ * <tr><td>0x0000000000000001 </td><td>(1UL << 0) | rand64()  </td></tr>
+ * <tr><td>0x0000000000000002 </td><td>(1UL << 1) | rand64()  </td></tr>
+ * <tr><td>...                </td><td>                       </td></tr>
+ * <tr><td>0x4000000000000000 </td><td>(1UL << 62) | rand64() </td></tr>
+ * <tr><td>0x8000000000000000 </td><td>(1UL << 63) | rand64() </td></tr>
+ * </table>
  */
 TEST
 bitGetm_multipleRandomSetBitsUpTo64Bit_Generated()
@@ -192,11 +207,13 @@ bitGetm_multipleRandomSetBitsUpTo64Bit_Generated()
  * @testcase    BIT_GET(v, n) correctly returns the cleared bit for n is 0 to
  * 63.
  * @testvalues
- *  0xFFFFFFFFFFFFFFFE, 0
- *  0xFFFFFFFFFFFFFFFD, 1
- *  ...
- *  0xBFFFFFFFFFFFFFFF, 62
- *  0x7FFFFFFFFFFFFFFF, 63
+ * | Test argument 1    | Test argument 2    |
+ * | ------------------ | ------------------ |
+ * | 0xFFFFFFFFFFFFFFFE | 0                  |
+ * | 0xFFFFFFFFFFFFFFFD | 1                  |
+ * | ...                |                    |
+ * | 0xBFFFFFFFFFFFFFFF | 62                 |
+ * | 0x7FFFFFFFFFFFFFFF | 62                 |
  */
 TEST
 bitGetm_multipleRandomClearedBitsUpTo64Bit_Generated()
@@ -706,6 +723,9 @@ test_modifyBits_goodWeather(void)
     PASS();
 }
 
+/**
+ * @todo add info...
+ */
 TEST
 test_mergeBits_goodWeather(void)
 {
@@ -960,6 +980,8 @@ test_roundUpToPowerOf2_goodWeather(void)
     PASS();
 }
 
+/**
+ * Unit test suite for the BitOperations unit tests. */
 SUITE(BitOperations)
 {
     RUN_TEST(bitMask32_masksUpTo32Bit_Generated);
@@ -1001,8 +1023,16 @@ SUITE(BitOperations)
 /*******************************************************************************
  * Main function
  ******************************************************************************/
+/** Main definitions for the unit test framework greatest. */
 GREATEST_MAIN_DEFS();
 
+/**
+ * @brief Initializes and controls all other functions (indirectly).
+ *
+ * @param   argc Argument counter.
+ * @param   argv Array of different function arguments.
+ * @return  int Error code.
+ */
 int
 main(int argc, char **argv)
 {
@@ -1028,7 +1058,7 @@ rand64() {
 }
 
 void
-putBits(const uint64_t _v, const uint8_t _nBits)
+putBits(uint64_t const _num, uint8_t const _nBits)
 {
     uint8_t i;
 
@@ -1036,7 +1066,7 @@ putBits(const uint64_t _v, const uint8_t _nBits)
         /* Output plus 48, since character '0' is in the 48th place of the
          * ASCII table.
          */
-        putchar(((_v >> (i - 1)) & 0x01) + 48);
+        putchar(((_num >> (i - 1)) & 0x01) + 48);
     }
 
     return;

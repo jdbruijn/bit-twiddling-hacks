@@ -96,7 +96,7 @@ extern "C" {
 /**
  * @brief   Clear a single bit.
  *
- * @param   v, variable to clear a bit in
+ * @param   v Variable to clear a bit in.
  * @param   n Number of the bit to clear where 0 is the rightmost bit.
  */
 #define BIT_CLEAR(v, n) BIT_CLEARM((v), (1ULL << (n)))
@@ -107,7 +107,7 @@ extern "C" {
  * @param   v Variable to flip the bit(s) in.
  * @param   mask Mask for flipping the bit(s).
  */
-#define BIT_FLIPM(b, mask) ((b) ^= (mask))
+#define BIT_FLIPM(v, mask) ((v) ^= (mask))
 
 /**
  * @brief   Flip/toggle a single bit.
@@ -121,7 +121,7 @@ extern "C" {
  * @brief   Shift a variable n places left.
  *
  * @param   v Variable to shift n places left.
- * @param   p Number of positions to shift the variable left.
+ * @param   n Number of positions to shift the variable left.
  */
 #define SHIFT_LEFT(v, n) ((v) <<= (n))
 
@@ -152,21 +152,21 @@ bitGetm(uint64_t _v, uint64_t _mask);
 /**
  * @brief   Get the value of a single bit.
  *
- * @param   _v Variable to get a from.
+ * @param   _var Variable to get a from.
  * @param   _n Number of the bit to get where 0 is the rightmost bit
  * @return  bool True if the selected bit was set, false else.
  */
 bool
-bitGet(uint64_t _v, uint8_t _n);
+bitGet(uint64_t _var, uint8_t _n);
 
 /**
  * @brief   Compute the sign of an integer.
  *
- * @param   _v, variable of which to compute the sign
+ * @param   _var Variable of which to compute the sign
  * @return  boolean value of 1 (true) if the variable is positive, 0 else.
  */
 bool
-isPositive(int32_t const _v);
+isPositive(int32_t const _var);
 
 /**
  * @brief   Compute parity of a variable to see if it is odd.
@@ -277,7 +277,7 @@ isEvenParity(uint64_t const _var);
 /**
  * @brief Reverse the order of bits in a byte.
  *
- * @param   _v Pointer to the byte which needs to be reversed.
+ * @param   _pByte Pointer to the byte which needs to be reversed.
  */
 void
 reverseBitOrderByte(uint8_t *const _pByte);

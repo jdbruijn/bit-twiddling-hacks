@@ -198,7 +198,7 @@ rand64();
  * @param   _nBits Number of bits to send.
  */
 void
-putBits( const uint64_t _v, const uint8_t _nBits );
+putBits(uint64_t const _num, uint8_t const _nBits);
 
 #ifdef __cplusplus
 extern "C" {
