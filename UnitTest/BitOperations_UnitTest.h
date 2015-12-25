@@ -22,7 +22,12 @@
  *
  *~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~**/
 /** @file
- * @brief Unit test for the BitOperations files.
+ * @brief Unit test for the BitOperations project.
+ *
+ * The purpose of this unit test is not to verify that the arithmetic is
+ * correct, because Sean Eron Anderson already tested that thoroughly. The
+ * purpose of this unit test is to verify that the implementation of the code
+ * is correct.
  *
  ******************************************************************************/
 

@@ -24,6 +24,11 @@
 /** @file
  * @brief Unit test for the BitOperations project.
  *
+ * The purpose of this unit test is not to verify that the arithmetic is
+ * correct, because Sean Eron Anderson already tested that thoroughly. The
+ * purpose of this unit test is to verify that the implementation of the code
+ * is correct.
+ *
  ******************************************************************************/
 
 /*******************************************************************************
@@ -44,13 +49,13 @@
  * @testname    bitMask32_masksUpTo32Bit_Generated
  * @testcase    BIT_MASK32(n) creates the correct bit mask for n is 0 to 31.
  * @testvalues
- * | Test argument |
- * | ------------- |
- * | 0             |
- * | 1             |
- * | ...           |
- * | 30            |
- * | 31            |
+ * | Argument |
+ * | -------- |
+ * | 0        |
+ * | 1        |
+ * | ...      |
+ * | 30       |
+ * | 31       |
  */
 TEST
 bitMask32_masksUpTo32Bit_Generated()
@@ -59,28 +64,30 @@ bitMask32_masksUpTo32Bit_Generated()
     for (i = 0; i < 32; i++) {
         GREATEST_ASSERT_EQ(correctBitMasksUpTo64Bit[i], BIT_MASK32(i));
     }
+
     PASS();
 }
 
 /**
  * @testname    bitMask32_masksBetween32And64Bit_ShouldFail
- * @testcase    BIT_MASK32(n) fails to create a correct mask for n is 32 to 127.
+ * @testcase    BIT_MASK32(n) fails to create a correct mask for n is 32 to 63.
  * @testvalues
- * | Test argument |
- * | ------------- |
- * | 32            |
- * | 33            |
- * | ...           |
- * | 126           |
- * | 127           |
+ * | Argument |
+ * | -------- |
+ * | 32       |
+ * | 33       |
+ * | ...      |
+ * | 62       |
+ * | 63       |
  */
 TEST
-bitMask32_masksBetween32And128Bit_ShouldFail()
+bitMask32_masksBetween32And64Bit_ShouldFail()
 {
     uint8_t i;
-    for (i = 32; i < 128; i++) {
+    for (i = 32; i < 64; i++) {
         GREATEST_ASSERT_FALSE(correctBitMasksUpTo64Bit[i] == BIT_MASK32(i));
     }
+
     PASS();
 }
 
@@ -88,13 +95,13 @@ bitMask32_masksBetween32And128Bit_ShouldFail()
  * @testname    bitMask64_masksUpTo64Bit_Generated
  * @testcase    BIT_MASK64(n) creates the correct bit mask for n is 0 to 63.
  * @testvalues
- * | Test argument |
- * | ------------- |
- * | 0             |
- * | 1             |
- * | ...           |
- * | 62            |
- * | 36            |
+ * | Argument |
+ * | -------- |
+ * | 0        |
+ * | 1        |
+ * | ...      |
+ * | 62       |
+ * | 36       |
  */
 TEST
 bitMask64_masksUpTo64Bit_Generated()
@@ -103,28 +110,470 @@ bitMask64_masksUpTo64Bit_Generated()
     for (i = 0; i < 64; i++) {
         GREATEST_ASSERT_EQ(correctBitMasksUpTo64Bit[i], BIT_MASK64(i));
     }
+
     PASS();
 }
 
 /**
- * @testname    bitMask32_masksBetween64And128Bit_ShouldFail
- * @testcase    BIT_MASK64(n) fails to create a correct mask for n is 32 to 127.
+ * @testname    bitSetm_singleBitsUpTo64Bit_Set
+ * @testcase    BIT_SETM sets the correct bit in a 64-bit variable.
  * @testvalues
- * | Test argument |
- * | ------------- |
- * | 0             |
- * | 1             |
- * | ...           |
- * | 126           |
- * | 127           |
+ * | Argument 1         | Argument 2         |
+ * | ------------------ | ------------------ |
+ * | 0x0000000000000000 | 0x0000000000000001 |
+ * | 0x0000000000000000 | 0x0000000000000002 |
+ * | ...                |                    |
+ * | 0x0000000000000000 | 0x4000000000000000 |
+ * | 0x0000000000000000 | 0x8000000000000000 |
  */
 TEST
-bitMask64_masksBetween64And128Bit_ShouldFail()
+bitSetm_singleBitsUpTo64Bit_Set()
 {
     uint8_t i;
-    for (i = 64; i < 128; i++) {
-        GREATEST_ASSERT_FALSE(correctBitMasksUpTo64Bit[i] == BIT_MASK64(i));
+    uint64_t v;
+    for (i = 0; i < 64; i++) {
+        v = 0;
+        BIT_SETM(v, (1ULL << i));
+        GREATEST_ASSERT_EQ(correctBitMasksUpTo64Bit[i], v);
     }
+
+    PASS();
+}
+
+/**
+ * @testname    bitSetm_multipleBitsUpTo64Bit_Set
+ * @testcase    BIT_SETM sets the correct bits in a 64-bit variable.
+ * @testvalues
+ * | Argument 1         | Argument 2         |
+ * | ------------------ | ------------------ |
+ * | 0x0000000000000000 | 0x5555555555555555 |
+ * | 0x5555555555555555 | 0xAAAAAAAAAAAAAAAA |
+ */
+TEST
+bitSetm_multipleBitsUpTo64Bit_Set()
+{
+    uint64_t v = 0;
+
+    BIT_SETM(v, 0x5555555555555555);
+    GREATEST_ASSERT_EQ(0x5555555555555555, v);
+    BIT_SETM(v, 0xAAAAAAAAAAAAAAAA);
+    GREATEST_ASSERT_EQ(0xFFFFFFFFFFFFFFFF, v);
+
+    PASS();
+}
+
+/**
+ * @testname    bitSet_singleBitsUpTo64Bit_Set
+ * @testcase    BIT_SET sets the correct bit in a 64-bit variable.
+ * @testvalues
+ * | Argument 1         | Argument 2 |
+ * | ------------------ | ---------- |
+ * | 0x0000000000000000 | 0          |
+ * | 0x0000000000000000 | 1          |
+ * | ...                |            |
+ * | 0x0000000000000000 | 62         |
+ * | 0x0000000000000000 | 63         |
+ */
+TEST
+bitSet_singleBitsUpTo64Bit_Set()
+{
+    uint8_t i;
+    uint64_t v;
+    for (i = 0; i < 64; i++) {
+        v = 0;
+        BIT_SET(v, i);
+        GREATEST_ASSERT_EQ(correctBitMasksUpTo64Bit[i], v);
+    }
+
+    PASS();
+}
+
+/**
+ * @testname    bitClearm_singleBitsUpTo64Bit_Cleared
+ * @testcase    BIT_CLEARM clears the correct bit in a 64-bit variable.
+ * @testvalues
+ * | Argument 1         | Argument 2         |
+ * | ------------------ | ------------------ |
+ * | 0xFFFFFFFFFFFFFFFF | 0xFFFFFFFFFFFFFFFE |
+ * | 0xFFFFFFFFFFFFFFFF | 0xFFFFFFFFFFFFFFFD |
+ * | ...                |                    |
+ * | 0xFFFFFFFFFFFFFFFF | 0xBFFFFFFFFFFFFFFF |
+ * | 0xFFFFFFFFFFFFFFFF | 0x7FFFFFFFFFFFFFFF |
+ */
+TEST
+bitClearm_singleBitsUpTo64Bit_Cleared()
+{
+    uint8_t i;
+    uint64_t v;
+    for (i = 0; i < 64; i++) {
+        v = 0xFFFFFFFFFFFFFFFF;
+        BIT_CLEARM(v, (1ULL << i));
+        GREATEST_ASSERT_EQ(~correctBitMasksUpTo64Bit[i], v);
+    }
+
+    PASS();
+}
+
+/**
+ * @testname    bitClearm_multipleBitsUpTo64Bit_Cleared
+ * @testcase    BIT_CLEARM clears the correct bits in a 64-bit variable.
+ * @testvalues
+ * | Argument 1         | Argument 2         |
+ * | ------------------ | ------------------ |
+ * | 0xFFFFFFFFFFFFFFFF | 0x5555555555555555 |
+ * | 0xAAAAAAAAAAAAAAAA | 0x0000000000000000 |
+ */
+TEST
+bitClearm_multipleBitsUpTo64Bit_Cleared()
+{
+    uint64_t v = 0xFFFFFFFFFFFFFFFF;
+
+    BIT_CLEARM(v, 0x5555555555555555);
+    GREATEST_ASSERT_EQ(0xAAAAAAAAAAAAAAAA, v);
+    BIT_CLEARM(v, 0xAAAAAAAAAAAAAAAA);
+    GREATEST_ASSERT_EQ(0x0000000000000000, v);
+
+    PASS();
+}
+
+/**
+ * @testname    bitClear_singleBitsUpTo64Bit_Cleared
+ * @testcase    BIT_CLEAR clears the correct bit in a 64-bit variable.
+ * @testvalues
+ * | Argument 1         | Argument 2 |
+ * | ------------------ | ---------- |
+ * | 0xFFFFFFFFFFFFFFFF | 0          |
+ * | 0xFFFFFFFFFFFFFFFF | 1          |
+ * | ...                |            |
+ * | 0xFFFFFFFFFFFFFFFF | 62         |
+ * | 0xFFFFFFFFFFFFFFFF | 63         |
+ */
+TEST
+bitClear_singleBitsUpTo64Bit_Cleared()
+{
+    uint8_t i;
+    uint64_t v;
+    for (i = 0; i < 64; i++) {
+        v = 0xFFFFFFFFFFFFFFFF;
+        BIT_CLEAR(v, i);
+        GREATEST_ASSERT_EQ(~correctBitMasksUpTo64Bit[i], v);
+    }
+
+    PASS();
+}
+
+/**
+ * @testname    bitFlipm_singleSetBitsUpTo64Bit_Flipped
+ * @testcase    BIT_FLIPM flips the correct set bit in a 64-bit variable.
+ * @testvalues
+ * | Argument 1         | Argument 2         |
+ * | ------------------ | ------------------ |
+ * | 0xFFFFFFFFFFFFFFFF | 0x0000000000000001 |
+ * | 0xFFFFFFFFFFFFFFFF | 0x0000000000000002 |
+ * | ...                |                    |
+ * | 0xFFFFFFFFFFFFFFFF | 0x4000000000000000 |
+ * | 0xFFFFFFFFFFFFFFFF | 0x8000000000000000 |
+ */
+TEST
+bitFlipm_singleSetBitsUpTo64Bit_Flipped()
+{
+    uint8_t i;
+    uint64_t v;
+    for (i = 0; i < 64; i++) {
+        v = 0xFFFFFFFFFFFFFFFF;
+        BIT_FLIPM(v, (1ULL << i));
+        GREATEST_ASSERT_EQ(~correctBitMasksUpTo64Bit[i], v);
+    }
+
+    PASS();
+}
+
+/**
+ * @testname    bitFlipm_singleClearedBitsUpTo64Bit_Flipped
+ * @testcase    BIT_FLIPM flips the correct cleared bit in a 64-bit variable.
+ * @testvalues
+ * | Argument 1         | Argument 2         |
+ * | ------------------ | ------------------ |
+ * | 0x0000000000000000 | 0x0000000000000001 |
+ * | 0x0000000000000000 | 0x0000000000000002 |
+ * | ...                |                    |
+ * | 0x0000000000000000 | 0x4000000000000000 |
+ * | 0x0000000000000000 | 0x8000000000000000 |
+ */
+TEST
+bitFlipm_singleClearedBitsUpTo64Bit_Flipped()
+{
+    uint8_t i;
+    uint64_t v;
+    for (i = 0; i < 64; i++) {
+        v = 0;
+        BIT_FLIPM(v, (1ULL << i));
+        GREATEST_ASSERT_EQ(correctBitMasksUpTo64Bit[i], v);
+    }
+
+    PASS();
+}
+
+/**
+ * @testname    bitFlipm_multipleSetBitsUpTo64Bit_Flipped
+ * @testcase    BIT_FLIPM flips the correct bits in a 64-bit variable.
+ * @testvalues
+ * | Argument 1         | Argument 2         |
+ * | ------------------ | ------------------ |
+ * | 0xFFFFFFFFFFFFFFFF | 0x5555555555555555 |
+ * | 0xAAAAAAAAAAAAAAAA | 0x0000000000000000 |
+ */
+TEST
+bitFlipm_multipleSetBitsUpTo64Bit_Flipped()
+{
+    uint64_t v = 0xFFFFFFFFFFFFFFFF;
+
+    BIT_FLIPM(v, 0x5555555555555555);
+    GREATEST_ASSERT_EQ(0xAAAAAAAAAAAAAAAA, v);
+    BIT_FLIPM(v, 0xAAAAAAAAAAAAAAAA);
+    GREATEST_ASSERT_EQ(0x0000000000000000, v);
+
+    PASS();
+}
+
+/**
+ * @testname    bitFlipm_multipleClearedBitsUpTo64Bit_Flipped
+ * @testcase    BIT_FLIPM flips the correct bits in a 64-bit variable.
+ * @testvalues
+ * | Argument 1         | Argument 2         |
+ * | ------------------ | ------------------ |
+ * | 0x0000000000000000 | 0xAAAAAAAAAAAAAAAA |
+ * | 0x5555555555555555 | 0xFFFFFFFFFFFFFFFF |
+ */
+TEST
+bitFlipm_multipleClearedBitsUpTo64Bit_Flipped()
+{
+    uint64_t v = 0x0000000000000000;
+
+    BIT_FLIPM(v, 0xAAAAAAAAAAAAAAAA);
+    GREATEST_ASSERT_EQ(0xAAAAAAAAAAAAAAAA, v);
+    BIT_FLIPM(v, 0x5555555555555555);
+    GREATEST_ASSERT_EQ(0xFFFFFFFFFFFFFFFF, v);
+
+    PASS();
+}
+
+/**
+ * @testname    bitFlip_singleSetBitsUpTo64Bit_Flipped
+ * @testcase    BIT_FLIPM flips the correct set bit in a 64-bit variable.
+ * @testvalues
+ * | Argument 1         | Argument 2 |
+ * | ------------------ | ---------- |
+ * | 0xFFFFFFFFFFFFFFFF | 0          |
+ * | 0xFFFFFFFFFFFFFFFF | 1          |
+ * | ...                |            |
+ * | 0xFFFFFFFFFFFFFFFF | 62         |
+ * | 0xFFFFFFFFFFFFFFFF | 63         |
+ */
+TEST
+bitFlip_singleSetBitsUpTo64Bit_Flipped()
+{
+    uint8_t i;
+    uint64_t v;
+    for (i = 0; i < 64; i++) {
+        v = 0xFFFFFFFFFFFFFFFF;
+        BIT_FLIP(v, i);
+        GREATEST_ASSERT_EQ(~correctBitMasksUpTo64Bit[i], v);
+    }
+
+    PASS();
+}
+
+/**
+ * @testname    bitFlip_singleClearedBitsUpTo64Bit_Flipped
+ * @testcase    BIT_FLIP flips the correct cleared bit in a 64-bit variable.
+ * @testvalues
+ * | Argument 1         | Argument 2 |
+ * | ------------------ | ---------- |
+ * | 0x0000000000000000 | 0          |
+ * | 0x0000000000000000 | 1          |
+ * | ...                |            |
+ * | 0x0000000000000000 | 62         |
+ * | 0x0000000000000000 | 63         |
+ */
+TEST
+bitFlip_singleClearedBitsUpTo64Bit_Flipped()
+{
+    uint8_t i;
+    uint64_t v;
+    for (i = 0; i < 64; i++) {
+        v = 0;
+        BIT_FLIP(v, i);
+        GREATEST_ASSERT_EQ(correctBitMasksUpTo64Bit[i], v);
+    }
+
+    PASS();
+}
+
+/**
+ * @testname    shiftLeft_singleSetBitUpTo64_Shifted
+ * @testcase    SHIFT_LEFT shifts the 64-bit variable with a single bit set to
+ * the correct position.
+ * @testvalues
+ * | Argument 1         | Argument 2 |
+ * | ------------------ | ---------- |
+ * | 0x0000000000000001 | 0          |
+ * | 0x0000000000000001 | 1          |
+ * | ...                |            |
+ * | 0x0000000000000001 | 62         |
+ * | 0x0000000000000001 | 63         |
+ */
+TEST
+shiftLeft_singleSetBitUpTo64_Shifted()
+{
+    uint8_t i;
+    uint64_t v;
+    for (i = 0; i < 64; i++) {
+        v = 0x0000000000000001;
+        SHIFT_LEFT(v, i);
+        GREATEST_ASSERT_EQ(correctBitMasksUpTo64Bit[i], v);
+    }
+
+    PASS();
+}
+
+/**
+ * @testname    shiftLeft_multipleSetBitsUpTo64_Shifted
+ * @testcase    SHIFT_LEFT shifts the 64-bit variable with multiple bits set to
+ * the correct position.
+ * @testvalues
+ * <table class="doxtable">
+ * <tr><th>Argument 1                   </th><th>Argument 2 </th></tr>
+ * <tr><td>0x0000000000000001 | 0x0000000000007070</td><td>0          </td></tr>
+ * <tr><td>0x0000000000000001 | 0x0000000000007070</td><td>1          </td></tr>
+ * <tr><td>...                          </td><td>           </td></tr>
+ * <tr><td>0x0000000000000001 | 0x0000000000007070</td><td>62         </td></tr>
+ * <tr><td>0x0000000000000001 | 0x0000000000007070</td><td>63         </td></tr>
+ * </table>
+ */
+TEST
+shiftLeft_multipleSetBitsUpTo64_Shifted()
+{
+    uint8_t i;
+    uint64_t v;
+    for (i = 0; i < 64; i++) {
+        v = 0x0000000000000001 | 0x0000000000007070;
+        SHIFT_LEFT(v, i);
+        GREATEST_ASSERT_EQ(correctBitMasksUpTo64Bit[i]                         |
+                           (0x0000000000007070UL << i), v);
+    }
+
+    PASS();
+}
+
+/**
+ * @testname    shiftRight_singleSetBitUpTo64_Shifted
+ * @testcase    SHIFT_RIGHT shifts the 64-bit variable with a single bit set to
+ * the correct position.
+ * @testvalues
+ * | Argument 1         | Argument 2 |
+ * | ------------------ | ---------- |
+ * | 0x8000000000000000 | 0          |
+ * | 0x8000000000000000 | 1          |
+ * | ...                |            |
+ * | 0x8000000000000000 | 62         |
+ * | 0x8000000000000000 | 63         |
+ */
+TEST
+shiftRight_singleSetBitUpTo64_Shifted()
+{
+    uint8_t i;
+    uint64_t v;
+    for (i = 0; i < 64; i++) {
+        v = 0x8000000000000000;
+        SHIFT_RIGHT(v, i);
+        GREATEST_ASSERT_EQ(correctBitMasksUpTo64Bit[63-i], v);
+    }
+
+    PASS();
+}
+
+/**
+ * @testname    shiftRight_multipleSetBitsUpTo64_Shifted
+ * @testcase    SHIFT_RIGHT shifts the 64-bit variable with multiple bits set to
+ * the correct position.
+ * @testvalues
+ * <table class="doxtable">
+ * <tr><th>Argument 1                             </th><th>Argument 2 </th></tr>
+ * <tr><td>0x8000000000000000 | 0x7070000000000000</td><td>0          </td></tr>
+ * <tr><td>0x8000000000000000 | 0x7070000000000000</td><td>1          </td></tr>
+ * <tr><td>...                                    </td><td>           </td></tr>
+ * <tr><td>0x8000000000000000 | 0x7070000000000000</td><td>62         </td></tr>
+ * <tr><td>0x8000000000000000 | 0x7070000000000000</td><td>63         </td></tr>
+ * </table>
+ */
+TEST
+shiftRight_multipleSetBitsUpTo64_Shifted()
+{
+    uint8_t i;
+    uint64_t v;
+    for (i = 0; i < 64; i++) {
+        v = 0x8000000000000000 | 0x7070000000000000;
+        SHIFT_RIGHT(v, i);
+        GREATEST_ASSERT_EQ(correctBitMasksUpTo64Bit[63-i]                      |
+                           (0x7070000000000000 >> i), v);
+    }
+
+    PASS();
+}
+
+/**
+ * @testname    bitGetm_multipleSetBitsUpTo64Bit_Generated
+ * @testcase    BIT_GET(v, n) correctly returns the set bit for n is 0 to 63.
+ * @testvalues
+ * <table class="doxtable">
+ * <tr><th>Argument 1         </th><th>Argument 2             </th></tr>
+ * <tr><td>0x0000000000000001 </td><td>(1UL << 0)  | rand64() </td></tr>
+ * <tr><td>0x0000000000000002 </td><td>(1UL << 1)  | rand64() </td></tr>
+ * <tr><td>...                </td><td>                       </td></tr>
+ * <tr><td>0x4000000000000000 </td><td>(1UL << 62) | rand64() </td></tr>
+ * <tr><td>0x8000000000000000 </td><td>(1UL << 63) | rand64() </td></tr>
+ * </table>
+ */
+TEST
+bitGetm_multipleRandomSetBitsUpTo64Bit_Generated()
+{
+    uint64_t r;
+    uint8_t i;
+    for (i = 0; i < 64; i++) {
+        r = rand64();
+        GREATEST_ASSERT_EQ(correctBitMasksUpTo64Bit[i] | r                     ,
+                           bitGetm(correctBitMasksUpTo64Bit[i] | r             ,
+                                   (1UL << i) | r));
+    }
+
+    PASS();
+}
+
+/**
+ * @testname    bitGet_multipleClearedBitsUpTo64Bit_Generated
+ * @testcase    BIT_GET(v, n) correctly returns the cleared bit for n is 0 to
+ * 63.
+ * @testvalues
+ * | Argument 1         | Argument 2 |
+ * | ------------------ | ---------- |
+ * | 0xFFFFFFFFFFFFFFFE | 0          |
+ * | 0xFFFFFFFFFFFFFFFD | 1          |
+ * | ...                |            |
+ * | 0xBFFFFFFFFFFFFFFF | 62         |
+ * | 0x7FFFFFFFFFFFFFFF | 63         |
+ */
+TEST
+bitGetm_multipleRandomClearedBitsUpTo64Bit_Generated()
+{
+    uint64_t r;
+    uint8_t i;
+    for (i = 0; i < 64; i++) {
+        r = rand64();
+        GREATEST_ASSERT_EQ(0,
+            bitGetm(correctBitMasksUpTo64Bit[i] | r, ~((1UL << i) | r)));
+    }
+
     PASS();
 }
 
@@ -132,13 +581,13 @@ bitMask64_masksBetween64And128Bit_ShouldFail()
  * @testname    bitGet_singleSetBitsUpTo64Bit_Generated
  * @testcase    BIT_GET(v, n) correctly returns the set bit for n is 0 to 63.
  * @testvalues
- * | Test argument 1    | Test argument 2    |
- * | ------------------ | ------------------ |
- * | 0x0000000000000001 | 0                  |
- * | 0x0000000000000002 | 1                  |
- * | ...                |                    |
- * | 0x4000000000000000 | 62                 |
- * | 0x8000000000000000 | 62                 |
+ * | Argument 1         | Argument 2 |
+ * | ------------------ | ---------- |
+ * | 0x0000000000000001 | 0          |
+ * | 0x0000000000000002 | 1          |
+ * | ...                |            |
+ * | 0x4000000000000000 | 62         |
+ * | 0x8000000000000000 | 63         |
  */
 TEST
 bitGet_singleSetBitsUpTo64Bit_Generated()
@@ -156,13 +605,13 @@ bitGet_singleSetBitsUpTo64Bit_Generated()
  * @testcase    BIT_GET(v, n) correctly returns the cleared bit for n is 0 to
  * 63.
  * @testvalues
- * | Test argument 1    | Test argument 2    |
- * | ------------------ | ------------------ |
- * | 0xFFFFFFFFFFFFFFFE | 0                  |
- * | 0xFFFFFFFFFFFFFFFD | 1                  |
- * | ...                |                    |
- * | 0xBFFFFFFFFFFFFFFF | 62                 |
- * | 0x7FFFFFFFFFFFFFFF | 62                 |
+ * | Argument 1         | Argument 2 |
+ * | ------------------ | ---------- |
+ * | 0xFFFFFFFFFFFFFFFE | 0          |
+ * | 0xFFFFFFFFFFFFFFFD | 1          |
+ * | ...                |            |
+ * | 0xBFFFFFFFFFFFFFFF | 62         |
+ * | 0x7FFFFFFFFFFFFFFF | 63         |
  */
 TEST
 bitGet_singleClearedBitsUpTo64Bit_Generated()
@@ -176,392 +625,18 @@ bitGet_singleClearedBitsUpTo64Bit_Generated()
 }
 
 /**
- * @testname    bitGetm_multipleSetBitsUpTo64Bit_Generated
- * @testcase    BIT_GET(v, n) correctly returns the set bit for n is 0 to 63.
+ * @testname    isPositive_maximumPoitiveAndNegativeNumber_SignGenerated
+ * @testcase    isPositive returns the correct sign of maximum positive and
+ * negative values.
  * @testvalues
- * <table class="doxtable">
- * <tr><th>Test argument 1    </th><th>Test argument 2  </th></tr>
- * <tr><td>0x0000000000000001 </td><td>(1UL << 0) | rand64()  </td></tr>
- * <tr><td>0x0000000000000002 </td><td>(1UL << 1) | rand64()  </td></tr>
- * <tr><td>...                </td><td>                       </td></tr>
- * <tr><td>0x4000000000000000 </td><td>(1UL << 62) | rand64() </td></tr>
- * <tr><td>0x8000000000000000 </td><td>(1UL << 63) | rand64() </td></tr>
- * </table>
+ * | Argument                     |
+ * | ---------------------------- |
+ * | -2147483648 (@ref INT32_MIN) |
+ * | 0                            |
+ * | 2147483647 (@ref INT32_MAX)  |
  */
 TEST
-bitGetm_multipleRandomSetBitsUpTo64Bit_Generated()
-{
-    uint64_t r;
-    uint8_t i;
-    for (i = 0; i < 64; i++) {
-        r = rand64();
-        GREATEST_ASSERT_EQ(correctBitMasksUpTo64Bit[i] | r,
-                bitGetm(correctBitMasksUpTo64Bit[i] | r, (1UL << i) | r));
-    }
-
-    PASS();
-}
-
-/**
- * @testname    bitGet_multipleClearedBitsUpTo64Bit_Generated
- * @testcase    BIT_GET(v, n) correctly returns the cleared bit for n is 0 to
- * 63.
- * @testvalues
- * | Test argument 1    | Test argument 2    |
- * | ------------------ | ------------------ |
- * | 0xFFFFFFFFFFFFFFFE | 0                  |
- * | 0xFFFFFFFFFFFFFFFD | 1                  |
- * | ...                |                    |
- * | 0xBFFFFFFFFFFFFFFF | 62                 |
- * | 0x7FFFFFFFFFFFFFFF | 62                 |
- */
-TEST
-bitGetm_multipleRandomClearedBitsUpTo64Bit_Generated()
-{
-    uint64_t r;
-    uint8_t i;
-    for (i = 0; i < 64; i++) {
-        r = rand64();
-        GREATEST_ASSERT_EQ(0,
-            bitGetm(correctBitMasksUpTo64Bit[i] | r, ~((1UL << i) | r)));
-    }
-
-    PASS();
-}
-
-/**
- * @testname    test_bitGetm_goodWeather
- * @testcase    Whether ...
- * @testvalues
- *  0xFFFFFFFFFFFFFFFF, 2^0
- *  0xFFFFFFFFFFFFFFFF, 2^1
- *  ...
- *  0xFFFFFFFFFFFFFFFF, 2^62
- *  0xFFFFFFFFFFFFFFFF, 2^63
- *
- *  0xFFFFFFFFFFFFFFFF, 0
- *  0xFFFFFFFFFFFFFFFF, 1
- *  ...
- *  0xFFFFFFFFFFFFFFFF, 253
- *  0xFFFFFFFFFFFFFFFF, 254
- */
-TEST
-test_bitGetm_goodWeather(void) {
-    SKIPm("Have not checked the implementation of this test.");
-    uint8_t i;
-    for( i = 0; i < 64; i++ ) {
-        GREATEST_ASSERT_EQ(correctBitMasksUpTo64Bit[i], bitGetm(0xFFFFFFFFFFFFFFFF, correctBitMasksUpTo64Bit[i]));
-    }
-    for( i = 0; i < UINT8_MAX; i++ ) {
-        GREATEST_ASSERT_EQ(i, bitGetm(0xFFFFFFFFFFFFFFFF, i));
-    }
-
-    PASS();
-}
-
-/**
- * @testname    test_bitSet_goodWeather
- * @testcase    Whether ...
- * @testvalues
- *  0, 0
- *  0, 1
- *  ...
- *  0, 62
- *  0, 63
- *
- *  0x8000000000000000, 1
- *  0x8000000000000002, 62
- */
-TEST
-test_bitSet_goodWeather(void) {
-    SKIP();
-    uint8_t i;
-    uint64_t v;
-    for( i = 0; i < 64; i++ ) {
-        v = 0;
-        BIT_SET(v, i);
-        GREATEST_ASSERT_EQ(correctBitMasksUpTo64Bit[i], v);
-    }
-
-    v = 0x8000000000000000;
-    BIT_SET(v, 1);
-    GREATEST_ASSERT_EQ(0x8000000000000002, v);
-    BIT_SET(v, 62);
-    GREATEST_ASSERT_EQ(0xC000000000000002, v);
-
-    PASS();
-}
-
-/**
- * @testname    test_bitSetm_goodWeather
- * @testcase    Whether ...
- * @testvalues
- *  0, 0
- *  0, 1
- *  ...
- *  0, 62
- *  0, 63
- *
- *  0x8000000000000000, 0x1F00
- *  0x8000000000001F00, 0x123ABC0F000000
- */
-TEST
-test_bitSetm_goodWeather(void) {
-    SKIP();
-    uint8_t i;
-    uint64_t v;
-    for( i = 0; i < 64; i++ ) {
-        v = 0;
-        BIT_SETM(v, i);
-        GREATEST_ASSERT_EQ(i, v);
-    }
-
-    v = 0x8000000000000000;
-    BIT_SETM(v, 0x1F00);
-    GREATEST_ASSERT_EQ(0x8000000000001F00, v);
-    BIT_SETM(v, 0x123ABC0F000000);
-    GREATEST_ASSERT_EQ(0x80123ABC0F001F00, v);
-
-    PASS();
-}
-
-/**
- * @testname    test_bitClear_goodWeather
- * @testcase    Whether ...
- * @testvalues
- *  0xFFFFFFFFFFFFFFFF, 0
- *  0xFFFFFFFFFFFFFFFF, 1
- *  ...
- *  0xFFFFFFFFFFFFFFFF, 62
- *  0xFFFFFFFFFFFFFFFF, 63
- *
- *  0x80123ABC0F001F00, 63
- *  0x00123ABC0F001F00, 35
- *  0x00123AB40F001F00, 8
- *  0x00123AB40F001E00, 0
- */
-TEST
-test_bitClear_goodWeather(void) {
-    SKIP();
-    uint8_t i;
-    uint64_t v;
-    for( i = 0; i < 64; i++ ) {
-        v = 0xFFFFFFFFFFFFFFFF;
-        BIT_CLEAR(v, i);
-        GREATEST_ASSERT_EQ(~correctBitMasksUpTo64Bit[i], v);
-    }
-
-    v = 0x80123ABC0F001F00;
-    BIT_CLEAR(v, 63);
-    GREATEST_ASSERT_EQ(0x00123ABC0F001F00, v);
-    BIT_CLEAR(v, 35);
-    GREATEST_ASSERT_EQ(0x00123AB40F001F00, v);
-    BIT_CLEAR(v, 8);
-    GREATEST_ASSERT_EQ(0x00123AB40F001E00, v);
-    BIT_CLEAR(v, 0);
-    GREATEST_ASSERT_EQ(0x00123AB40F001E00, v);
-
-    PASS();
-}
-
-/**
- * @testname    test_bitClear_goodWeather
- * @testcase    Whether ...
- * @testvalues
- *  0xFFFFFFFFFFFFFFFF, 0
- *  0xFFFFFFFFFFFFFFFF, 1
- *  ...
- *  0xFFFFFFFFFFFFFFFF, 62
- *  0xFFFFFFFFFFFFFFFF, 63
- *
- *  0x80123ABC0F001F00, 0x8000000000000000
- *  0x00123ABC0F001F00, 0x800000000
- *  0x00123AB40F001F00, 0x100
- *  0x00123AB40F001E00, 1
- */
-TEST
-test_bitClearm_goodWeather(void) {
-    SKIP();
-    uint8_t i;
-    uint64_t v;
-    for( i = 0; i < 64; i++ ) {
-        v = 0xFFFFFFFFFFFFFFFF;
-        BIT_CLEARM(v, i);
-        GREATEST_ASSERT_EQ(~i, v);
-    }
-
-    v = 0x80123ABC0F001F00;
-    BIT_CLEARM(v, 0x8000000000000000);
-    GREATEST_ASSERT_EQ(0x00123ABC0F001F00, v);
-    BIT_CLEARM(v, 0x800000000);
-    GREATEST_ASSERT_EQ(0x00123AB40F001F00, v);
-    BIT_CLEARM(v, 0x100);
-    GREATEST_ASSERT_EQ(0x00123AB40F001E00, v);
-    BIT_CLEARM(v, 1);
-    GREATEST_ASSERT_EQ(0x00123AB40F001E00, v);
-
-    PASS();
-}
-
-/**
- * @testname    test_bitFlip_goodWeather
- * @testcase    Whether ...
- * @testvalues
- *  0xFFFFFFFFFFFFFFFF, 0
- *  0xFFFFFFFFFFFFFFFF, 1
- *  ...
- *  0xFFFFFFFFFFFFFFFF, 62
- *  0xFFFFFFFFFFFFFFFF, 63
- *
- *  0x80123ABC0F001F00, 63
- *  0x00123ABC0F001F00, 35
- *  0x00123AB40F001F00, 8
- *  0x00123AB40F001E00, 0
- */
-TEST
-test_bitFlip_goodWeather(void) {
-    SKIP();
-    uint8_t i;
-    uint64_t v;
-    for( i = 0; i < 64; i++ ) {
-        v = 0xFFFFFFFFFFFFFFFF;
-        BIT_FLIP(v, i);
-        GREATEST_ASSERT_EQ(~correctBitMasksUpTo64Bit[i], v);
-    }
-
-    v = 0x80123ABC0F001F00;
-    BIT_FLIP(v, 63);
-    GREATEST_ASSERT_EQ(0x00123ABC0F001F00, v);
-    BIT_FLIP(v, 35);
-    GREATEST_ASSERT_EQ(0x00123AB40F001F00, v);
-    BIT_FLIP(v, 8);
-    GREATEST_ASSERT_EQ(0x00123AB40F001E00, v);
-    BIT_FLIP(v, 0);
-    GREATEST_ASSERT_EQ(0x00123AB40F001E01, v);
-
-    PASS();
-}
-
-/**
- * @testname    test_bitFlipm_goodWeather
- * @testcase    Whether ...
- * @testvalues
- *  0xFFFFFFFFFFFFFFFF, 0
- *  0xFFFFFFFFFFFFFFFF, 1
- *  ...
- *  0xFFFFFFFFFFFFFFFF, 62
- *  0xFFFFFFFFFFFFFFFF, 63
- *
- *  0x80123ABC0F001F00, 0x8000000000000000
- *  0x00123ABC0F001F00, 0x800000000
- *  0x00123AB40F001F00, 0x100
- *  0x00123AB40F001E00, 1
- */
-TEST
-test_bitFlipm_goodWeather(void) {
-    SKIP();
-    uint8_t i;
-    uint64_t v;
-    for( i = 0; i < 64; i++ ) {
-        v = 0xFFFFFFFFFFFFFFFF;
-        BIT_FLIPM(v, i);
-        GREATEST_ASSERT_EQ(~i, v);
-    }
-
-    v = 0x80123ABC0F001F00;
-    BIT_FLIPM(v, 0x8000000000000000);
-    GREATEST_ASSERT_EQ(0x00123ABC0F001F00, v);
-    BIT_FLIPM(v, 0x800000000);
-    GREATEST_ASSERT_EQ(0x00123AB40F001F00, v);
-    BIT_FLIPM(v, 0x100);
-    GREATEST_ASSERT_EQ(0x00123AB40F001E00, v);
-    BIT_FLIPM(v, 1);
-    GREATEST_ASSERT_EQ(0x00123AB40F001E01, v);
-
-    PASS();
-}
-
-/**
- * @testname    test_shiftLeft_goodWeather
- * @testcase    Whether ...
- * @testvalues
- *  1, 0
- *  1, 1
- *  ...
- *  1, 62
- *  1, 63
- *
- *  0x00000000000FF010, 4
- *  0x0000000000FF0100, 12
- *  0x0000000FF0100000, 32
- */
-TEST
-test_shiftLeft_goodWeather(void) {
-    SKIP();
-    uint8_t i;
-    uint64_t v;
-    for( i = 0; i < 64; i++ ) {
-        v = 1;
-        SHIFT_LEFT(v, i);
-        GREATEST_ASSERT_EQ(correctBitMasksUpTo64Bit[i], v);
-    }
-    v = 0x00000000000FF010;
-    SHIFT_LEFT(v, 4);
-    GREATEST_ASSERT_EQ(0x0000000000FF0100, v);
-    SHIFT_LEFT(v, 12);
-    GREATEST_ASSERT_EQ(0x0000000FF0100000, v);
-    SHIFT_LEFT(v, 32);
-    GREATEST_ASSERT_EQ(0xF010000000000000, v);
-
-    PASS();
-}
-
-/**
- * @testname    test_shiftRight_goodWeather
- * @testcase    Whether ...
- * @testvalues
- *  1, 0
- *  1, 1
- *  ...
- *  1, 62
- *  1, 63
- *
- *  0x010FF00000000000, 4
- *  0x0010FF0000000000, 12
- *  0x0000010FF0000000, 32
- */
-TEST
-test_shiftRight_goodWeather(void) {
-    SKIP();
-    uint8_t i;
-    uint64_t v;
-    for( i = 0; i < 64; i++ ) {
-        v = 0x8000000000000000;
-        SHIFT_RIGHT(v, i);
-        GREATEST_ASSERT_EQ(correctBitMasksUpTo64Bit[63-i], v);
-    }
-    v = 0x010FF00000000000;
-    SHIFT_RIGHT(v, 4);
-    GREATEST_ASSERT_EQ(0x0010FF0000000000, v);
-    SHIFT_RIGHT(v, 12);
-    GREATEST_ASSERT_EQ(0x0000010FF0000000, v);
-    SHIFT_RIGHT(v, 32);
-    GREATEST_ASSERT_EQ(0x000000000000010F, v);
-
-    PASS();
-}
-
-/**
- * @testname    test_isPositive_goodWeather
- * @testcase    Whether the signs of a unit32 minimum, zero and maximum values are correctly determined
- * determined.
- * @testvalues
- *  -2147483648 (INT32_MIN)
- *  0
- *  2147483647 (INT32_MAX)
- */
-TEST
-test_isPositive_goodWeather(void)
+isPositive_maximumPoitiveAndNegativeNumber_SignGenerated()
 {
     GREATEST_ASSERT_EQ(0, isPositive(INT32_MIN));
     GREATEST_ASSERT_EQ(1, isPositive(0));
@@ -571,113 +646,619 @@ test_isPositive_goodWeather(void)
 }
 
 /**
- * @testname    test_haveOppositeSigns_goodWeather
- * @testcase    Whether difference in signs are correctly determined
+ * @testname    isPositive_minimumPoitiveAndNegativeNumber_SignGenerated
+ * @testcase    isPositive returns the correct sign of minimum positive and
+ * negative values.
  * @testvalues
- *  -   -
- *  -   +
- *  +   -
- *  +   +
+ * | Argument |
+ * | -------- |
+ * | -1       |
+ * | 1        |
  */
 TEST
-test_haveOppositeSigns_goodWeather(void)
+isPositive_minimumPoitiveAndNegativeNumber_SignGenerated()
 {
-    GREATEST_ASSERT_EQ(0, haveOppositeSigns(INT32_MIN, -1));
+    GREATEST_ASSERT_EQ(0, isPositive(-1));
+    GREATEST_ASSERT_EQ(1, isPositive(1));
+
+    PASS();
+}
+
+/**
+ * @testname    isOdd_positivePowersOfTwoUpTo64Bit_ParityGenerated
+ * @testcase    isOdd returns the correct parity for positive even integers
+ * 2^n from n is 1 to 62.
+ * @testvalues
+ * | Argument           |
+ * | ------------------ |
+ * | 0x0000000000000002 |
+ * | 0x0000000000000004 |
+ * | ...                |
+ * | 0x2000000000000000 |
+ * | 0x4000000000000000 |
+ */
+TEST
+isOdd_positivePowersOfTwoUpTo64Bit_ParityGenerated()
+{
+    uint8_t i;
+    for (i = 1; i < 63; i++) {
+        GREATEST_ASSERT_EQ(0, isOdd((int64_t)correctBitMasksUpTo64Bit[i]));
+    }
+
+    PASS();
+}
+
+/**
+ * @testname    isOdd_positiveMaximum64Bit_ParityGenerated
+ * @testcase    isOdd returns the correct parity for the maximum positive even
+ * integer.
+ * @testvalues
+ * | Argument           |
+ * | ------------------ |
+ * | 0x7FFFFFFFFFFFFFFE |
+ */
+TEST
+isOdd_positiveMaximum64Bit_ParityGenerated()
+{
+    GREATEST_ASSERT_EQ(0, isOdd(0x7FFFFFFFFFFFFFFE));
+
+    PASS();
+}
+
+/**
+ * @testname    isOdd_negativePowersOfTwoUpTo64Bit_ParityGenerated
+ * @testcase    isOdd returns the correct parity for negative even integers
+ * -2^n from n is 1 to 63.
+ * @testvalues
+ * | Argument            |
+ * | ------------------- |
+ * | -0x0000000000000002 |
+ * | -0x0000000000000004 |
+ * | ...                 |
+ * | -0x4000000000000000 |
+ * | -0x8000000000000000 |
+ */
+TEST
+isOdd_negativePowersOfTwoUpTo64Bit_ParityGenerated()
+{
+    uint8_t i;
+    for (i = 1; i < 64; i++) {
+        GREATEST_ASSERT_EQ(0, isOdd(-(int64_t)correctBitMasksUpTo64Bit[i]));
+    }
+
+    PASS();
+}
+
+/**
+ * @testname    isOdd_positivePowersOfTwoUpTo64BitMinusOne_ParityGenerated
+ * @testcase    isOdd returns the correct parity for positive odd integers
+ * 2^n - 1 from n is 1 to 63.
+ * @testvalues
+ * | Argument           |
+ * | ------------------ |
+ * | 0x0000000000000001 |
+ * | 0x0000000000000003 |
+ * | ...                |
+ * | 0x3FFFFFFFFFFFFFFF |
+ * | 0x7FFFFFFFFFFFFFFF |
+ */
+TEST
+isOdd_positivePowersOfTwoUpTo64BitMinusOne_ParityGenerated()
+{
+    uint8_t i;
+    for (i = 1; i < 64; i++) {
+        GREATEST_ASSERT_EQ(1, isOdd((int64_t)correctBitMasksUpTo64Bit[i] - 1));
+    }
+
+    PASS();
+}
+
+/**
+ * @testname    isOdd_negativePowersOfTwoUpTo64BitPlusOne_ParityGenerated
+ * @testcase    isOdd returns the correct parity for negative odd integers
+ * -2^n + 1 from n is 1 to 63.
+ * @testvalues
+ * | Argument            |
+ * | ------------------- |
+ * | -0x0000000000000001 |
+ * | -0x0000000000000003 |
+ * | ...                 |
+ * | -0x3FFFFFFFFFFFFFFF |
+ * | -0x7FFFFFFFFFFFFFFF |
+ */
+TEST
+isOdd_negativePowersOfTwoUpTo64BitPlusOne_ParityGenerated()
+{
+    uint8_t i;
+    for (i = 1; i < 64; i++) {
+        GREATEST_ASSERT_EQ(1, isOdd(-(int64_t)correctBitMasksUpTo64Bit[i] + 1));
+    }
+
+    PASS();
+}
+
+/**
+ * @testname    isEven_positivePowersOfTwoUpTo64Bit_ParityGenerated
+ * @testcase    isEven returns the correct parity for positive even integers
+ * 2^n from n is 1 to 62.
+ * @testvalues
+ * | Argument           |
+ * | ------------------ |
+ * | 0x0000000000000002 |
+ * | 0x0000000000000004 |
+ * | ...                |
+ * | 0x2000000000000000 |
+ * | 0x4000000000000000 |
+ */
+TEST
+isEven_positivePowersOfTwoUpTo64Bit_ParityGenerated()
+{
+    uint8_t i;
+    for (i = 1; i < 63; i++) {
+        GREATEST_ASSERT_EQ(1, isEven((int64_t)correctBitMasksUpTo64Bit[i]));
+    }
+
+    PASS();
+}
+
+/**
+ * @testname    isEven_positiveMaximum64Bit_ParityGenerated
+ * @testcase    isEven returns the correct parity for the maximum positive even
+ * integer.
+ * @testvalues
+ * | Argument           |
+ * | ------------------ |
+ * | 0x7FFFFFFFFFFFFFFE |
+ */
+TEST
+isEven_positiveMaximum64Bit_ParityGenerated()
+{
+    GREATEST_ASSERT_EQ(1, isEven(0x7FFFFFFFFFFFFFFE));
+
+    PASS();
+}
+
+/**
+ * @testname    isEven_negativePowersOfTwoUpTo64Bit_ParityGenerated
+ * @testcase    isEven returns the correct parity for negative even integers
+ * -2^n from n is 1 to 63.
+ * @testvalues
+ * | Argument            |
+ * | ------------------- |
+ * | -0x0000000000000002 |
+ * | -0x0000000000000004 |
+ * | ...                 |
+ * | -0x4000000000000000 |
+ * | -0x8000000000000000 |
+ */
+TEST
+isEven_negativePowersOfTwoUpTo64Bit_ParityGenerated()
+{
+    uint8_t i;
+    for (i = 1; i < 64; i++) {
+        GREATEST_ASSERT_EQ(1, isEven(-(int64_t)correctBitMasksUpTo64Bit[i]));
+    }
+
+    PASS();
+}
+
+/**
+ * @testname    isEven_positivePowersOfTwoUpTo64BitMinusOne_ParityGenerated
+ * @testcase    isEven returns the correct parity for positive odd integers
+ * 2^n - 1 from n is 1 to 63.
+ * @testvalues
+ * | Argument           |
+ * | ------------------ |
+ * | 0x0000000000000001 |
+ * | 0x0000000000000003 |
+ * | ...                |
+ * | 0x3FFFFFFFFFFFFFFF |
+ * | 0x7FFFFFFFFFFFFFFF |
+ */
+TEST
+isEven_positivePowersOfTwoUpTo64BitMinusOne_ParityGenerated()
+{
+    uint8_t i;
+    for (i = 1; i < 64; i++) {
+        GREATEST_ASSERT_EQ(0, isEven((int64_t)correctBitMasksUpTo64Bit[i] - 1));
+    }
+
+    PASS();
+}
+
+/**
+ * @testname    isEven_negativePowersOfTwoUpTo64BitPlusOne_ParityGenerated
+ * @testcase    isEven returns the correct parity for negative odd integers
+ * -2^n + 1 from n is 1 to 63.
+ * @testvalues
+ * | Argument            |
+ * | ------------------- |
+ * | -0x0000000000000001 |
+ * | -0x0000000000000003 |
+ * | ...                 |
+ * | -0x3FFFFFFFFFFFFFFF |
+ * | -0x7FFFFFFFFFFFFFFF |
+ */
+TEST
+isEven_negativePowersOfTwoUpTo64BitPlusOne_ParityGenerated()
+{
+    uint8_t i;
+    for (i = 1; i < 64; i++) {
+        GREATEST_ASSERT_EQ(0, isEven(-(int64_t)correctBitMasksUpTo64Bit[i] + 1));
+    }
+
+    PASS();
+}
+
+/**
+ * @testname    haveOppositeSigns_maximumPoitiveAndNegativeValues_Generated
+ * @testcase    haveOppositeSigns returns the correct difference in signs of
+ * maximum positive and negative values.
+ * @testvalues
+ * | Argument 1                   | Argument 2                   |
+ * | ---------------------------- | ---------------------------- |
+ * | -2147483648 (@ref INT32_MIN) | -2147483648 (@ref INT32_MIN) |
+ * | -2147483648 (@ref INT32_MIN) | 2147483647 (@ref INT32_MAX)  |
+ * | 2147483647 (@ref INT32_MAX)  | -2147483648 (@ref INT32_MIN) |
+ * | 2147483647 (@ref INT32_MAX)  | 2147483647 (@ref INT32_MAX)  |
+ */
+TEST
+haveOppositeSigns_maximumPoitiveAndNegativeValues_Generated()
+{
+    GREATEST_ASSERT_EQ(0, haveOppositeSigns(INT32_MIN, INT32_MIN));
+    GREATEST_ASSERT_EQ(1, haveOppositeSigns(INT32_MIN, INT32_MAX));
+    GREATEST_ASSERT_EQ(1, haveOppositeSigns(INT32_MAX, INT32_MIN));
+    GREATEST_ASSERT_EQ(0, haveOppositeSigns(INT32_MAX, INT32_MAX));
+
+    PASS();
+}
+
+/**
+ * @testname    haveOppositeSigns_minimumPoitiveAndNegativeValues_Generated
+ * @testcase    haveOppositeSigns returns the correct difference in signs of
+ * minimum positive and negative values.
+ * @testvalues
+ * | Argument 1 | Argument 2 |
+ * | ---------- | ---------- |
+ * | -1         | -1         |
+ * | -1         | 1          |
+ * | 1          | -1         |
+ * | 1          | 1          |
+ */
+TEST
+haveOppositeSigns_minimumPoitiveAndNegativeValues_Generated()
+{
+    GREATEST_ASSERT_EQ(0, haveOppositeSigns(-1, -1));
     GREATEST_ASSERT_EQ(1, haveOppositeSigns(-1, 1));
     GREATEST_ASSERT_EQ(1, haveOppositeSigns(1, -1));
-    GREATEST_ASSERT_EQ(0, haveOppositeSigns(1, INT32_MAX));
+    GREATEST_ASSERT_EQ(0, haveOppositeSigns(1, 1));
 
     PASS();
 }
 
 /**
- * @testname    test_min_goodWeather
- * @testcase    Whether min() returns the right value
+ * @testname    min_maximum32BitPositiveAndNegativeNumber_MinFound
+ * @testcase    min returns the correct minimum value of maximum positive and
+ * negative values.
  * @testvalues
- *  -2147483648 (INT32_MIN) -1
- *  2147483647 (INT32_MAX)  -2147483648 (INT32_MIN)
- *  0                       0
- *  1                       2147483647 (INT32_MAX)
+ * | Argument 1                   | Argument 2                   |
+ * | ---------------------------- | ---------------------------- |
+ * | -2147483648 (@ref INT32_MIN) | 2147483647 (@ref INT32_MAX)  |
+ * | 2147483647 (@ref INT32_MAX)  | -2147483648 (@ref INT32_MIN) |
  */
 TEST
-test_min_goodWeather(void)
+min_maximum32BitPositiveAndNegativeNumber_MinFound()
 {
-    GREATEST_ASSERT_EQ(INT32_MIN, min(INT32_MIN, -1));
+    GREATEST_ASSERT_EQ(INT32_MIN, min(INT32_MIN, INT32_MAX));
     GREATEST_ASSERT_EQ(INT32_MIN, min(INT32_MAX, INT32_MIN));
-    GREATEST_ASSERT_EQ(0, min(0, 0));
-    GREATEST_ASSERT_EQ(1, min(1, INT32_MAX));
 
     PASS();
 }
 
 /**
- * @testname    test_max_goodWeather
- * @testcase    Whether max() returns the right value
+ * @testname    min_minimum32BitPositiveAndNegativeNumber_MinFound
+ * @testcase    min returns the correct minimum value of minimum positive and
+ * negative values.
  * @testvalues
- *  -2147483648 (INT32_MIN) -1
- *  2147483647 (INT32_MAX)  -2147483648 (INT32_MIN)
- *  0                       0
- *  1                       2147483647 (INT32_MAX)
+ * | Argument 1 | Argument 2 |
+ * | ---------- | ---------- |
+ * | -1         | 1          |
+ * | 1          | -1         |
  */
 TEST
-test_max_goodWeather(void)
+min_minimum32BitPositiveAndNegativeNumber_MinFound()
 {
-    GREATEST_ASSERT_EQ(-1, max(INT32_MIN, -1));
+    GREATEST_ASSERT_EQ(-1, min(-1, 1));
+    GREATEST_ASSERT_EQ(-1, min(1, -1));
+
+    PASS();
+}
+
+/**
+ * @testname    min_maximum32BitPositiveAndNegativeToZeroNumber_MinFound
+ * @testcase    min returns the correct minimum value of maximum positive and
+ * negative values to zero.
+ * @testvalues
+ * | Argument 1                   | Argument 2                   |
+ * | ---------------------------- | ---------------------------- |
+ * | -2147483648 (@ref INT32_MIN) | 0                            |
+ * | 0                            | -2147483648 (@ref INT32_MIN) |
+ * | 2147483647 (@ref INT32_MAX)  | 0                            |
+ * | 0                            | 2147483647 (@ref INT32_MAX)  |
+ */
+TEST
+min_maximum32BitPositiveAndNegativeToZeroNumber_MinFound()
+{
+    GREATEST_ASSERT_EQ(INT32_MIN, min(INT32_MIN, 0));
+    GREATEST_ASSERT_EQ(INT32_MIN, min(0, INT32_MIN));
+    GREATEST_ASSERT_EQ(0, min(INT32_MAX, 0));
+    GREATEST_ASSERT_EQ(0, min(0, INT32_MAX));
+
+    PASS();
+}
+
+/**
+ * @testname    min_minimum32BitPositiveAndNegativeToZeroNumber_MinFound
+ * @testcase    min returns the correct minimum value of maximum positive and
+ * negative values to zero.
+ * @testvalues
+ * | Argument 1 | Argument 2 |
+ * | ---------- | ---------- |
+ * | -1         | 0          |
+ * | 0          | -1         |
+ * | 1          | 0          |
+ * | 0          | 1          |
+ */
+TEST
+min_minimum32BitPositiveAndNegativeToZeroNumber_MinFound()
+{
+    GREATEST_ASSERT_EQ(-1, min(-1, 0));
+    GREATEST_ASSERT_EQ(-1, min(0, -1));
+    GREATEST_ASSERT_EQ(0, min(1, 0));
+    GREATEST_ASSERT_EQ(0, min(0, 1));
+
+    PASS();
+}
+
+/**
+ * @testname    min_maximumEqual32BitPositiveAndNegativeNumber_MinFound
+ * @testcase    min returns one of the entered values since they are both the
+ * same.
+ * @testvalues
+ * | Argument 1                   | Argument 2                   |
+ * | ---------------------------- | ---------------------------- |
+ * | 2147483648 (@ref INT32_MAX)  | 2147483647 (@ref INT32_MAX)  |
+ * | -2147483647 (@ref INT32_MIN)  | -2147483648 (@ref INT32_MIN) |
+ */
+TEST
+min_maximumEqual32BitPositiveAndNegativeNumber_MinFound()
+{
+    GREATEST_ASSERT_EQ(INT32_MAX, min(INT32_MAX, INT32_MAX));
+    GREATEST_ASSERT_EQ(INT32_MIN, min(INT32_MIN, INT32_MIN));
+
+    PASS();
+}
+
+/**
+ * @testname    min_minimumEqual32BitPositiveAndNegativeNumber_MinFound
+ * @testcase    min returns one of the entered values since they are both the
+ * same.
+ * @testvalues
+ * | Argument 1 | Argument 2 |
+ * | ---------- | ---------- |
+ * | 1          | 1          |
+ * | -1         | -1         |
+ */
+TEST
+min_minimumEqual32BitPositiveAndNegativeNumber_MinFound()
+{
+    GREATEST_ASSERT_EQ(1, min(1, 1));
+    GREATEST_ASSERT_EQ(-1, min(-1, -1));
+
+    PASS();
+}
+
+/**
+ * @testname    max_maximum32BitPositiveAndNegativeNumber_MaxFound
+ * @testcase    min returns the correct maximum value of maximum positive and
+ * negative values.
+ * @testvalues
+ * | Argument 1                   | Argument 2                   |
+ * | ---------------------------- | ---------------------------- |
+ * | -2147483648 (@ref INT32_MIN) | 2147483647 (@ref INT32_MAX)  |
+ * | 2147483647 (@ref INT32_MAX)  | -2147483648 (@ref INT32_MIN) |
+ */
+TEST
+max_maximum32BitPositiveAndNegativeNumber_MaxFound()
+{
+    GREATEST_ASSERT_EQ(INT32_MAX, max(INT32_MIN, INT32_MAX));
     GREATEST_ASSERT_EQ(INT32_MAX, max(INT32_MAX, INT32_MIN));
-    GREATEST_ASSERT_EQ(0, max(0, 0));
-    GREATEST_ASSERT_EQ(INT32_MAX, max(1, INT32_MAX));
 
     PASS();
 }
 
 /**
- * @testname    test_isPowerOf2_goodWeather
- * @testcase    Whether isPowerOf2() returns the right value
+ * @testname    max_minimum32BitPositiveAndNegativeNumber_MaxFound
+ * @testcase    min returns the correct maximum value of minimum positive and
+ * negative values.
  * @testvalues
- *  2^0
- *  2^1
- *  ...
- *  2^62
- *  2^63
+ * | Argument 1 | Argument 2 |
+ * | ---------- | ---------- |
+ * | -1         | 1          |
+ * | 1          | -1         |
  */
 TEST
-test_isPowerOf2_goodWeather(void)
+max_minimum32BitPositiveAndNegativeNumber_MaxFound()
+{
+    GREATEST_ASSERT_EQ(1, max(-1, 1));
+    GREATEST_ASSERT_EQ(1, max(1, -1));
+
+    PASS();
+}
+
+/**
+ * @testname    max_maximum32BitPositiveAndNegativeToZeroNumber_MaxFound
+ * @testcase    min returns the correct maximum value of maximum positive and
+ * negative values to zero.
+ * @testvalues
+ * | Argument 1                   | Argument 2                   |
+ * | ---------------------------- | ---------------------------- |
+ * | -2147483648 (@ref INT32_MIN) | 0                            |
+ * | 0                            | -2147483648 (@ref INT32_MIN) |
+ * | 2147483647 (@ref INT32_MAX)  | 0                            |
+ * | 0                            | 2147483647 (@ref INT32_MAX)  |
+ */
+TEST
+max_maximum32BitPositiveAndNegativeToZeroNumber_MaxFound()
+{
+    GREATEST_ASSERT_EQ(0, max(INT32_MIN, 0));
+    GREATEST_ASSERT_EQ(0, max(0, INT32_MIN));
+    GREATEST_ASSERT_EQ(INT32_MAX, max(INT32_MAX, 0));
+    GREATEST_ASSERT_EQ(INT32_MAX, max(0, INT32_MAX));
+
+    PASS();
+}
+
+/**
+ * @testname    max_minimum32BitPositiveAndNegativeToZeroNumber_MaxFound
+ * @testcase    min returns the correct maximum value of maximum positive and
+ * negative values to zero.
+ * @testvalues
+ * | Argument 1 | Argument 2 |
+ * | ---------- | ---------- |
+ * | -1         | 0          |
+ * | 0          | -1         |
+ * | 1          | 0          |
+ * | 0          | 1          |
+ */
+TEST
+max_minimum32BitPositiveAndNegativeToZeroNumber_MaxFound()
+{
+    GREATEST_ASSERT_EQ(0, max(-1, 0));
+    GREATEST_ASSERT_EQ(0, max(0, -1));
+    GREATEST_ASSERT_EQ(1, max(1, 0));
+    GREATEST_ASSERT_EQ(1, max(0, 1));
+
+    PASS();
+}
+
+/**
+ * @testname    max_maximumEqual32BitPositiveAndNegativeNumber_MaxFound
+ * @testcase    min returns one of the entered values since they are both the
+ * same.
+ * @testvalues
+ * | Argument 1                   | Argument 2                   |
+ * | ---------------------------- | ---------------------------- |
+ * | 2147483648 (@ref INT32_MAX)  | 2147483647 (@ref INT32_MAX)  |
+ * | -2147483647 (@ref INT32_MIN)  | -2147483648 (@ref INT32_MIN) |
+ */
+TEST
+max_maximumEqual32BitPositiveAndNegativeNumber_MaxFound()
+{
+    GREATEST_ASSERT_EQ(INT32_MAX, max(INT32_MAX, INT32_MAX));
+    GREATEST_ASSERT_EQ(INT32_MIN, max(INT32_MIN, INT32_MIN));
+
+    PASS();
+}
+
+/**
+ * @testname    max_minimumEqual32BitPositiveAndNegativeNumber_MaxFound
+ * @testcase    min returns one of the entered values since they are both the
+ * same.
+ * @testvalues
+ * | Argument 1 | Argument 2 |
+ * | ---------- | ---------- |
+ * | 1          | 1          |
+ * | -1         | -1         |
+ */
+TEST
+max_minimumEqual32BitPositiveAndNegativeNumber_MaxFound()
+{
+    GREATEST_ASSERT_EQ(1, max(1, 1));
+    GREATEST_ASSERT_EQ(-1, max(-1, -1));
+
+    PASS();
+}
+
+/**
+ * @testname    isPowerOf2_powersUpTo64Bit_ArePowers
+ * @testcase    isPowerOf2 returns the right value for integers 2^n from n is 0
+ * to 64.
+ * @testvalues
+ * | Argument           |
+ * | ------------------ |
+ * | 0x0000000000000001 |
+ * | 0x0000000000000002 |
+ * | ...                |
+ * | 0x4000000000000000 |
+ * | 0x8000000000000000 |
+ */
+TEST
+isPowerOf2_powersUpTo64Bit_ArePowers()
 {
     uint8_t i;
-    uint64_t power = 1;
-
     for (i = 0; i < 64; i++) {
-        GREATEST_ASSERT_EQ(1, isPowerOf2(power << i));
+        GREATEST_ASSERT_EQ(1, isPowerOf2(correctBitMasksUpTo64Bit[i]));
     }
 
     PASS();
 }
 
 /**
- * @testname    test_isPowerOf2_falsePositive
- * @testcase    Whether isPowerOf2() returns the right value
+ * @testname    isPowerOf2_zero_isNotAPower
+ * @testcase    isPowerOf2 returns the right value for 0.
  * @testvalues
- *  0
- *  1
- *  ...
- *  62
- *  63
+ * | Argument |
+ * | -------- |
+ * | 0        |
  */
 TEST
-test_isPowerOf2_falsePositive(void)
+isPowerOf2_zero_isNotAPower()
 {
     uint8_t i;
-
     for (i = 0; i < 64; i++) {
-        if (i == 1 || i == 2 || i == 4 || i == 8 || i == 16 || i == 32) {
-            GREATEST_ASSERT_EQ(1, isPowerOf2(i));
-        } else {
-            GREATEST_ASSERT_EQ(0, isPowerOf2(i));
-        }
+        GREATEST_ASSERT_EQ(0, isPowerOf2(0));
     }
 
     PASS();
 }
+
+/**
+ * @testname    isPowerOf2_powersUpTo64BitMinusAndPlusOne_AreNotPowers
+ * @testcase    isPowerOf2 returns the right value for integers 2^n -/+ 1 from
+ * n is 2 to 64.
+ * @testvalues
+ * | Argument                 |
+ * | ------------------------ |
+ * | 0x0000000000000004 -/+ 1 |
+ * | 0x0000000000000008 -/+ 1 |
+ * | ...                      |
+ * | 0x4000000000000000 -/+ 1 |
+ * | 0x8000000000000000 -/+ 1 |
+ */
+TEST
+isPowerOf2_powersUpTo64BitMinusAndPlusOne_AreNotPowers()
+{
+    uint8_t i;
+    for (i = 2; i < 64; i++) {
+        GREATEST_ASSERT_EQ(0, isPowerOf2(correctBitMasksUpTo64Bit[i] - 1));
+        GREATEST_ASSERT_EQ(0, isPowerOf2(correctBitMasksUpTo64Bit[i] + 1));
+    }
+
+    PASS();
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 /**
  * @testname    test_modifyBits_goodWeather
@@ -729,7 +1310,11 @@ test_modifyBits_goodWeather(void)
 TEST
 test_mergeBits_goodWeather(void)
 {
+//    uint32_t x = 0x10101010, y = 0x0A0A0A0A;
+//    mergeBits(x,y,0xABABABAB);
 
+//    uint8_t q = 0x10;
+//    reverseBitOrderByte(&q);
 
     SKIP();
 }
@@ -748,96 +1333,13 @@ test_mergeBits_goodWeather(void)
 TEST
 test_nBitsSet_goodWeather(void)
 {
+
     GREATEST_ASSERT_EQ(0, nBitsSet(0x00000000));
     GREATEST_ASSERT_EQ(1, nBitsSet(0x00000001));
     GREATEST_ASSERT_EQ(2, nBitsSet(0x00000003));
     GREATEST_ASSERT_EQ(3, nBitsSet(0x00000007));
     GREATEST_ASSERT_EQ(2, nBitsSet(0x10000008));
     GREATEST_ASSERT_EQ(32, nBitsSet(0xFFFFFFFF));
-
-    PASS();
-}
-
-/**
- * @testname    test_isEven_goodWeather
- * @testcase    Whether ...
- * @testvalues
- *  2^0
- *  2^1
- *  ...
- *  2^62
- *  2^63
- *
- *  0
- *  1
- *  ...
- *  253
- *  254
- *
- *  0x00123AB40F001E00
- *  0x00123AB40F001E01
- *  18446744073709551615 (UINT_MAX)
- */
-TEST
-test_isEven_goodWeather(void)
-{
-    uint8_t i;
-    for (i = 1; i < 32; i++) {
-        GREATEST_ASSERT_EQ(1, isEven(correctBitMasksUpTo64Bit[i]));
-    }
-
-    for (i = 0; i < UINT8_MAX; i++) {
-        if (i % 2)
-            GREATEST_ASSERT_EQ(0, isEven(i));
-        else
-            GREATEST_ASSERT_EQ(1, isEven(i));
-    }
-
-    GREATEST_ASSERT_EQ(1, isEven(0x00123AB40F001E00));
-    GREATEST_ASSERT_EQ(0, isEven(0x00123AB40F001E01));
-    GREATEST_ASSERT_EQ(0, isEven(UINT64_MAX));
-
-    PASS();
-}
-
-/**
- * @testname    test_isEven_goodWeather
- * @testcase    Whether ...
- * @testvalues
- *  2^0
- *  2^1
- *  ...
- *  2^62
- *  2^63
- *
- *  0
- *  1
- *  ...
- *  253
- *  254
- *
- *  0x00123AB40F001E00
- *  0x00123AB40F001E01
- *  18446744073709551615 (UINT64_MAX)
- */
-TEST
-test_isOdd_goodWeather(void)
-{
-    uint8_t i;
-    for (i = 1; i < 32; i++) {
-        GREATEST_ASSERT_EQ(0, isOdd(correctBitMasksUpTo64Bit[i]));
-    }
-
-    for (i = 0; i < UINT8_MAX; i++) {
-        if (i % 2)
-            GREATEST_ASSERT_EQ(1, isOdd(i));
-        else
-            GREATEST_ASSERT_EQ(0, isOdd(i));
-    }
-
-    GREATEST_ASSERT_EQ(0, isOdd(0x00123AB40F001E00));
-    GREATEST_ASSERT_EQ(1, isOdd(0x00123AB40F001E01));
-    GREATEST_ASSERT_EQ(1, isOdd(UINT64_MAX));
 
     PASS();
 }
@@ -857,6 +1359,7 @@ test_isOdd_goodWeather(void)
 TEST
 test_isEvenParity_goodWeather(void)
 {
+
     GREATEST_ASSERT_EQ(1, isEvenParity(UINT64_MAX));
     GREATEST_ASSERT_EQ(1, isEvenParity(0xFFFFFFCFAFFFFFFF));
     GREATEST_ASSERT_EQ(0, isEvenParity(0xFFFFFFCFAFFFFFF1));
@@ -883,6 +1386,7 @@ test_isEvenParity_goodWeather(void)
 TEST
 test_isOddParity_goodWeather(void)
 {
+
     GREATEST_ASSERT_EQ(0, isOddParity(UINT64_MAX));
     GREATEST_ASSERT_EQ(0, isOddParity(0xFFFFFFCFAFFFFFFF));
     GREATEST_ASSERT_EQ(1, isOddParity(0xFFFFFFCFAFFFFFF1));
@@ -906,6 +1410,7 @@ test_isOddParity_goodWeather(void)
 TEST
 test_reverseBitOrder_goodWeather(void)
 {
+
     uint32_t v = 0x0F0F0F0F;
     reverseBitOrder(&v);
     GREATEST_ASSERT_EQ(0xF0F0F0F0, v);
@@ -953,6 +1458,7 @@ test_reverseBitOrder_goodWeather(void)
 TEST
 test_roundUpToPowerOf2_goodWeather(void)
 {
+
     uint8_t i;
     for (i = 1; i < 32; i++) {
         GREATEST_ASSERT_EQ(correctBitMasksUpTo64Bit[i],
@@ -984,34 +1490,69 @@ test_roundUpToPowerOf2_goodWeather(void)
  * Unit test suite for the BitOperations unit tests. */
 SUITE(BitOperations)
 {
+    /********** Function macro tests ******************************************/
     RUN_TEST(bitMask32_masksUpTo32Bit_Generated);
-    RUN_TEST(bitMask32_masksBetween32And128Bit_ShouldFail);
+    RUN_TEST(bitMask32_masksBetween32And64Bit_ShouldFail);
     RUN_TEST(bitMask64_masksUpTo64Bit_Generated);
-    RUN_TEST(bitMask64_masksBetween64And128Bit_ShouldFail);
-    RUN_TEST(bitGet_singleSetBitsUpTo64Bit_Generated);
-    RUN_TEST(bitGet_singleClearedBitsUpTo64Bit_Generated);
+    RUN_TEST(bitSetm_singleBitsUpTo64Bit_Set);
+    RUN_TEST(bitSetm_multipleBitsUpTo64Bit_Set);
+    RUN_TEST(bitSet_singleBitsUpTo64Bit_Set);
+    RUN_TEST(bitClearm_singleBitsUpTo64Bit_Cleared);
+    RUN_TEST(bitClearm_multipleBitsUpTo64Bit_Cleared);
+    RUN_TEST(bitClear_singleBitsUpTo64Bit_Cleared);
+    RUN_TEST(bitFlipm_singleSetBitsUpTo64Bit_Flipped);
+    RUN_TEST(bitFlipm_singleClearedBitsUpTo64Bit_Flipped);
+    RUN_TEST(bitFlipm_multipleSetBitsUpTo64Bit_Flipped);
+    RUN_TEST(bitFlipm_multipleClearedBitsUpTo64Bit_Flipped);
+    RUN_TEST(bitFlip_singleSetBitsUpTo64Bit_Flipped);
+    RUN_TEST(bitFlip_singleClearedBitsUpTo64Bit_Flipped);
+    RUN_TEST(shiftLeft_singleSetBitUpTo64_Shifted);
+    RUN_TEST(shiftLeft_multipleSetBitsUpTo64_Shifted);
+    RUN_TEST(shiftRight_singleSetBitUpTo64_Shifted);
+    RUN_TEST(shiftRight_multipleSetBitsUpTo64_Shifted);
+    /********** Function tests ************************************************/
     RUN_TEST(bitGetm_multipleRandomSetBitsUpTo64Bit_Generated);
     RUN_TEST(bitGetm_multipleRandomClearedBitsUpTo64Bit_Generated);
-    RUN_TEST(test_bitGetm_goodWeather);
-    RUN_TEST(test_bitSet_goodWeather);
-    RUN_TEST(test_bitSetm_goodWeather);
-    RUN_TEST(test_bitClear_goodWeather);
-    RUN_TEST(test_bitClearm_goodWeather);
-    RUN_TEST(test_bitFlip_goodWeather);
-    RUN_TEST(test_bitFlipm_goodWeather);
-    RUN_TEST(test_shiftLeft_goodWeather);
-    RUN_TEST(test_shiftRight_goodWeather);
-    RUN_TEST(test_isPositive_goodWeather);
-    RUN_TEST(test_haveOppositeSigns_goodWeather);
-    RUN_TEST(test_min_goodWeather);
-    RUN_TEST(test_max_goodWeather);
-    RUN_TEST(test_isPowerOf2_goodWeather);
-    RUN_TEST(test_isPowerOf2_falsePositive);
+    RUN_TEST(bitGet_singleSetBitsUpTo64Bit_Generated);
+    RUN_TEST(bitGet_singleClearedBitsUpTo64Bit_Generated);
+    RUN_TEST(isPositive_maximumPoitiveAndNegativeNumber_SignGenerated);
+    RUN_TEST(isPositive_minimumPoitiveAndNegativeNumber_SignGenerated);
+    RUN_TEST(isOdd_positivePowersOfTwoUpTo64Bit_ParityGenerated);
+    RUN_TEST(isOdd_positiveMaximum64Bit_ParityGenerated);
+    RUN_TEST(isOdd_negativePowersOfTwoUpTo64Bit_ParityGenerated);
+    RUN_TEST(isOdd_positivePowersOfTwoUpTo64BitMinusOne_ParityGenerated);
+    RUN_TEST(isOdd_negativePowersOfTwoUpTo64BitPlusOne_ParityGenerated);
+    RUN_TEST(isEven_positivePowersOfTwoUpTo64Bit_ParityGenerated);
+    RUN_TEST(isEven_positiveMaximum64Bit_ParityGenerated);
+    RUN_TEST(isEven_negativePowersOfTwoUpTo64Bit_ParityGenerated);
+    RUN_TEST(isEven_positivePowersOfTwoUpTo64BitMinusOne_ParityGenerated);
+    RUN_TEST(isEven_negativePowersOfTwoUpTo64BitPlusOne_ParityGenerated);
+    RUN_TEST(haveOppositeSigns_maximumPoitiveAndNegativeValues_Generated);
+    RUN_TEST(haveOppositeSigns_minimumPoitiveAndNegativeValues_Generated);
+    RUN_TEST(min_maximum32BitPositiveAndNegativeNumber_MinFound);
+    RUN_TEST(min_minimum32BitPositiveAndNegativeNumber_MinFound);
+    RUN_TEST(min_maximum32BitPositiveAndNegativeToZeroNumber_MinFound);
+    RUN_TEST(min_minimum32BitPositiveAndNegativeToZeroNumber_MinFound);
+    RUN_TEST(min_maximumEqual32BitPositiveAndNegativeNumber_MinFound);
+    RUN_TEST(min_minimumEqual32BitPositiveAndNegativeNumber_MinFound);
+    RUN_TEST(max_maximum32BitPositiveAndNegativeNumber_MaxFound);
+    RUN_TEST(max_minimum32BitPositiveAndNegativeNumber_MaxFound);
+    RUN_TEST(max_maximum32BitPositiveAndNegativeToZeroNumber_MaxFound);
+    RUN_TEST(max_minimum32BitPositiveAndNegativeToZeroNumber_MaxFound);
+    RUN_TEST(max_maximumEqual32BitPositiveAndNegativeNumber_MaxFound);
+    RUN_TEST(max_minimumEqual32BitPositiveAndNegativeNumber_MaxFound);
+    RUN_TEST(isPowerOf2_powersUpTo64Bit_ArePowers);
+    RUN_TEST(isPowerOf2_zero_isNotAPower);
+    RUN_TEST(isPowerOf2_powersUpTo64BitMinusAndPlusOne_AreNotPowers);
+
+
+
+
+
+
     RUN_TEST(test_modifyBits_goodWeather);
     RUN_TEST(test_mergeBits_goodWeather);
     RUN_TEST(test_nBitsSet_goodWeather);
-    RUN_TEST(test_isEven_goodWeather);
-    RUN_TEST(test_isOdd_goodWeather);
     RUN_TEST(test_isEvenParity_goodWeather);
     RUN_TEST(test_isOddParity_goodWeather);
     RUN_TEST(test_reverseBitOrder_goodWeather);
@@ -1040,7 +1581,6 @@ main(int argc, char **argv)
 
     /* Seed the pseudo random number generator */
     srand(time(NULL));
-
 
     RUN_SUITE(BitOperations);
 

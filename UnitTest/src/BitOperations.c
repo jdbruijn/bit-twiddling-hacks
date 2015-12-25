@@ -67,7 +67,7 @@ isPositive(int32_t const _var)
 bool
 isOdd(int64_t const _var)
 {
-    return (_var & 1ULL);
+    return (_var & 1LL);
 }
 
 /**
