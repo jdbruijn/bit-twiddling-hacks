@@ -43,7 +43,7 @@
 #include "BitOperations.h"              /* Unit under test. */
 
 /*******************************************************************************
- * Test functions
+ * Unit test functions
  ******************************************************************************/
 /**
  * @testname    bitMask32_masksUpTo32Bit_Generated
@@ -360,7 +360,7 @@ bitFlipm_multipleClearedBitsUpTo64Bit_Flipped()
 
 /**
  * @testname    bitFlip_singleSetBitsUpTo64Bit_Flipped
- * @testcase    BIT_FLIPM flips the correct set bit in a 64-bit variable.
+ * @testcase    BIT_FLIP flips the correct set bit in a 64-bit variable.
  * @testvalues
  * | Argument 1         | Argument 2 |
  * | ------------------ | ---------- |
@@ -460,7 +460,7 @@ shiftLeft_multipleSetBitsUpTo64_Shifted()
         v = 0x0000000000000001 | 0x0000000000007070;
         SHIFT_LEFT(v, i);
         GREATEST_ASSERT_EQ(correctBitMasksUpTo64Bit[i]                         |
-                           (0x0000000000007070UL << i), v);
+                           (0x0000000000007070ULL << i), v);
     }
 
     PASS();
@@ -515,7 +515,7 @@ shiftRight_multipleSetBitsUpTo64_Shifted()
     for (i = 0; i < 64; i++) {
         v = 0x8000000000000000 | 0x7070000000000000;
         SHIFT_RIGHT(v, i);
-        GREATEST_ASSERT_EQ(correctBitMasksUpTo64Bit[63-i]                      |
+        GREATEST_ASSERT_EQ(correctBitMasksUpTo64Bit[63-i] |
                            (0x7070000000000000 >> i), v);
     }
 
@@ -542,9 +542,9 @@ bitGetm_multipleRandomSetBitsUpTo64Bit_Generated()
     uint8_t i;
     for (i = 0; i < 64; i++) {
         r = rand64();
-        GREATEST_ASSERT_EQ(correctBitMasksUpTo64Bit[i] | r                     ,
-                           bitGetm(correctBitMasksUpTo64Bit[i] | r             ,
-                                   (1UL << i) | r));
+        GREATEST_ASSERT_EQ(correctBitMasksUpTo64Bit[i] | r,
+                           bitGetm(correctBitMasksUpTo64Bit[i] | r,
+                                   (1ULL << i) | r));
     }
 
     PASS();
@@ -571,7 +571,7 @@ bitGetm_multipleRandomClearedBitsUpTo64Bit_Generated()
     for (i = 0; i < 64; i++) {
         r = rand64();
         GREATEST_ASSERT_EQ(0,
-            bitGetm(correctBitMasksUpTo64Bit[i] | r, ~((1UL << i) | r)));
+            bitGetm(correctBitMasksUpTo64Bit[i] | r, ~((1ULL << i) | r)));
     }
 
     PASS();
@@ -884,7 +884,8 @@ isEven_negativePowersOfTwoUpTo64BitPlusOne_ParityGenerated()
 {
     uint8_t i;
     for (i = 1; i < 64; i++) {
-        GREATEST_ASSERT_EQ(0, isEven(-(int64_t)correctBitMasksUpTo64Bit[i] + 1));
+        GREATEST_ASSERT_EQ(0,
+                           isEven(-(int64_t)correctBitMasksUpTo64Bit[i] + 1));
     }
 
     PASS();
@@ -1248,246 +1249,594 @@ isPowerOf2_powersUpTo64BitMinusAndPlusOne_AreNotPowers()
     PASS();
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
 /**
- * @testname    test_modifyBits_goodWeather
- * @testcase    Whether ...
+ * @testname    bitFlipm_singleSetBitsUpTo32Bit_Flipped
+ * @testcase    modifyBits modifies the correct bit to the correct value in a
+ * 32-bit variable.
  * @testvalues
- *  &0x0F0F0F0F, 0,   1
- *  &0x0F0F0F0F, 1,   1
- *  ...
- *  &0x0F0F0F0F, 253, 1
- *  &0x0F0F0F0F, 254, 1
- *
- *  &0x0F0F0F0F, 0,   0
- *  &0x0F0F0F0F, 1,   0
- *  ...
- *  &0x0F0F0F0F, 253, 0
- *  &0x0F0F0F0F, 254, 0
- *
- *  &0x0F0F0F0F, 0xF01,     0
- *  &0x0F0F000E, 0x11001202, 1
+ * | Argument 1 | Argument 2 | Argument 3 |
+ * | ---------- | ---------- | ---------- |
+ * | 0xFFFFFFFF | 0x00000001 | 0          |
+ * | 0xFFFFFFFF | 0x00000002 | 0          |
+ * | ...        |            | 0          |
+ * | 0xFFFFFFFF | 0x40000000 | 0          |
+ * | 0xFFFFFFFF | 0x80000000 | 0          |
  */
 TEST
-test_modifyBits_goodWeather(void)
+modifyBits_setBitsUpTo32Bit_SingleBitCleared()
 {
     uint8_t i;
     uint32_t v;
-    for (i = 1; i < UINT8_MAX; i++) {
-        v = 0x0F0F0F0F;
-        modifyBits(&v, i, 1);
-        GREATEST_ASSERT_EQ(0x0F0F0F0F | i, v);
+    for (i = 0; i < 32; i++) {
+        v = 0xFFFFFFFF;
+        modifyBits(&v, (1UL << i), 0);
+        GREATEST_ASSERT_EQ(~(uint32_t)correctBitMasksUpTo64Bit[i], v);
     }
-    for (i = 1; i < 32; i++) {
-        v = 0x0F0F0F0F;
-        modifyBits(&v, i, 0);
-        GREATEST_ASSERT_EQ(0x0F0F0F0F & ~i, v);
-    }
-
-    v = 0x0F0F0F0F;
-    modifyBits(&v, 0xF01, 0);
-    GREATEST_ASSERT_EQ(0x0F0F000E, v);
-    modifyBits(&v, 0x11001202, 1);
-    GREATEST_ASSERT_EQ(0x1F0F120E, v);
 
     PASS();
 }
 
 /**
- * @todo add info...
+ * @testname    modifyBits_clearedBitsUpTo32Bit_SingleBitSet
+ * @testcase    modifyBits modifies the correct bit to the correct value in a
+ * 32-bit variable.
+ * @testvalues
+ * | Argument 1 | Argument 2 | Argument 3 |
+ * | ---------- | ---------- | ---------- |
+ * | 0x00000000 | 0x00000001 | 1          |
+ * | 0x00000000 | 0x00000002 | 1          |
+ * | ...        |            | 1          |
+ * | 0x00000000 | 0x40000000 | 1          |
+ * | 0x00000000 | 0x80000000 | 1          |
  */
 TEST
-test_mergeBits_goodWeather(void)
+modifyBits_clearedBitsUpTo32Bit_SingleBitSet()
 {
-//    uint32_t x = 0x10101010, y = 0x0A0A0A0A;
-//    mergeBits(x,y,0xABABABAB);
+    uint8_t i;
+    uint32_t v;
+    for (i = 0; i < 32; i++) {
+        v = 0;
+        modifyBits(&v, (1UL << i), 1);
+        GREATEST_ASSERT_EQ(correctBitMasksUpTo64Bit[i], v);
+    }
 
-//    uint8_t q = 0x10;
-//    reverseBitOrderByte(&q);
-
-    SKIP();
+    PASS();
 }
 
 /**
- * @testname    test_nBitsSet_goodWeather
- * @testcase    Whether ...
+ * @testname    modifyBits_setBitsUpTo32Bit_MultipleBitsCleared
+ * @testcase    modifyBits modifies the correct bits to the correct value in a
+ * 32-bit variable.
  * @testvalues
- *  0x00000000
- *  0x00000001
- *  0x00000003
- *  0x00000007
- *  0x10000008
- *  0xFFFFFFFF
+ * | Argument 1 | Argument 2 | Argument 3 |
+ * | ---------- | ---------- | ---------- |
+ * | 0xFFFFFFFF | 0x55555555 | 0          |
+ * | 0xAAAAAAAA | 0xAAAAAAAA | 0          |
  */
 TEST
-test_nBitsSet_goodWeather(void)
+modifyBits_setBitsUpTo32Bit_MultipleBitsCleared()
 {
+    uint32_t v = 0xFFFFFFFF;
 
-    GREATEST_ASSERT_EQ(0, nBitsSet(0x00000000));
-    GREATEST_ASSERT_EQ(1, nBitsSet(0x00000001));
-    GREATEST_ASSERT_EQ(2, nBitsSet(0x00000003));
-    GREATEST_ASSERT_EQ(3, nBitsSet(0x00000007));
-    GREATEST_ASSERT_EQ(2, nBitsSet(0x10000008));
+    modifyBits(&v, 0x55555555, 0);
+    GREATEST_ASSERT_EQ(0xAAAAAAAA, v);
+    modifyBits(&v, 0xAAAAAAAA, 0);
+    GREATEST_ASSERT_EQ(0x00000000, v);
+
+    PASS();
+}
+
+/**
+ * @testname    modifyBits_setBitsUpTo32Bit_MultipleBitsSet
+ * @testcase    modifyBits modifies the correct bits to the correct value in a
+ * 32-bit variable.
+ * @testvalues
+ * | Argument 1 | Argument 2 | Argument 3 |
+ * | ---------- | ---------- | ---------- |
+ * | 0x00000000 | 0xAAAAAAAA | 1          |
+ * | 0xAAAAAAAA | 0x55555555 | 1          |
+ */
+TEST
+modifyBits_setBitsUpTo32Bit_MultipleBitsSet()
+{
+    uint32_t v = 0x00000000;
+
+    modifyBits(&v, 0xAAAAAAAA, 1);
+    GREATEST_ASSERT_EQ(0xAAAAAAAA, v);
+    modifyBits(&v, 0x55555555, 1);
+    GREATEST_ASSERT_EQ(0xFFFFFFFF, v);
+
+    PASS();
+}
+
+/**
+ * @testname    mergeBits_magic32BitNumbers_Merged
+ * @testcase    mergeBits merges the correct bits in the correct part of the
+ * mask to a correct 32-bit variable.
+ * @testvalues
+ * | Argument 1 | Argument 2 | Argument 3 |
+ * | ---------- | ---------- | ---------- |
+ * | 0x55555555 | 0xAAAAAAAA | 0xAAAAAAAA |
+ * | 0xAAAAAAAA | 0x55555555 | 0xAAAAAAAA |
+ * | 0x55555555 | 0xAAAAAAAA | 0x55555555 |
+ * | 0xAAAAAAAA | 0x55555555 | 0x55555555 |
+ * | 0x55555555 | 0xAAAAAAAA | 0x33333333 |
+ * | 0xAAAAAAAA | 0x55555555 | 0x33333333 |
+ */
+TEST
+mergeBits_magic32BitNumbers_Merged()
+{
+    GREATEST_ASSERT_EQ(0xFFFFFFFF,
+                       mergeBits(0x55555555, 0xAAAAAAAA, 0xAAAAAAAA));
+    GREATEST_ASSERT_EQ(0x00000000,
+                       mergeBits(0xAAAAAAAA, 0x55555555, 0xAAAAAAAA));
+    GREATEST_ASSERT_EQ(0x00000000,
+                       mergeBits(0x55555555, 0xAAAAAAAA, 0x55555555));
+    GREATEST_ASSERT_EQ(0xFFFFFFFF,
+                       mergeBits(0xAAAAAAAA, 0x55555555, 0x55555555));
+    GREATEST_ASSERT_EQ(0x66666666,
+                       mergeBits(0x55555555, 0xAAAAAAAA, 0x33333333));
+    GREATEST_ASSERT_EQ(0x99999999,
+                       mergeBits(0xAAAAAAAA, 0x55555555, 0x33333333));
+
+    PASS();
+}
+
+/**
+ * @testname    nBitsSet_magic32BitNumbers_Generated
+ * @testcase    nBitsSet determines the correct amount of bits that are set in a
+ * 32-bit variable.
+ * @testvalues
+ * | Argument   |
+ * | ---------- |
+ * | 0xFFFFFFFF |
+ * | 0xEEEEEEEE |
+ * | 0xDDDDDDDD |
+ * | 0xCCCCCCCC |
+ * | 0xBBBBBBBB |
+ * | 0xAAAAAAAA |
+ * | 0x99999999 |
+ * | 0x88888888 |
+ * | 0x77777777 |
+ * | 0x66666666 |
+ * | 0x55555555 |
+ * | 0x44444444 |
+ * | 0x33333333 |
+ * | 0x22222222 |
+ * | 0x11111111 |
+ * | 0x00000000 |
+ */
+TEST
+nBitsSet_magic32BitNumbers_Generated()
+{
     GREATEST_ASSERT_EQ(32, nBitsSet(0xFFFFFFFF));
+    GREATEST_ASSERT_EQ(24, nBitsSet(0xEEEEEEEE));
+    GREATEST_ASSERT_EQ(24, nBitsSet(0xDDDDDDDD));
+    GREATEST_ASSERT_EQ(16, nBitsSet(0xCCCCCCCC));
+    GREATEST_ASSERT_EQ(24, nBitsSet(0xBBBBBBBB));
+    GREATEST_ASSERT_EQ(16, nBitsSet(0xAAAAAAAA));
+    GREATEST_ASSERT_EQ(16, nBitsSet(0x99999999));
+    GREATEST_ASSERT_EQ(8, nBitsSet(0x88888888));
+    GREATEST_ASSERT_EQ(24, nBitsSet(0x77777777));
+    GREATEST_ASSERT_EQ(16, nBitsSet(0x66666666));
+    GREATEST_ASSERT_EQ(16, nBitsSet(0x55555555));
+    GREATEST_ASSERT_EQ(8, nBitsSet(0x44444444));
+    GREATEST_ASSERT_EQ(16, nBitsSet(0x33333333));
+    GREATEST_ASSERT_EQ(8, nBitsSet(0x22222222));
+    GREATEST_ASSERT_EQ(8, nBitsSet(0x11111111));
+    GREATEST_ASSERT_EQ(0, nBitsSet(0x00000000));
 
     PASS();
 }
 
 /**
- * @testname    test_isEvenParity_goodWeather
- * @testcase    Whether ...
+ * @testname    isOddParity_powersOfTwoUpTo64Bit_ParityGenerated
+ * @testcase    isOddParity determines the correct parity of a 64-bit variable.
  * @testvalues
- *  18446744073709551615 (UINT64_MAX)
- *  0xFFFFFFCFAFFFFFFF
- *  0xFFFFFFCFAFFFFFF1
- *  0
- *  1
- *  7
- *  54
+ * | Argument           |
+ * | ------------------ |
+ * | 0x0000000000000001 |
+ * | 0x0000000000000002 |
+ * | ...                |
+ * | 0x4000000000000000 |
+ * | 0x8000000000000000 |
  */
 TEST
-test_isEvenParity_goodWeather(void)
+isOddParity_powersOfTwoUpTo64Bit_ParityGenerated()
 {
-
-    GREATEST_ASSERT_EQ(1, isEvenParity(UINT64_MAX));
-    GREATEST_ASSERT_EQ(1, isEvenParity(0xFFFFFFCFAFFFFFFF));
-    GREATEST_ASSERT_EQ(0, isEvenParity(0xFFFFFFCFAFFFFFF1));
-    GREATEST_ASSERT_EQ(1, isEvenParity(0));
-    GREATEST_ASSERT_EQ(0, isEvenParity(1));
-    GREATEST_ASSERT_EQ(0, isEvenParity(7));
-    GREATEST_ASSERT_EQ(1, isEvenParity(54));
+    uint8_t i;
+    for (i = 0; i < 64; i++) {
+        GREATEST_ASSERT_EQ(1, isOddParity(correctBitMasksUpTo64Bit[i]));
+    }
 
     PASS();
 }
 
 /**
- * @testname    test_isOddParity_goodWeather
- * @testcase    Whether ...
+ * @testname    isOddParity_magig64BitNumbers_ParityGenerated
+ * @testcase    isOddParity determines the correct parity of a 64-bit variable.
  * @testvalues
- *  18446744073709551615 (UINT64_MAX)
- *  0xFFFFFFCFAFFFFFFF
- *  0xFFFFFFCFAFFFFFF1
- *  0
- *  1
- *  7
- *  54
+ * | Argument           |
+ * | ------------------ |
+ * | 0xFFFFFFFFFFFFFFFF |
+ * | 0xEEEEEEEEEEEEEEEE |
+ * | 0xDDDDDDDDDDDDDDDD |
+ * | 0xCCCCCCCCCCCCCCCC |
+ * | 0xBBBBBBBBBBBBBBBB |
+ * | 0xAAAAAAAAAAAAAAAA |
+ * | 0x9999999999999999 |
+ * | 0x8888888888888888 |
+ * | 0x7777777777777777 |
+ * | 0x6666666666666666 |
+ * | 0x5555555555555555 |
+ * | 0x4444444444444444 |
+ * | 0x3333333333333333 |
+ * | 0x2222222222222222 |
+ * | 0x1111111111111111 |
+ * | 0x0000000000000000 |
  */
 TEST
-test_isOddParity_goodWeather(void)
+isOddParity_magig64BitNumbers_ParityGenerated()
 {
-
-    GREATEST_ASSERT_EQ(0, isOddParity(UINT64_MAX));
-    GREATEST_ASSERT_EQ(0, isOddParity(0xFFFFFFCFAFFFFFFF));
-    GREATEST_ASSERT_EQ(1, isOddParity(0xFFFFFFCFAFFFFFF1));
-    GREATEST_ASSERT_EQ(0, isOddParity(0));
-    GREATEST_ASSERT_EQ(1, isOddParity(1));
-    GREATEST_ASSERT_EQ(1, isOddParity(7));
-    GREATEST_ASSERT_EQ(0, isOddParity(54));
+    GREATEST_ASSERT_EQ(0, isOddParity(0xFFFFFFFFFFFFFFFF));
+    GREATEST_ASSERT_EQ(0, isOddParity(0xEEEEEEEEEEEEEEEE));
+    GREATEST_ASSERT_EQ(0, isOddParity(0xDDDDDDDDDDDDDDDD));
+    GREATEST_ASSERT_EQ(0, isOddParity(0xCCCCCCCCCCCCCCCC));
+    GREATEST_ASSERT_EQ(0, isOddParity(0xBBBBBBBBBBBBBBBB));
+    GREATEST_ASSERT_EQ(0, isOddParity(0xAAAAAAAAAAAAAAAA));
+    GREATEST_ASSERT_EQ(0, isOddParity(0x9999999999999999));
+    GREATEST_ASSERT_EQ(0, isOddParity(0x8888888888888888));
+    GREATEST_ASSERT_EQ(0, isOddParity(0x7777777777777777));
+    GREATEST_ASSERT_EQ(0, isOddParity(0x6666666666666666));
+    GREATEST_ASSERT_EQ(0, isOddParity(0x5555555555555555));
+    GREATEST_ASSERT_EQ(0, isOddParity(0x4444444444444444));
+    GREATEST_ASSERT_EQ(0, isOddParity(0x3333333333333333));
+    GREATEST_ASSERT_EQ(0, isOddParity(0x2222222222222222));
+    GREATEST_ASSERT_EQ(0, isOddParity(0x1111111111111111));
+    GREATEST_ASSERT_EQ(0, isOddParity(0x0000000000000000));
 
     PASS();
 }
 
 /**
- * @testname    test_reverseBitOrder_goodWeather
- * @testcase    Whether ...
+ * @testname    isOddParity_magig64BitNumbersMinusOne_ParityGenerated
+ * @testcase    isOddParity determines the correct parity of a 64-bit variable.
  * @testvalues
- *  0x0F0F0F0F
- *  0xF0F0F0F0
- *  0x12345678
- *  1
+ * | Argument               |
+ * | ---------------------- |
+ * | 0xFFFFFFFFFFFFFFFF - 1 |
+ * | 0xEEEEEEEEEEEEEEEE - 1 |
+ * | 0xDDDDDDDDDDDDDDDD - 1 |
+ * | 0xCCCCCCCCCCCCCCCC - 1 |
+ * | 0xBBBBBBBBBBBBBBBB - 1 |
+ * | 0xAAAAAAAAAAAAAAAA - 1 |
+ * | 0x9999999999999999 - 1 |
+ * | 0x8888888888888888 - 1 |
+ * | 0x7777777777777777 - 1 |
+ * | 0x6666666666666666 - 1 |
+ * | 0x5555555555555555 - 1 |
+ * | 0x4444444444444444 - 1 |
+ * | 0x3333333333333333 - 1 |
+ * | 0x2222222222222222 - 1 |
+ * | 0x1111111111111111 - 1 |
  */
 TEST
-test_reverseBitOrder_goodWeather(void)
+isOddParity_magig64BitNumbersMinusOne_ParityGenerated()
 {
-
-    uint32_t v = 0x0F0F0F0F;
-    reverseBitOrder(&v);
-    GREATEST_ASSERT_EQ(0xF0F0F0F0, v);
-    reverseBitOrder(&v);
-    GREATEST_ASSERT_EQ(0x0F0F0F0F, v);
-    v = 0x12345678;
-    reverseBitOrder(&v);
-    GREATEST_ASSERT_EQ(0x1E6A2C48, v);
-    v = 1;
-    reverseBitOrder(&v);
-    GREATEST_ASSERT_EQ(0x80000000, v);
+    GREATEST_ASSERT_EQ(1, isOddParity(0xFFFFFFFFFFFFFFFF - 1));
+    GREATEST_ASSERT_EQ(0, isOddParity(0xEEEEEEEEEEEEEEEE - 1));
+    GREATEST_ASSERT_EQ(1, isOddParity(0xDDDDDDDDDDDDDDDD - 1));
+    GREATEST_ASSERT_EQ(1, isOddParity(0xCCCCCCCCCCCCCCCC - 1));
+    GREATEST_ASSERT_EQ(1, isOddParity(0xBBBBBBBBBBBBBBBB - 1));
+    GREATEST_ASSERT_EQ(0, isOddParity(0xAAAAAAAAAAAAAAAA - 1));
+    GREATEST_ASSERT_EQ(1, isOddParity(0x9999999999999999 - 1));
+    GREATEST_ASSERT_EQ(0, isOddParity(0x8888888888888888 - 1));
+    GREATEST_ASSERT_EQ(1, isOddParity(0x7777777777777777 - 1));
+    GREATEST_ASSERT_EQ(0, isOddParity(0x6666666666666666 - 1));
+    GREATEST_ASSERT_EQ(1, isOddParity(0x5555555555555555 - 1));
+    GREATEST_ASSERT_EQ(1, isOddParity(0x4444444444444444 - 1));
+    GREATEST_ASSERT_EQ(1, isOddParity(0x3333333333333333 - 1));
+    GREATEST_ASSERT_EQ(0, isOddParity(0x2222222222222222 - 1));
+    GREATEST_ASSERT_EQ(1, isOddParity(0x1111111111111111 - 1));
 
     PASS();
 }
 
 /**
- * @testname    test_roundUpToPowerOf2_goodWeather
- * @testcase    Whether ...
+ * @testname    isEvenParity_powersOfTwoUpTo64Bit_ParityGenerated
+ * @testcase    isEvenParity determines the correct parity of a 64-bit variable.
  * @testvalues
- *  2^0
- *  2^1
- *  ...
- *  2^62
- *  2^63
- *
- *  0
- *  1
- *  3
- *  5
- *  9
- *  17
- *  33
- *  65
- *  127
- *  129
- *  200
- *  500
- *
- *  2^10 - 200
- *  2^11 - 200
- *  ...
- *  2^62 - 200
- *  2^63 - 200
+ * | Argument           |
+ * | ------------------ |
+ * | 0x0000000000000001 |
+ * | 0x0000000000000002 |
+ * | ...                |
+ * | 0x4000000000000000 |
+ * | 0x8000000000000000 |
  */
 TEST
-test_roundUpToPowerOf2_goodWeather(void)
+isEvenParity_powersOfTwoUpTo64Bit_ParityGenerated()
 {
+    uint8_t i;
+    for (i = 0; i < 64; i++) {
+        GREATEST_ASSERT_EQ(0, isEvenParity(correctBitMasksUpTo64Bit[i]));
+    }
 
+    PASS();
+}
+
+/**
+ * @testname    isEvenParity_magig64BitNumbers_ParityGenerated
+ * @testcase    isEvenParity determines the correct parity of a 64-bit variable.
+ * @testvalues
+ * | Argument           |
+ * | ------------------ |
+ * | 0xFFFFFFFFFFFFFFFF |
+ * | 0xEEEEEEEEEEEEEEEE |
+ * | 0xDDDDDDDDDDDDDDDD |
+ * | 0xCCCCCCCCCCCCCCCC |
+ * | 0xBBBBBBBBBBBBBBBB |
+ * | 0xAAAAAAAAAAAAAAAA |
+ * | 0x9999999999999999 |
+ * | 0x8888888888888888 |
+ * | 0x7777777777777777 |
+ * | 0x6666666666666666 |
+ * | 0x5555555555555555 |
+ * | 0x4444444444444444 |
+ * | 0x3333333333333333 |
+ * | 0x2222222222222222 |
+ * | 0x1111111111111111 |
+ * | 0x0000000000000000 |
+ */
+TEST
+isEvenParity_magig64BitNumbers_ParityGenerated()
+{
+    GREATEST_ASSERT_EQ(1, isEvenParity(0xFFFFFFFFFFFFFFFF));
+    GREATEST_ASSERT_EQ(1, isEvenParity(0xEEEEEEEEEEEEEEEE));
+    GREATEST_ASSERT_EQ(1, isEvenParity(0xDDDDDDDDDDDDDDDD));
+    GREATEST_ASSERT_EQ(1, isEvenParity(0xCCCCCCCCCCCCCCCC));
+    GREATEST_ASSERT_EQ(1, isEvenParity(0xBBBBBBBBBBBBBBBB));
+    GREATEST_ASSERT_EQ(1, isEvenParity(0xAAAAAAAAAAAAAAAA));
+    GREATEST_ASSERT_EQ(1, isEvenParity(0x9999999999999999));
+    GREATEST_ASSERT_EQ(1, isEvenParity(0x8888888888888888));
+    GREATEST_ASSERT_EQ(1, isEvenParity(0x7777777777777777));
+    GREATEST_ASSERT_EQ(1, isEvenParity(0x6666666666666666));
+    GREATEST_ASSERT_EQ(1, isEvenParity(0x5555555555555555));
+    GREATEST_ASSERT_EQ(1, isEvenParity(0x4444444444444444));
+    GREATEST_ASSERT_EQ(1, isEvenParity(0x3333333333333333));
+    GREATEST_ASSERT_EQ(1, isEvenParity(0x2222222222222222));
+    GREATEST_ASSERT_EQ(1, isEvenParity(0x1111111111111111));
+    GREATEST_ASSERT_EQ(1, isEvenParity(0x0000000000000000));
+
+    PASS();
+}
+
+/**
+ * @testname    isEvenParity_magig64BitNumbersMinusOne_ParityGenerated
+ * @testcase    isEvenParity determines the correct parity of a 64-bit variable.
+ * @testvalues
+ * | Argument               |
+ * | ---------------------- |
+ * | 0xFFFFFFFFFFFFFFFF - 1 |
+ * | 0xEEEEEEEEEEEEEEEE - 1 |
+ * | 0xDDDDDDDDDDDDDDDD - 1 |
+ * | 0xCCCCCCCCCCCCCCCC - 1 |
+ * | 0xBBBBBBBBBBBBBBBB - 1 |
+ * | 0xAAAAAAAAAAAAAAAA - 1 |
+ * | 0x9999999999999999 - 1 |
+ * | 0x8888888888888888 - 1 |
+ * | 0x7777777777777777 - 1 |
+ * | 0x6666666666666666 - 1 |
+ * | 0x5555555555555555 - 1 |
+ * | 0x4444444444444444 - 1 |
+ * | 0x3333333333333333 - 1 |
+ * | 0x2222222222222222 - 1 |
+ * | 0x1111111111111111 - 1 |
+ */
+TEST
+isEvenParity_magig64BitNumbersMinusOne_ParityGenerated()
+{
+    GREATEST_ASSERT_EQ(0, isEvenParity(0xFFFFFFFFFFFFFFFF - 1));
+    GREATEST_ASSERT_EQ(1, isEvenParity(0xEEEEEEEEEEEEEEEE - 1));
+    GREATEST_ASSERT_EQ(0, isEvenParity(0xDDDDDDDDDDDDDDDD - 1));
+    GREATEST_ASSERT_EQ(0, isEvenParity(0xCCCCCCCCCCCCCCCC - 1));
+    GREATEST_ASSERT_EQ(0, isEvenParity(0xBBBBBBBBBBBBBBBB - 1));
+    GREATEST_ASSERT_EQ(1, isEvenParity(0xAAAAAAAAAAAAAAAA - 1));
+    GREATEST_ASSERT_EQ(0, isEvenParity(0x9999999999999999 - 1));
+    GREATEST_ASSERT_EQ(1, isEvenParity(0x8888888888888888 - 1));
+    GREATEST_ASSERT_EQ(0, isEvenParity(0x7777777777777777 - 1));
+    GREATEST_ASSERT_EQ(1, isEvenParity(0x6666666666666666 - 1));
+    GREATEST_ASSERT_EQ(0, isEvenParity(0x5555555555555555 - 1));
+    GREATEST_ASSERT_EQ(0, isEvenParity(0x4444444444444444 - 1));
+    GREATEST_ASSERT_EQ(0, isEvenParity(0x3333333333333333 - 1));
+    GREATEST_ASSERT_EQ(1, isEvenParity(0x2222222222222222 - 1));
+    GREATEST_ASSERT_EQ(0, isEvenParity(0x1111111111111111 - 1));
+
+    PASS();
+}
+
+/**
+ * @testname    reverseBitOrderByte_macic8BitNumbers_Reversed
+ * @testcase    reverseBitOrderByte correctly reverses a 8-bit variable.
+ * @testvalues
+ * | Argument |
+ * | -------- |
+ * | 0xFF     |
+ * | 0xEE     |
+ * | 0xDD     |
+ * | 0xCC     |
+ * | 0xBB     |
+ * | 0xAA     |
+ * | 0x99     |
+ * | 0x88     |
+ * | 0x77     |
+ * | 0x66     |
+ * | 0x55     |
+ * | 0x44     |
+ * | 0x33     |
+ * | 0x22     |
+ * | 0x11     |
+ * | 0x00     |
+ */
+TEST
+reverseBitOrderByte_macic8BitNumbers_Reversed()
+{
+    GREATEST_ASSERT_EQ(0xFF, reverseBitOrderByte(0xFF));
+    GREATEST_ASSERT_EQ(0x77, reverseBitOrderByte(0xEE));
+    GREATEST_ASSERT_EQ(0xBB, reverseBitOrderByte(0xDD));
+    GREATEST_ASSERT_EQ(0x33, reverseBitOrderByte(0xCC));
+    GREATEST_ASSERT_EQ(0xDD, reverseBitOrderByte(0xBB));
+    GREATEST_ASSERT_EQ(0x55, reverseBitOrderByte(0xAA));
+    GREATEST_ASSERT_EQ(0x99, reverseBitOrderByte(0x99));
+    GREATEST_ASSERT_EQ(0x11, reverseBitOrderByte(0x88));
+    GREATEST_ASSERT_EQ(0xEE, reverseBitOrderByte(0x77));
+    GREATEST_ASSERT_EQ(0x66, reverseBitOrderByte(0x66));
+    GREATEST_ASSERT_EQ(0xAA, reverseBitOrderByte(0x55));
+    GREATEST_ASSERT_EQ(0x22, reverseBitOrderByte(0x44));
+    GREATEST_ASSERT_EQ(0xCC, reverseBitOrderByte(0x33));
+    GREATEST_ASSERT_EQ(0x44, reverseBitOrderByte(0x22));
+    GREATEST_ASSERT_EQ(0x88, reverseBitOrderByte(0x11));
+    GREATEST_ASSERT_EQ(0x00, reverseBitOrderByte(0x00));
+
+    PASS();
+}
+
+/**
+ * @testname    reverseBitOrder_macic32BitNumbers_Reversed
+ * @testcase    reverseBitOrderByte correctly reverses a 32-bit variable.
+ * @testvalues
+ * | Argument   |
+ * | ---------- |
+ * | 0xFFFFFFFF |
+ * | 0xEEEEEEEE |
+ * | 0xDDDDDDDD |
+ * | 0xCCCCCCCC |
+ * | 0xBBBBBBBB |
+ * | 0xAAAAAAAA |
+ * | 0x99999999 |
+ * | 0x88888888 |
+ * | 0x77777777 |
+ * | 0x66666666 |
+ * | 0x55555555 |
+ * | 0x44444444 |
+ * | 0x33333333 |
+ * | 0x22222222 |
+ * | 0x11111111 |
+ * | 0x00000000 |
+ */
+TEST
+reverseBitOrder_macic32BitNumbers_Reversed()
+{
+    GREATEST_ASSERT_EQ(0xFFFFFFFF, reverseBitOrder(0xFFFFFFFF));
+    GREATEST_ASSERT_EQ(0x77777777, reverseBitOrder(0xEEEEEEEE));
+    GREATEST_ASSERT_EQ(0xBBBBBBBB, reverseBitOrder(0xDDDDDDDD));
+    GREATEST_ASSERT_EQ(0x33333333, reverseBitOrder(0xCCCCCCCC));
+    GREATEST_ASSERT_EQ(0xDDDDDDDD, reverseBitOrder(0xBBBBBBBB));
+    GREATEST_ASSERT_EQ(0x55555555, reverseBitOrder(0xAAAAAAAA));
+    GREATEST_ASSERT_EQ(0x99999999, reverseBitOrder(0x99999999));
+    GREATEST_ASSERT_EQ(0x11111111, reverseBitOrder(0x88888888));
+    GREATEST_ASSERT_EQ(0xEEEEEEEE, reverseBitOrder(0x77777777));
+    GREATEST_ASSERT_EQ(0x66666666, reverseBitOrder(0x66666666));
+    GREATEST_ASSERT_EQ(0xAAAAAAAA, reverseBitOrder(0x55555555));
+    GREATEST_ASSERT_EQ(0x22222222, reverseBitOrder(0x44444444));
+    GREATEST_ASSERT_EQ(0xCCCCCCCC, reverseBitOrder(0x33333333));
+    GREATEST_ASSERT_EQ(0x44444444, reverseBitOrder(0x22222222));
+    GREATEST_ASSERT_EQ(0x88888888, reverseBitOrder(0x11111111));
+    GREATEST_ASSERT_EQ(0x00000000, reverseBitOrder(0x00000000));
+
+    PASS();
+}
+
+
+
+
+
+
+
+
+
+
+/**
+ * @testname    roundUpToPowerOf2_powersOfTwoUpTo32Bit_ShouldReturnTheSamePower
+ * @testcase    roundUpToPowerOf2 returns the same 32-bit variable for variables
+ * that are powers of two.
+ * @testvalues
+ * | Argument   |
+ * | ---------- |
+ * | 0x00000001 |
+ * | 0x00000002 |
+ * | ...        |
+ * | 0x40000000 |
+ * | 0x80000000 |
+ */
+TEST
+roundUpToPowerOf2_powersOfTwoUpTo32Bit_ShouldReturnTheSamePower()
+{
     uint8_t i;
     for (i = 1; i < 32; i++) {
-        GREATEST_ASSERT_EQ(correctBitMasksUpTo64Bit[i],
-                roundUpToPowerOf2(correctBitMasksUpTo64Bit[i]));
-    }
-
-    GREATEST_ASSERT_EQ(1, roundUpToPowerOf2(0));
-    GREATEST_ASSERT_EQ(1, roundUpToPowerOf2(1));
-    GREATEST_ASSERT_EQ(4, roundUpToPowerOf2(3));
-    GREATEST_ASSERT_EQ(8, roundUpToPowerOf2(5));
-    GREATEST_ASSERT_EQ(16, roundUpToPowerOf2(9));
-    GREATEST_ASSERT_EQ(32, roundUpToPowerOf2(17));
-    GREATEST_ASSERT_EQ(64, roundUpToPowerOf2(33));
-    GREATEST_ASSERT_EQ(128, roundUpToPowerOf2(65));
-    GREATEST_ASSERT_EQ(128, roundUpToPowerOf2(127));
-    GREATEST_ASSERT_EQ(256, roundUpToPowerOf2(129));
-    GREATEST_ASSERT_EQ(256, roundUpToPowerOf2(200));
-    GREATEST_ASSERT_EQ(512, roundUpToPowerOf2(500));
-
-    for (i = 10; i < 32; i++) {
-        GREATEST_ASSERT_EQ(correctBitMasksUpTo64Bit[i],
-                roundUpToPowerOf2(correctBitMasksUpTo64Bit[i] - 200));
+        GREATEST_ASSERT_EQ((uint32_t)correctBitMasksUpTo64Bit[i],
+            roundUpToPowerOf2((uint32_t)correctBitMasksUpTo64Bit[i]));
     }
 
     PASS();
 }
 
 /**
- * Unit test suite for the BitOperations unit tests. */
+ * @testname    roundUpToPowerOf2_powersOfTwoUpTo32BitMinusOne_GeneratePower
+ * @testcase    roundUpToPowerOf2 returns the correct next power of two for
+ * variables 2^n - 1 for n is 2 to 32.
+ * that are powers of two.
+ * @testvalues
+ * | Argument       |
+ * | -------------- |
+ * | 0x00000004 - 1 |
+ * | 0x00000008 - 1 |
+ * | ...            |
+ * | 0x40000000 - 1 |
+ * | 0x80000000 - 1 |
+ */
+TEST
+roundUpToPowerOf2_powersOfTwoUpTo32BitMinusOne_GeneratePower()
+{
+    uint8_t i;
+    for (i = 2; i < 32; i++) {
+        GREATEST_ASSERT_EQ((uint32_t)correctBitMasksUpTo64Bit[i],
+            roundUpToPowerOf2((uint32_t)correctBitMasksUpTo64Bit[i] - 1));
+    }
+
+    PASS();
+}
+
+/**
+ * @testname    roundUpToPowerOf2_powersOfTwoUpTo32BitPlusOne_GeneratePower
+ * @testcase    roundUpToPowerOf2 returns the correct next power of two for
+ * variables 2^n + 1 for n is 1 to 31.
+ * that are powers of two.
+ * @testvalues
+ * | Argument       |
+ * | -------------- |
+ * | 0x00000002 + 1 |
+ * | 0x00000004 + 1 |
+ * | ...            |
+ * | 0x20000000 + 1 |
+ * | 0x40000000 + 1 |
+ */
+TEST
+roundUpToPowerOf2_powersOfTwoUpTo32BitPlusOne_GeneratePower()
+{
+    uint8_t i;
+    for (i = 1; i < 32; i++) {
+        GREATEST_ASSERT_EQ((uint32_t)correctBitMasksUpTo64Bit[i+1],
+            roundUpToPowerOf2((uint32_t)correctBitMasksUpTo64Bit[i] + 1));
+    }
+
+    PASS();
+}
+
+/*******************************************************************************
+ * Unit test suite
+ ******************************************************************************/
+/** Unit test suite for the BitOperations unit tests. */
 SUITE(BitOperations)
 {
     /********** Function macro tests ******************************************/
@@ -1544,22 +1893,24 @@ SUITE(BitOperations)
     RUN_TEST(isPowerOf2_powersUpTo64Bit_ArePowers);
     RUN_TEST(isPowerOf2_zero_isNotAPower);
     RUN_TEST(isPowerOf2_powersUpTo64BitMinusAndPlusOne_AreNotPowers);
-
-
-
-
-
-
-    RUN_TEST(test_modifyBits_goodWeather);
-    RUN_TEST(test_mergeBits_goodWeather);
-    RUN_TEST(test_nBitsSet_goodWeather);
-    RUN_TEST(test_isEvenParity_goodWeather);
-    RUN_TEST(test_isOddParity_goodWeather);
-    RUN_TEST(test_reverseBitOrder_goodWeather);
-    RUN_TEST(test_roundUpToPowerOf2_goodWeather);
+    RUN_TEST(modifyBits_setBitsUpTo32Bit_SingleBitCleared);
+    RUN_TEST(modifyBits_clearedBitsUpTo32Bit_SingleBitSet);
+    RUN_TEST(modifyBits_setBitsUpTo32Bit_MultipleBitsCleared);
+    RUN_TEST(modifyBits_setBitsUpTo32Bit_MultipleBitsSet);
+    RUN_TEST(mergeBits_magic32BitNumbers_Merged);
+    RUN_TEST(nBitsSet_magic32BitNumbers_Generated);
+    RUN_TEST(isOddParity_powersOfTwoUpTo64Bit_ParityGenerated);
+    RUN_TEST(isOddParity_magig64BitNumbers_ParityGenerated);
+    RUN_TEST(isOddParity_magig64BitNumbersMinusOne_ParityGenerated);
+    RUN_TEST(isEvenParity_powersOfTwoUpTo64Bit_ParityGenerated);
+    RUN_TEST(isEvenParity_magig64BitNumbers_ParityGenerated);
+    RUN_TEST(isEvenParity_magig64BitNumbersMinusOne_ParityGenerated);
+    RUN_TEST(reverseBitOrderByte_macic8BitNumbers_Reversed);
+    RUN_TEST(reverseBitOrder_macic32BitNumbers_Reversed);
+    RUN_TEST(roundUpToPowerOf2_powersOfTwoUpTo32Bit_ShouldReturnTheSamePower);
+    RUN_TEST(roundUpToPowerOf2_powersOfTwoUpTo32BitMinusOne_GeneratePower);
+    RUN_TEST(roundUpToPowerOf2_powersOfTwoUpTo32BitPlusOne_GeneratePower);
 }
-
-
 
 /*******************************************************************************
  * Main function
@@ -1568,7 +1919,7 @@ SUITE(BitOperations)
 GREATEST_MAIN_DEFS();
 
 /**
- * @brief Initializes and controls all other functions (indirectly).
+ * @brief Initialize and run the unit tests.
  *
  * @param   argc Argument counter.
  * @param   argv Array of different function arguments.
@@ -1585,7 +1936,6 @@ main(int argc, char **argv)
     RUN_SUITE(BitOperations);
 
     GREATEST_MAIN_END();
-
     return EXIT_SUCCESS;
 }
 

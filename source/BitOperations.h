@@ -277,20 +277,21 @@ isEvenParity(uint64_t const _var);
 /**
  * @brief Reverse the order of bits in a byte.
  *
- * @param   _pByte Pointer to the byte which needs to be reversed.
+ * @param   _var Variable which needs to be reversed.
+ * @return  uint8_t The reversed variable.
  */
-void
-reverseBitOrderByte(uint8_t *const _pByte);
+uint8_t
+reverseBitOrderByte(uint8_t const _var);
 
 /**
  * @brief   Reverse an N-bit quantity in parallel in 5 * lg(N) operations.
  *
  * @note    Now set to reverse the bit order of an 32 bit unsigned integer.
- * @param   _pVar Pointer to the variable of which the bit order needs to be
- * reversed.
+ * @param   _var Variable of which the bit order needs to be reversed.
+ * @return  uint32_t The reversed variable.
  */
-void
-reverseBitOrder(uint32_t *const _pVar);
+uint32_t
+reverseBitOrder(uint32_t const _var);
 
 /**
  * @brief   Round up to the next highest power of 2 by float casting.

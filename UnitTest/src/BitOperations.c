@@ -217,12 +217,10 @@ isEvenParity(uint64_t const _var)
  * @see https://github.com/gibsjose/BitHacks/blob/master/BitHacks.md#reverse-the-bits-in-a-byte-with-3-operations-64-bit-multiply-and-modulus-division
  *
  */
-void
-reverseBitOrderByte(uint8_t *const _pByte)
+uint8_t
+reverseBitOrderByte(uint8_t const _var)
 {
-    *_pByte = ((*_pByte * 0x0202020202ULL & 0x010884422010ULL) % 1023) & 0xFF;
-
-    return;
+    return (((_var * 0x0202020202ULL & 0x010884422010ULL) % 1023) & 0xFF);
 }
 
 /**
@@ -232,21 +230,22 @@ reverseBitOrderByte(uint8_t *const _pByte)
  * @see https://github.com/gibsjose/BitHacks/blob/master/BitHacks.md#reverse-an-n-bit-quantity-in-parallel-in-5--lgn-operations
  *
  */
-void
-reverseBitOrder(uint32_t *const _pVar)
+uint32_t
+reverseBitOrder(uint32_t const _var)
 {
+    uint32_t v = _var;
     // swap odd and even bits
-    *_pVar = ((*_pVar >> 1) & 0x55555555) | ((*_pVar & 0x55555555) << 1);
+    v = ((v >> 1) & 0x55555555) | ((v & 0x55555555) << 1);
     // swap consecutive pairs
-    *_pVar = ((*_pVar >> 2) & 0x33333333) | ((*_pVar & 0x33333333) << 2);
+    v = ((v >> 2) & 0x33333333) | ((v & 0x33333333) << 2);
     // swap nibbles ...
-    *_pVar = ((*_pVar >> 4) & 0x0F0F0F0F) | ((*_pVar & 0x0F0F0F0F) << 4);
+    v = ((v >> 4) & 0x0F0F0F0F) | ((v & 0x0F0F0F0F) << 4);
     // swap bytes
-    *_pVar = ((*_pVar >> 8) & 0x00FF00FF) | ((*_pVar & 0x00FF00FF) << 8);
+    v = ((v >> 8) & 0x00FF00FF) | ((v & 0x00FF00FF) << 8);
     // swap 2-byte long pairs
-    *_pVar = ( *_pVar >> 16             ) | ( *_pVar               << 16);
+    v = ( v >> 16             ) | ( v               << 16);
 
-    return;
+    return (v);
 }
 
 /**
