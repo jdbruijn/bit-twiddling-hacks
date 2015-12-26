@@ -2,8 +2,11 @@
 [![Travis build status][badge-travis]][travis]
 [![Coveralls coverage][badge-coveralls]][coveralls]
 
-Several bit operations and manipulations, also known as 'bit hacks'.
-More info will be added later! (2015-12-23)
+Several bit operations and manipulations, also known as 'bit hacks'.  
+Documentation on the function macros and functions can be found in the [documentation page](http:http://vidavidorra.github.io/BitOperations/html/index.html).
+
+*Please note that the coverage results do not include the function macros, although those are tested in the unit tests.*
+
 
 [badge-travis]:             https://travis-ci.org/vidavidorra/BitOperations.svg
 [travis]:                   https://travis-ci.org/vidavidorra/BitOperations
