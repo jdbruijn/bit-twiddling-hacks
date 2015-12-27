@@ -22,10 +22,11 @@ test_script:
 after_test:
   - gcov src\BitOperations
   - dir %APPVEYOR_BUILD_FOLDER%
-  - dir %APPVEYOR_BUILD_FOLDER%\out
 
 artifacts:
-  - path: projects\bitoperations\UnitTest\Debug\UnitTest.log
-    name: UnitTest
+  - path: UnitTest\Debug\UnitTest.log
+    name: UnitTest.log
   - path: bitoperations\UnitTest\Debug\UnitTest.log
     name: UnitTest_c
+  - path: %APPVEYOR_BUILD_FOLDER%\UnitTest\Debug\UnitTest.log
+    name: UnitTest_clog
