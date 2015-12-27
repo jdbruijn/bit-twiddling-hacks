@@ -119,7 +119,7 @@ bitMask64_masksUpTo64Bit_Generated()
 
 /**
  * @testname    bitSetm_singleBitsUpTo64Bit_Set
- * @testcase    @ref BIT_SETM sets the correct bit in a 64-bit variable.
+ * @testcase    @ref BIT_SETm sets the correct bit in a 64-bit variable.
  * @testvalues
  * | Argument 1         | Argument 2         |
  * | ------------------ | ------------------ |
@@ -136,7 +136,7 @@ bitSetm_singleBitsUpTo64Bit_Set()
     uint64_t v;
     for (i = 0; i < 64; i++) {
         v = 0;
-        BIT_SETM(v, (1ULL << i));
+        BIT_SETm(v, (1ULL << i));
         GREATEST_ASSERT_EQ(correctBitMasksUpTo64Bit[i], v);
     }
 
@@ -145,7 +145,7 @@ bitSetm_singleBitsUpTo64Bit_Set()
 
 /**
  * @testname    bitSetm_multipleBitsUpTo64Bit_Set
- * @testcase    @ref BIT_SETM sets the correct bits in a 64-bit variable.
+ * @testcase    @ref BIT_SETm sets the correct bits in a 64-bit variable.
  * @testvalues
  * | Argument 1         | Argument 2         |
  * | ------------------ | ------------------ |
@@ -157,9 +157,9 @@ bitSetm_multipleBitsUpTo64Bit_Set()
 {
     uint64_t v = 0;
 
-    BIT_SETM(v, 0x5555555555555555);
+    BIT_SETm(v, 0x5555555555555555);
     GREATEST_ASSERT_EQ(0x5555555555555555, v);
-    BIT_SETM(v, 0xAAAAAAAAAAAAAAAA);
+    BIT_SETm(v, 0xAAAAAAAAAAAAAAAA);
     GREATEST_ASSERT_EQ(0xFFFFFFFFFFFFFFFF, v);
 
     PASS();
@@ -193,7 +193,7 @@ bitSet_singleBitsUpTo64Bit_Set()
 
 /**
  * @testname    bitClearm_singleBitsUpTo64Bit_Cleared
- * @testcase    @ref BIT_CLEARM clears the correct bit in a 64-bit variable.
+ * @testcase    @ref BIT_CLEARm clears the correct bit in a 64-bit variable.
  * @testvalues
  * | Argument 1         | Argument 2         |
  * | ------------------ | ------------------ |
@@ -210,7 +210,7 @@ bitClearm_singleBitsUpTo64Bit_Cleared()
     uint64_t v;
     for (i = 0; i < 64; i++) {
         v = 0xFFFFFFFFFFFFFFFF;
-        BIT_CLEARM(v, (1ULL << i));
+        BIT_CLEARm(v, (1ULL << i));
         GREATEST_ASSERT_EQ(~correctBitMasksUpTo64Bit[i], v);
     }
 
@@ -219,7 +219,7 @@ bitClearm_singleBitsUpTo64Bit_Cleared()
 
 /**
  * @testname    bitClearm_multipleBitsUpTo64Bit_Cleared
- * @testcase    @ref BIT_CLEARM clears the correct bits in a 64-bit variable.
+ * @testcase    @ref BIT_CLEARm clears the correct bits in a 64-bit variable.
  * @testvalues
  * | Argument 1         | Argument 2         |
  * | ------------------ | ------------------ |
@@ -231,9 +231,9 @@ bitClearm_multipleBitsUpTo64Bit_Cleared()
 {
     uint64_t v = 0xFFFFFFFFFFFFFFFF;
 
-    BIT_CLEARM(v, 0x5555555555555555);
+    BIT_CLEARm(v, 0x5555555555555555);
     GREATEST_ASSERT_EQ(0xAAAAAAAAAAAAAAAA, v);
-    BIT_CLEARM(v, 0xAAAAAAAAAAAAAAAA);
+    BIT_CLEARm(v, 0xAAAAAAAAAAAAAAAA);
     GREATEST_ASSERT_EQ(0x0000000000000000, v);
 
     PASS();
@@ -267,7 +267,7 @@ bitClear_singleBitsUpTo64Bit_Cleared()
 
 /**
  * @testname    bitFlipm_singleSetBitsUpTo64Bit_Flipped
- * @testcase    @ref BIT_FLIPM flips the correct set bit in a 64-bit variable.
+ * @testcase    @ref BIT_FLIPm flips the correct set bit in a 64-bit variable.
  * @testvalues
  * | Argument 1         | Argument 2         |
  * | ------------------ | ------------------ |
@@ -284,7 +284,7 @@ bitFlipm_singleSetBitsUpTo64Bit_Flipped()
     uint64_t v;
     for (i = 0; i < 64; i++) {
         v = 0xFFFFFFFFFFFFFFFF;
-        BIT_FLIPM(v, (1ULL << i));
+        BIT_FLIPm(v, (1ULL << i));
         GREATEST_ASSERT_EQ(~correctBitMasksUpTo64Bit[i], v);
     }
 
@@ -293,7 +293,7 @@ bitFlipm_singleSetBitsUpTo64Bit_Flipped()
 
 /**
  * @testname    bitFlipm_singleClearedBitsUpTo64Bit_Flipped
- * @testcase    @ref BIT_FLIPM flips the correct cleared bit in a 64-bit
+ * @testcase    @ref BIT_FLIPm flips the correct cleared bit in a 64-bit
  * variable.
  * @testvalues
  * | Argument 1         | Argument 2         |
@@ -311,7 +311,7 @@ bitFlipm_singleClearedBitsUpTo64Bit_Flipped()
     uint64_t v;
     for (i = 0; i < 64; i++) {
         v = 0;
-        BIT_FLIPM(v, (1ULL << i));
+        BIT_FLIPm(v, (1ULL << i));
         GREATEST_ASSERT_EQ(correctBitMasksUpTo64Bit[i], v);
     }
 
@@ -320,7 +320,7 @@ bitFlipm_singleClearedBitsUpTo64Bit_Flipped()
 
 /**
  * @testname    bitFlipm_multipleSetBitsUpTo64Bit_Flipped
- * @testcase    @ref BIT_FLIPM flips the correct bits in a 64-bit variable.
+ * @testcase    @ref BIT_FLIPm flips the correct bits in a 64-bit variable.
  * @testvalues
  * | Argument 1         | Argument 2         |
  * | ------------------ | ------------------ |
@@ -332,9 +332,9 @@ bitFlipm_multipleSetBitsUpTo64Bit_Flipped()
 {
     uint64_t v = 0xFFFFFFFFFFFFFFFF;
 
-    BIT_FLIPM(v, 0x5555555555555555);
+    BIT_FLIPm(v, 0x5555555555555555);
     GREATEST_ASSERT_EQ(0xAAAAAAAAAAAAAAAA, v);
-    BIT_FLIPM(v, 0xAAAAAAAAAAAAAAAA);
+    BIT_FLIPm(v, 0xAAAAAAAAAAAAAAAA);
     GREATEST_ASSERT_EQ(0x0000000000000000, v);
 
     PASS();
@@ -342,7 +342,7 @@ bitFlipm_multipleSetBitsUpTo64Bit_Flipped()
 
 /**
  * @testname    bitFlipm_multipleClearedBitsUpTo64Bit_Flipped
- * @testcase    @ref BIT_FLIPM flips the correct bits in a 64-bit variable.
+ * @testcase    @ref BIT_FLIPm flips the correct bits in a 64-bit variable.
  * @testvalues
  * | Argument 1         | Argument 2         |
  * | ------------------ | ------------------ |
@@ -354,9 +354,9 @@ bitFlipm_multipleClearedBitsUpTo64Bit_Flipped()
 {
     uint64_t v = 0x0000000000000000;
 
-    BIT_FLIPM(v, 0xAAAAAAAAAAAAAAAA);
+    BIT_FLIPm(v, 0xAAAAAAAAAAAAAAAA);
     GREATEST_ASSERT_EQ(0xAAAAAAAAAAAAAAAA, v);
-    BIT_FLIPM(v, 0x5555555555555555);
+    BIT_FLIPm(v, 0x5555555555555555);
     GREATEST_ASSERT_EQ(0xFFFFFFFFFFFFFFFF, v);
 
     PASS();

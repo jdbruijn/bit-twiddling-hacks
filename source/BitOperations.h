@@ -83,7 +83,7 @@ extern "C" {
  * @param   v Variable to set the bit(s) in.
  * @param   mask Mask for setting the bit(s).
  */
-#define BIT_SETM(v, mask) ((v) |= (mask))
+#define BIT_SETm(v, mask) ((v) |= (mask))
 
 /**
  * @brief   Set a single bit.
@@ -91,7 +91,7 @@ extern "C" {
  * @param   v Variable to set a bit in.
  * @param   n Number of the bit to set where 0 is the rightmost bit.
  */
-#define BIT_SET(v, n) BIT_SETM((v), (1ULL << (n)))
+#define BIT_SET(v, n) BIT_SETm((v), (1ULL << (n)))
 
 /**
  * @brief   Clear a bit or bits according to a mask.
@@ -99,7 +99,7 @@ extern "C" {
  * @param   v Variable to clear the bit(s) in.
  * @param   mask Mask for clearing the bit(s).
  */
-#define BIT_CLEARM(v, mask) ((v) &= (~(mask)))
+#define BIT_CLEARm(v, mask) ((v) &= (~(mask)))
 
 /**
  * @brief   Clear a single bit.
@@ -107,7 +107,7 @@ extern "C" {
  * @param   v Variable to clear a bit in.
  * @param   n Number of the bit to clear where 0 is the rightmost bit.
  */
-#define BIT_CLEAR(v, n) BIT_CLEARM((v), (1ULL << (n)))
+#define BIT_CLEAR(v, n) BIT_CLEARm((v), (1ULL << (n)))
 
 /**
  * @brief   Flip/toggle a bit or bits according to a mask.
@@ -115,7 +115,7 @@ extern "C" {
  * @param   v Variable to flip the bit(s) in.
  * @param   mask Mask for flipping the bit(s).
  */
-#define BIT_FLIPM(v, mask) ((v) ^= (mask))
+#define BIT_FLIPm(v, mask) ((v) ^= (mask))
 
 /**
  * @brief   Flip/toggle a single bit.
@@ -123,7 +123,7 @@ extern "C" {
  * @param   v Variable to flip a bit in.
  * @param   n Number of the bit to flip where 0 is the rightmost bit.
  */
-#define BIT_FLIP(v, n) BIT_FLIPM((v), (1ULL << (n)))
+#define BIT_FLIP(v, n) BIT_FLIPm((v), (1ULL << (n)))
 
 /**
  * @brief   Shift a variable n places left.
