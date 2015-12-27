@@ -1,5 +1,5 @@
 version: '{build}'
-skip_tags: true
+clone_folder: C:\projects\bitoperations
 
 branches:
   only:
@@ -21,6 +21,8 @@ test_script:
 
 after_test:
   - gcov src\BitOperations
+  - dir %APPVEYOR_BUILD_FOLDER%
+  - dir %APPVEYOR_BUILD_FOLDER%\out
 
 artifacts:
   - path: projects\bitoperations\UnitTest\Debug\UnitTest.log
