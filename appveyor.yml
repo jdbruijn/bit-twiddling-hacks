@@ -22,5 +22,5 @@ after_test:
   - gcov src\BitOperations
 
 artifacts:
-  - path: UnitTest.log
+  - path: bitoperations\UnitTest\Debug\UnitTest.log
     name: UnitTest.log
