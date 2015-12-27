@@ -1,0 +1,26 @@
+version: '{build}'
+
+branches:
+  only:
+    - master
+
+install:
+  - SET PATH=%PATH%;C:\cygwin\bin
+  - gcc --version
+  - gcov --version
+
+build_script:
+  - cd source\Debug
+  - make
+  - cd ..\..\UnitTest\Debug
+  - make
+
+test_script:
+  - BitOperations_UnitTest.exe -v | tee UnitTest.log
+
+after_test:
+  - gcov src\BitOperations
+
+artifacts:
+  - path: UnitTest.log
+    name: UnitTest.log
