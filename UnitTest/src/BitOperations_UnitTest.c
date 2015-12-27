@@ -47,7 +47,8 @@
  ******************************************************************************/
 /**
  * @testname    bitMask32_masksUpTo32Bit_Generated
- * @testcase    BIT_MASK32(n) creates the correct bit mask for n is 0 to 31.
+ * @testcase    @ref @ref BIT_MASK32(n) creates the correct bit mask for n is 0
+ * to 31.
  * @testvalues
  * | Argument |
  * | -------- |
@@ -70,7 +71,8 @@ bitMask32_masksUpTo32Bit_Generated()
 
 /**
  * @testname    bitMask32_masksBetween32And64Bit_ShouldFail
- * @testcase    BIT_MASK32(n) fails to create a correct mask for n is 32 to 63.
+ * @testcase    @ref BIT_MASK32(n) fails to create a correct mask for n is 32
+ * to 63.
  * @testvalues
  * | Argument |
  * | -------- |
@@ -93,7 +95,8 @@ bitMask32_masksBetween32And64Bit_ShouldFail()
 
 /**
  * @testname    bitMask64_masksUpTo64Bit_Generated
- * @testcase    BIT_MASK64(n) creates the correct bit mask for n is 0 to 63.
+ * @testcase    @ref BIT_MASK64(n) creates the correct bit mask for n is 0 to
+ * 63.
  * @testvalues
  * | Argument |
  * | -------- |
@@ -116,7 +119,7 @@ bitMask64_masksUpTo64Bit_Generated()
 
 /**
  * @testname    bitSetm_singleBitsUpTo64Bit_Set
- * @testcase    BIT_SETM sets the correct bit in a 64-bit variable.
+ * @testcase    @ref BIT_SETM sets the correct bit in a 64-bit variable.
  * @testvalues
  * | Argument 1         | Argument 2         |
  * | ------------------ | ------------------ |
@@ -142,7 +145,7 @@ bitSetm_singleBitsUpTo64Bit_Set()
 
 /**
  * @testname    bitSetm_multipleBitsUpTo64Bit_Set
- * @testcase    BIT_SETM sets the correct bits in a 64-bit variable.
+ * @testcase    @ref BIT_SETM sets the correct bits in a 64-bit variable.
  * @testvalues
  * | Argument 1         | Argument 2         |
  * | ------------------ | ------------------ |
@@ -164,7 +167,7 @@ bitSetm_multipleBitsUpTo64Bit_Set()
 
 /**
  * @testname    bitSet_singleBitsUpTo64Bit_Set
- * @testcase    BIT_SET sets the correct bit in a 64-bit variable.
+ * @testcase    @ref BIT_SET sets the correct bit in a 64-bit variable.
  * @testvalues
  * | Argument 1         | Argument 2 |
  * | ------------------ | ---------- |
@@ -190,7 +193,7 @@ bitSet_singleBitsUpTo64Bit_Set()
 
 /**
  * @testname    bitClearm_singleBitsUpTo64Bit_Cleared
- * @testcase    BIT_CLEARM clears the correct bit in a 64-bit variable.
+ * @testcase    @ref BIT_CLEARM clears the correct bit in a 64-bit variable.
  * @testvalues
  * | Argument 1         | Argument 2         |
  * | ------------------ | ------------------ |
@@ -216,7 +219,7 @@ bitClearm_singleBitsUpTo64Bit_Cleared()
 
 /**
  * @testname    bitClearm_multipleBitsUpTo64Bit_Cleared
- * @testcase    BIT_CLEARM clears the correct bits in a 64-bit variable.
+ * @testcase    @ref BIT_CLEARM clears the correct bits in a 64-bit variable.
  * @testvalues
  * | Argument 1         | Argument 2         |
  * | ------------------ | ------------------ |
@@ -238,7 +241,7 @@ bitClearm_multipleBitsUpTo64Bit_Cleared()
 
 /**
  * @testname    bitClear_singleBitsUpTo64Bit_Cleared
- * @testcase    BIT_CLEAR clears the correct bit in a 64-bit variable.
+ * @testcase    @ref BIT_CLEAR clears the correct bit in a 64-bit variable.
  * @testvalues
  * | Argument 1         | Argument 2 |
  * | ------------------ | ---------- |
@@ -264,7 +267,7 @@ bitClear_singleBitsUpTo64Bit_Cleared()
 
 /**
  * @testname    bitFlipm_singleSetBitsUpTo64Bit_Flipped
- * @testcase    BIT_FLIPM flips the correct set bit in a 64-bit variable.
+ * @testcase    @ref BIT_FLIPM flips the correct set bit in a 64-bit variable.
  * @testvalues
  * | Argument 1         | Argument 2         |
  * | ------------------ | ------------------ |
@@ -290,7 +293,8 @@ bitFlipm_singleSetBitsUpTo64Bit_Flipped()
 
 /**
  * @testname    bitFlipm_singleClearedBitsUpTo64Bit_Flipped
- * @testcase    BIT_FLIPM flips the correct cleared bit in a 64-bit variable.
+ * @testcase    @ref BIT_FLIPM flips the correct cleared bit in a 64-bit
+ * variable.
  * @testvalues
  * | Argument 1         | Argument 2         |
  * | ------------------ | ------------------ |
@@ -316,7 +320,7 @@ bitFlipm_singleClearedBitsUpTo64Bit_Flipped()
 
 /**
  * @testname    bitFlipm_multipleSetBitsUpTo64Bit_Flipped
- * @testcase    BIT_FLIPM flips the correct bits in a 64-bit variable.
+ * @testcase    @ref BIT_FLIPM flips the correct bits in a 64-bit variable.
  * @testvalues
  * | Argument 1         | Argument 2         |
  * | ------------------ | ------------------ |
@@ -338,7 +342,7 @@ bitFlipm_multipleSetBitsUpTo64Bit_Flipped()
 
 /**
  * @testname    bitFlipm_multipleClearedBitsUpTo64Bit_Flipped
- * @testcase    BIT_FLIPM flips the correct bits in a 64-bit variable.
+ * @testcase    @ref BIT_FLIPM flips the correct bits in a 64-bit variable.
  * @testvalues
  * | Argument 1         | Argument 2         |
  * | ------------------ | ------------------ |
@@ -360,7 +364,7 @@ bitFlipm_multipleClearedBitsUpTo64Bit_Flipped()
 
 /**
  * @testname    bitFlip_singleSetBitsUpTo64Bit_Flipped
- * @testcase    BIT_FLIP flips the correct set bit in a 64-bit variable.
+ * @testcase    @ref BIT_FLIP flips the correct set bit in a 64-bit variable.
  * @testvalues
  * | Argument 1         | Argument 2 |
  * | ------------------ | ---------- |
@@ -386,7 +390,7 @@ bitFlip_singleSetBitsUpTo64Bit_Flipped()
 
 /**
  * @testname    bitFlip_singleClearedBitsUpTo64Bit_Flipped
- * @testcase    BIT_FLIP flips the correct cleared bit in a 64-bit variable.
+ * @testcase    @ref BIT_FLIP flips the correct cleared bit in a 64-bit variable.
  * @testvalues
  * | Argument 1         | Argument 2 |
  * | ------------------ | ---------- |
@@ -412,8 +416,8 @@ bitFlip_singleClearedBitsUpTo64Bit_Flipped()
 
 /**
  * @testname    shiftLeft_singleSetBitUpTo64_Shifted
- * @testcase    SHIFT_LEFT shifts the 64-bit variable with a single bit set to
- * the correct position.
+ * @testcase    @ref SHIFT_LEFT shifts the 64-bit variable with a single bit
+ * set to the correct position.
  * @testvalues
  * | Argument 1         | Argument 2 |
  * | ------------------ | ---------- |
@@ -439,8 +443,8 @@ shiftLeft_singleSetBitUpTo64_Shifted()
 
 /**
  * @testname    shiftLeft_multipleSetBitsUpTo64_Shifted
- * @testcase    SHIFT_LEFT shifts the 64-bit variable with multiple bits set to
- * the correct position.
+ * @testcase    @ref SHIFT_LEFT shifts the 64-bit variable with multiple bits
+ * set to the correct position.
  * @testvalues
  * <table class="doxtable">
  * <tr><th>Argument 1                   </th><th>Argument 2 </th></tr>
@@ -459,7 +463,7 @@ shiftLeft_multipleSetBitsUpTo64_Shifted()
     for (i = 0; i < 64; i++) {
         v = 0x0000000000000001 | 0x0000000000007070;
         SHIFT_LEFT(v, i);
-        GREATEST_ASSERT_EQ(correctBitMasksUpTo64Bit[i]                         |
+        GREATEST_ASSERT_EQ(correctBitMasksUpTo64Bit[i] |
                            (0x0000000000007070ULL << i), v);
     }
 
@@ -468,8 +472,8 @@ shiftLeft_multipleSetBitsUpTo64_Shifted()
 
 /**
  * @testname    shiftRight_singleSetBitUpTo64_Shifted
- * @testcase    SHIFT_RIGHT shifts the 64-bit variable with a single bit set to
- * the correct position.
+ * @testcase    @ref SHIFT_RIGHT shifts the 64-bit variable with a single bit
+ * set to the correct position.
  * @testvalues
  * | Argument 1         | Argument 2 |
  * | ------------------ | ---------- |
@@ -495,8 +499,8 @@ shiftRight_singleSetBitUpTo64_Shifted()
 
 /**
  * @testname    shiftRight_multipleSetBitsUpTo64_Shifted
- * @testcase    SHIFT_RIGHT shifts the 64-bit variable with multiple bits set to
- * the correct position.
+ * @testcase    @ref SHIFT_RIGHT shifts the 64-bit variable with multiple bits
+ * set to the correct position.
  * @testvalues
  * <table class="doxtable">
  * <tr><th>Argument 1                             </th><th>Argument 2 </th></tr>
@@ -524,7 +528,8 @@ shiftRight_multipleSetBitsUpTo64_Shifted()
 
 /**
  * @testname    bitGetm_multipleSetBitsUpTo64Bit_Generated
- * @testcase    BIT_GET(v, n) correctly returns the set bit for n is 0 to 63.
+ * @testcase    @ref bitGetm (v, n) correctly returns the set bit for n is 0 to
+ * 63.
  * @testvalues
  * <table class="doxtable">
  * <tr><th>Argument 1         </th><th>Argument 2             </th></tr>
@@ -552,8 +557,8 @@ bitGetm_multipleRandomSetBitsUpTo64Bit_Generated()
 
 /**
  * @testname    bitGet_multipleClearedBitsUpTo64Bit_Generated
- * @testcase    BIT_GET(v, n) correctly returns the cleared bit for n is 0 to
- * 63.
+ * @testcase    @ref bitGetm (v, n) correctly returns the cleared bit for n is
+ * 0 to 63.
  * @testvalues
  * | Argument 1         | Argument 2 |
  * | ------------------ | ---------- |
@@ -579,7 +584,8 @@ bitGetm_multipleRandomClearedBitsUpTo64Bit_Generated()
 
 /**
  * @testname    bitGet_singleSetBitsUpTo64Bit_Generated
- * @testcase    BIT_GET(v, n) correctly returns the set bit for n is 0 to 63.
+ * @testcase    @ref bitGet (v, n) correctly returns the set bit for n is 0 to
+ * 63.
  * @testvalues
  * | Argument 1         | Argument 2 |
  * | ------------------ | ---------- |
@@ -602,8 +608,8 @@ bitGet_singleSetBitsUpTo64Bit_Generated()
 
 /**
  * @testname    bitGet_singleClearedBitsUpTo64Bit_Generated
- * @testcase    BIT_GET(v, n) correctly returns the cleared bit for n is 0 to
- * 63.
+ * @testcase    @ref bitGet (v, n) correctly returns the cleared bit for n is 0
+ * to 63.
  * @testvalues
  * | Argument 1         | Argument 2 |
  * | ------------------ | ---------- |
@@ -626,7 +632,7 @@ bitGet_singleClearedBitsUpTo64Bit_Generated()
 
 /**
  * @testname    isPositive_maximumPoitiveAndNegativeNumber_SignGenerated
- * @testcase    isPositive returns the correct sign of maximum positive and
+ * @testcase    @ref isPositive returns the correct sign of maximum positive and
  * negative values.
  * @testvalues
  * | Argument                     |
@@ -636,7 +642,7 @@ bitGet_singleClearedBitsUpTo64Bit_Generated()
  * | 2147483647 (@ref INT32_MAX)  |
  */
 TEST
-isPositive_maximumPoitiveAndNegativeNumber_SignGenerated()
+isPositive_maximumPositiveAndNegativeNumber_SignGenerated()
 {
     GREATEST_ASSERT_EQ(0, isPositive(INT32_MIN));
     GREATEST_ASSERT_EQ(1, isPositive(0));
@@ -647,7 +653,7 @@ isPositive_maximumPoitiveAndNegativeNumber_SignGenerated()
 
 /**
  * @testname    isPositive_minimumPoitiveAndNegativeNumber_SignGenerated
- * @testcase    isPositive returns the correct sign of minimum positive and
+ * @testcase    @ref isPositive returns the correct sign of minimum positive and
  * negative values.
  * @testvalues
  * | Argument |
@@ -666,7 +672,7 @@ isPositive_minimumPoitiveAndNegativeNumber_SignGenerated()
 
 /**
  * @testname    isOdd_positivePowersOfTwoUpTo64Bit_ParityGenerated
- * @testcase    isOdd returns the correct parity for positive even integers
+ * @testcase    @ref isOdd returns the correct parity for positive even integers
  * 2^n from n is 1 to 62.
  * @testvalues
  * | Argument           |
@@ -690,8 +696,8 @@ isOdd_positivePowersOfTwoUpTo64Bit_ParityGenerated()
 
 /**
  * @testname    isOdd_positiveMaximum64Bit_ParityGenerated
- * @testcase    isOdd returns the correct parity for the maximum positive even
- * integer.
+ * @testcase    @ref isOdd returns the correct parity for the maximum positive
+ * even integer.
  * @testvalues
  * | Argument           |
  * | ------------------ |
@@ -707,7 +713,7 @@ isOdd_positiveMaximum64Bit_ParityGenerated()
 
 /**
  * @testname    isOdd_negativePowersOfTwoUpTo64Bit_ParityGenerated
- * @testcase    isOdd returns the correct parity for negative even integers
+ * @testcase    @ref isOdd returns the correct parity for negative even integers
  * -2^n from n is 1 to 63.
  * @testvalues
  * | Argument            |
@@ -731,7 +737,7 @@ isOdd_negativePowersOfTwoUpTo64Bit_ParityGenerated()
 
 /**
  * @testname    isOdd_positivePowersOfTwoUpTo64BitMinusOne_ParityGenerated
- * @testcase    isOdd returns the correct parity for positive odd integers
+ * @testcase    @ref isOdd returns the correct parity for positive odd integers
  * 2^n - 1 from n is 1 to 63.
  * @testvalues
  * | Argument           |
@@ -755,7 +761,7 @@ isOdd_positivePowersOfTwoUpTo64BitMinusOne_ParityGenerated()
 
 /**
  * @testname    isOdd_negativePowersOfTwoUpTo64BitPlusOne_ParityGenerated
- * @testcase    isOdd returns the correct parity for negative odd integers
+ * @testcase    @ref isOdd returns the correct parity for negative odd integers
  * -2^n + 1 from n is 1 to 63.
  * @testvalues
  * | Argument            |
@@ -779,8 +785,8 @@ isOdd_negativePowersOfTwoUpTo64BitPlusOne_ParityGenerated()
 
 /**
  * @testname    isEven_positivePowersOfTwoUpTo64Bit_ParityGenerated
- * @testcase    isEven returns the correct parity for positive even integers
- * 2^n from n is 1 to 62.
+ * @testcase    @ref isEven returns the correct parity for positive even
+ * integers 2^n from n is 1 to 62.
  * @testvalues
  * | Argument           |
  * | ------------------ |
@@ -803,8 +809,8 @@ isEven_positivePowersOfTwoUpTo64Bit_ParityGenerated()
 
 /**
  * @testname    isEven_positiveMaximum64Bit_ParityGenerated
- * @testcase    isEven returns the correct parity for the maximum positive even
- * integer.
+ * @testcase    @ref isEven returns the correct parity for the maximum positive
+ * even integer.
  * @testvalues
  * | Argument           |
  * | ------------------ |
@@ -820,8 +826,8 @@ isEven_positiveMaximum64Bit_ParityGenerated()
 
 /**
  * @testname    isEven_negativePowersOfTwoUpTo64Bit_ParityGenerated
- * @testcase    isEven returns the correct parity for negative even integers
- * -2^n from n is 1 to 63.
+ * @testcase    @ref isEven returns the correct parity for negative even
+ * integers -2^n from n is 1 to 63.
  * @testvalues
  * | Argument            |
  * | ------------------- |
@@ -844,7 +850,7 @@ isEven_negativePowersOfTwoUpTo64Bit_ParityGenerated()
 
 /**
  * @testname    isEven_positivePowersOfTwoUpTo64BitMinusOne_ParityGenerated
- * @testcase    isEven returns the correct parity for positive odd integers
+ * @testcase    @ref isEven returns the correct parity for positive odd integers
  * 2^n - 1 from n is 1 to 63.
  * @testvalues
  * | Argument           |
@@ -868,7 +874,7 @@ isEven_positivePowersOfTwoUpTo64BitMinusOne_ParityGenerated()
 
 /**
  * @testname    isEven_negativePowersOfTwoUpTo64BitPlusOne_ParityGenerated
- * @testcase    isEven returns the correct parity for negative odd integers
+ * @testcase    @ref isEven returns the correct parity for negative odd integers
  * -2^n + 1 from n is 1 to 63.
  * @testvalues
  * | Argument            |
@@ -893,8 +899,8 @@ isEven_negativePowersOfTwoUpTo64BitPlusOne_ParityGenerated()
 
 /**
  * @testname    haveOppositeSigns_maximumPoitiveAndNegativeValues_Generated
- * @testcase    haveOppositeSigns returns the correct difference in signs of
- * maximum positive and negative values.
+ * @testcase    @ref haveOppositeSigns returns the correct difference in signs
+ * of maximum positive and negative values.
  * @testvalues
  * | Argument 1                   | Argument 2                   |
  * | ---------------------------- | ---------------------------- |
@@ -916,8 +922,8 @@ haveOppositeSigns_maximumPoitiveAndNegativeValues_Generated()
 
 /**
  * @testname    haveOppositeSigns_minimumPoitiveAndNegativeValues_Generated
- * @testcase    haveOppositeSigns returns the correct difference in signs of
- * minimum positive and negative values.
+ * @testcase    @ref haveOppositeSigns returns the correct difference in signs
+ * of minimum positive and negative values.
  * @testvalues
  * | Argument 1 | Argument 2 |
  * | ---------- | ---------- |
@@ -939,8 +945,8 @@ haveOppositeSigns_minimumPoitiveAndNegativeValues_Generated()
 
 /**
  * @testname    min_maximum32BitPositiveAndNegativeNumber_MinFound
- * @testcase    min returns the correct minimum value of maximum positive and
- * negative values.
+ * @testcase    @ref min returns the correct minimum value of maximum positive
+ * and negative values.
  * @testvalues
  * | Argument 1                   | Argument 2                   |
  * | ---------------------------- | ---------------------------- |
@@ -958,8 +964,8 @@ min_maximum32BitPositiveAndNegativeNumber_MinFound()
 
 /**
  * @testname    min_minimum32BitPositiveAndNegativeNumber_MinFound
- * @testcase    min returns the correct minimum value of minimum positive and
- * negative values.
+ * @testcase    @ref min returns the correct minimum value of minimum positive
+ * and negative values.
  * @testvalues
  * | Argument 1 | Argument 2 |
  * | ---------- | ---------- |
@@ -977,8 +983,8 @@ min_minimum32BitPositiveAndNegativeNumber_MinFound()
 
 /**
  * @testname    min_maximum32BitPositiveAndNegativeToZeroNumber_MinFound
- * @testcase    min returns the correct minimum value of maximum positive and
- * negative values to zero.
+ * @testcase    @ref min returns the correct minimum value of maximum positive
+ * and negative values to zero.
  * @testvalues
  * | Argument 1                   | Argument 2                   |
  * | ---------------------------- | ---------------------------- |
@@ -1000,8 +1006,8 @@ min_maximum32BitPositiveAndNegativeToZeroNumber_MinFound()
 
 /**
  * @testname    min_minimum32BitPositiveAndNegativeToZeroNumber_MinFound
- * @testcase    min returns the correct minimum value of maximum positive and
- * negative values to zero.
+ * @testcase    @ref min returns the correct minimum value of maximum positive
+ * and negative values to zero.
  * @testvalues
  * | Argument 1 | Argument 2 |
  * | ---------- | ---------- |
@@ -1023,8 +1029,8 @@ min_minimum32BitPositiveAndNegativeToZeroNumber_MinFound()
 
 /**
  * @testname    min_maximumEqual32BitPositiveAndNegativeNumber_MinFound
- * @testcase    min returns one of the entered values since they are both the
- * same.
+ * @testcase    @ref min returns one of the entered values since they are both
+ * the same.
  * @testvalues
  * | Argument 1                   | Argument 2                   |
  * | ---------------------------- | ---------------------------- |
@@ -1042,8 +1048,8 @@ min_maximumEqual32BitPositiveAndNegativeNumber_MinFound()
 
 /**
  * @testname    min_minimumEqual32BitPositiveAndNegativeNumber_MinFound
- * @testcase    min returns one of the entered values since they are both the
- * same.
+ * @testcase    @ref min returns one of the entered values since they are both
+ * the same.
  * @testvalues
  * | Argument 1 | Argument 2 |
  * | ---------- | ---------- |
@@ -1061,8 +1067,8 @@ min_minimumEqual32BitPositiveAndNegativeNumber_MinFound()
 
 /**
  * @testname    max_maximum32BitPositiveAndNegativeNumber_MaxFound
- * @testcase    min returns the correct maximum value of maximum positive and
- * negative values.
+ * @testcase    @ref max returns the correct maximum value of maximum positive
+ * and negative values.
  * @testvalues
  * | Argument 1                   | Argument 2                   |
  * | ---------------------------- | ---------------------------- |
@@ -1080,8 +1086,8 @@ max_maximum32BitPositiveAndNegativeNumber_MaxFound()
 
 /**
  * @testname    max_minimum32BitPositiveAndNegativeNumber_MaxFound
- * @testcase    min returns the correct maximum value of minimum positive and
- * negative values.
+ * @testcase    @ref max returns the correct maximum value of minimum positive
+ * and negative values.
  * @testvalues
  * | Argument 1 | Argument 2 |
  * | ---------- | ---------- |
@@ -1099,8 +1105,8 @@ max_minimum32BitPositiveAndNegativeNumber_MaxFound()
 
 /**
  * @testname    max_maximum32BitPositiveAndNegativeToZeroNumber_MaxFound
- * @testcase    min returns the correct maximum value of maximum positive and
- * negative values to zero.
+ * @testcase    @ref max returns the correct maximum value of maximum positive
+ * and negative values to zero.
  * @testvalues
  * | Argument 1                   | Argument 2                   |
  * | ---------------------------- | ---------------------------- |
@@ -1122,8 +1128,8 @@ max_maximum32BitPositiveAndNegativeToZeroNumber_MaxFound()
 
 /**
  * @testname    max_minimum32BitPositiveAndNegativeToZeroNumber_MaxFound
- * @testcase    min returns the correct maximum value of maximum positive and
- * negative values to zero.
+ * @testcase    @ref max returns the correct maximum value of maximum positive
+ * and negative values to zero.
  * @testvalues
  * | Argument 1 | Argument 2 |
  * | ---------- | ---------- |
@@ -1145,8 +1151,8 @@ max_minimum32BitPositiveAndNegativeToZeroNumber_MaxFound()
 
 /**
  * @testname    max_maximumEqual32BitPositiveAndNegativeNumber_MaxFound
- * @testcase    min returns one of the entered values since they are both the
- * same.
+ * @testcase    @ref max returns one of the entered values since they are both
+ * the same.
  * @testvalues
  * | Argument 1                   | Argument 2                   |
  * | ---------------------------- | ---------------------------- |
@@ -1164,8 +1170,8 @@ max_maximumEqual32BitPositiveAndNegativeNumber_MaxFound()
 
 /**
  * @testname    max_minimumEqual32BitPositiveAndNegativeNumber_MaxFound
- * @testcase    min returns one of the entered values since they are both the
- * same.
+ * @testcase    @ref max returns one of the entered values since they are both
+ * the same.
  * @testvalues
  * | Argument 1 | Argument 2 |
  * | ---------- | ---------- |
@@ -1183,8 +1189,8 @@ max_minimumEqual32BitPositiveAndNegativeNumber_MaxFound()
 
 /**
  * @testname    isPowerOf2_powersUpTo64Bit_ArePowers
- * @testcase    isPowerOf2 returns the right value for integers 2^n from n is 0
- * to 64.
+ * @testcase    @ref isPowerOf2 returns the right value for integers 2^n from n
+ * is 0 to 64.
  * @testvalues
  * | Argument           |
  * | ------------------ |
@@ -1207,7 +1213,7 @@ isPowerOf2_powersUpTo64Bit_ArePowers()
 
 /**
  * @testname    isPowerOf2_zero_isNotAPower
- * @testcase    isPowerOf2 returns the right value for 0.
+ * @testcase    @ref isPowerOf2 returns the right value for 0.
  * @testvalues
  * | Argument |
  * | -------- |
@@ -1226,8 +1232,8 @@ isPowerOf2_zero_isNotAPower()
 
 /**
  * @testname    isPowerOf2_powersUpTo64BitMinusAndPlusOne_AreNotPowers
- * @testcase    isPowerOf2 returns the right value for integers 2^n -/+ 1 from
- * n is 2 to 64.
+ * @testcase    @ref isPowerOf2 returns the right value for integers 2^n -/+ 1
+ * from n is 2 to 64.
  * @testvalues
  * | Argument                 |
  * | ------------------------ |
@@ -1250,9 +1256,9 @@ isPowerOf2_powersUpTo64BitMinusAndPlusOne_AreNotPowers()
 }
 
 /**
- * @testname    bitFlipm_singleSetBitsUpTo32Bit_Flipped
- * @testcase    modifyBits modifies the correct bit to the correct value in a
- * 32-bit variable.
+ * @testname    modifyBits_setBitsUpTo32Bit_SingleBitCleared
+ * @testcase    @ref modifyBits modifies the correct bit to the correct value
+ * in a 32-bit variable.
  * @testvalues
  * | Argument 1 | Argument 2 | Argument 3 |
  * | ---------- | ---------- | ---------- |
@@ -1278,8 +1284,8 @@ modifyBits_setBitsUpTo32Bit_SingleBitCleared()
 
 /**
  * @testname    modifyBits_clearedBitsUpTo32Bit_SingleBitSet
- * @testcase    modifyBits modifies the correct bit to the correct value in a
- * 32-bit variable.
+ * @testcase    @ref modifyBits modifies the correct bit to the correct value
+ * in a 32-bit variable.
  * @testvalues
  * | Argument 1 | Argument 2 | Argument 3 |
  * | ---------- | ---------- | ---------- |
@@ -1305,8 +1311,8 @@ modifyBits_clearedBitsUpTo32Bit_SingleBitSet()
 
 /**
  * @testname    modifyBits_setBitsUpTo32Bit_MultipleBitsCleared
- * @testcase    modifyBits modifies the correct bits to the correct value in a
- * 32-bit variable.
+ * @testcase    @ref modifyBits modifies the correct bits to the correct value
+ * in a 32-bit variable.
  * @testvalues
  * | Argument 1 | Argument 2 | Argument 3 |
  * | ---------- | ---------- | ---------- |
@@ -1328,8 +1334,8 @@ modifyBits_setBitsUpTo32Bit_MultipleBitsCleared()
 
 /**
  * @testname    modifyBits_setBitsUpTo32Bit_MultipleBitsSet
- * @testcase    modifyBits modifies the correct bits to the correct value in a
- * 32-bit variable.
+ * @testcase    @ref modifyBits modifies the correct bits to the correct value
+ * in a 32-bit variable.
  * @testvalues
  * | Argument 1 | Argument 2 | Argument 3 |
  * | ---------- | ---------- | ---------- |
@@ -1351,8 +1357,8 @@ modifyBits_setBitsUpTo32Bit_MultipleBitsSet()
 
 /**
  * @testname    mergeBits_magic32BitNumbers_Merged
- * @testcase    mergeBits merges the correct bits in the correct part of the
- * mask to a correct 32-bit variable.
+ * @testcase    @ref mergeBits merges the correct bits in the correct part of
+ * the mask to a correct 32-bit variable.
  * @testvalues
  * | Argument 1 | Argument 2 | Argument 3 |
  * | ---------- | ---------- | ---------- |
@@ -1384,8 +1390,8 @@ mergeBits_magic32BitNumbers_Merged()
 
 /**
  * @testname    nBitsSet_magic32BitNumbers_Generated
- * @testcase    nBitsSet determines the correct amount of bits that are set in a
- * 32-bit variable.
+ * @testcase    @ref nBitsSet determines the correct amount of bits that are set
+ * in a 32-bit variable.
  * @testvalues
  * | Argument   |
  * | ---------- |
@@ -1431,7 +1437,8 @@ nBitsSet_magic32BitNumbers_Generated()
 
 /**
  * @testname    isOddParity_powersOfTwoUpTo64Bit_ParityGenerated
- * @testcase    isOddParity determines the correct parity of a 64-bit variable.
+ * @testcase    @ref isOddParity determines the correct parity of a 64-bit
+ * variable.
  * @testvalues
  * | Argument           |
  * | ------------------ |
@@ -1454,7 +1461,8 @@ isOddParity_powersOfTwoUpTo64Bit_ParityGenerated()
 
 /**
  * @testname    isOddParity_magig64BitNumbers_ParityGenerated
- * @testcase    isOddParity determines the correct parity of a 64-bit variable.
+ * @testcase    @ref isOddParity determines the correct parity of a 64-bit
+ * variable.
  * @testvalues
  * | Argument           |
  * | ------------------ |
@@ -1500,7 +1508,8 @@ isOddParity_magig64BitNumbers_ParityGenerated()
 
 /**
  * @testname    isOddParity_magig64BitNumbersMinusOne_ParityGenerated
- * @testcase    isOddParity determines the correct parity of a 64-bit variable.
+ * @testcase    @ref isOddParity determines the correct parity of a 64-bit
+ * variable.
  * @testvalues
  * | Argument               |
  * | ---------------------- |
@@ -1544,7 +1553,8 @@ isOddParity_magig64BitNumbersMinusOne_ParityGenerated()
 
 /**
  * @testname    isEvenParity_powersOfTwoUpTo64Bit_ParityGenerated
- * @testcase    isEvenParity determines the correct parity of a 64-bit variable.
+ * @testcase    @ref isEvenParity determines the correct parity of a 64-bit
+ * variable.
  * @testvalues
  * | Argument           |
  * | ------------------ |
@@ -1567,7 +1577,8 @@ isEvenParity_powersOfTwoUpTo64Bit_ParityGenerated()
 
 /**
  * @testname    isEvenParity_magig64BitNumbers_ParityGenerated
- * @testcase    isEvenParity determines the correct parity of a 64-bit variable.
+ * @testcase    @ref isEvenParity determines the correct parity of a 64-bit
+ * variable.
  * @testvalues
  * | Argument           |
  * | ------------------ |
@@ -1613,7 +1624,8 @@ isEvenParity_magig64BitNumbers_ParityGenerated()
 
 /**
  * @testname    isEvenParity_magig64BitNumbersMinusOne_ParityGenerated
- * @testcase    isEvenParity determines the correct parity of a 64-bit variable.
+ * @testcase    @ref isEvenParity determines the correct parity of a 64-bit
+ * variable.
  * @testvalues
  * | Argument               |
  * | ---------------------- |
@@ -1657,7 +1669,7 @@ isEvenParity_magig64BitNumbersMinusOne_ParityGenerated()
 
 /**
  * @testname    reverseBitOrderByte_macic8BitNumbers_Reversed
- * @testcase    reverseBitOrderByte correctly reverses a 8-bit variable.
+ * @testcase    @ref reverseBitOrderByte correctly reverses a 8-bit variable.
  * @testvalues
  * | Argument |
  * | -------- |
@@ -1703,7 +1715,7 @@ reverseBitOrderByte_macic8BitNumbers_Reversed()
 
 /**
  * @testname    reverseBitOrder_macic32BitNumbers_Reversed
- * @testcase    reverseBitOrderByte correctly reverses a 32-bit variable.
+ * @testcase    @ref reverseBitOrderByte correctly reverses a 32-bit variable.
  * @testvalues
  * | Argument   |
  * | ---------- |
@@ -1747,19 +1759,10 @@ reverseBitOrder_macic32BitNumbers_Reversed()
     PASS();
 }
 
-
-
-
-
-
-
-
-
-
 /**
  * @testname    roundUpToPowerOf2_powersOfTwoUpTo32Bit_ShouldReturnTheSamePower
- * @testcase    roundUpToPowerOf2 returns the same 32-bit variable for variables
- * that are powers of two.
+ * @testcase    @ref roundUpToPowerOf2 returns the same 32-bit variable for
+ * variables that are powers of two.
  * @testvalues
  * | Argument   |
  * | ---------- |
@@ -1783,7 +1786,7 @@ roundUpToPowerOf2_powersOfTwoUpTo32Bit_ShouldReturnTheSamePower()
 
 /**
  * @testname    roundUpToPowerOf2_powersOfTwoUpTo32BitMinusOne_GeneratePower
- * @testcase    roundUpToPowerOf2 returns the correct next power of two for
+ * @testcase    @ref roundUpToPowerOf2 returns the correct next power of two for
  * variables 2^n - 1 for n is 2 to 32.
  * that are powers of two.
  * @testvalues
@@ -1809,7 +1812,7 @@ roundUpToPowerOf2_powersOfTwoUpTo32BitMinusOne_GeneratePower()
 
 /**
  * @testname    roundUpToPowerOf2_powersOfTwoUpTo32BitPlusOne_GeneratePower
- * @testcase    roundUpToPowerOf2 returns the correct next power of two for
+ * @testcase    @ref roundUpToPowerOf2 returns the correct next power of two for
  * variables 2^n + 1 for n is 1 to 31.
  * that are powers of two.
  * @testvalues
@@ -1828,6 +1831,25 @@ roundUpToPowerOf2_powersOfTwoUpTo32BitPlusOne_GeneratePower()
     for (i = 1; i < 32; i++) {
         GREATEST_ASSERT_EQ((uint32_t)correctBitMasksUpTo64Bit[i+1],
             roundUpToPowerOf2((uint32_t)correctBitMasksUpTo64Bit[i] + 1));
+    }
+
+    PASS();
+}
+
+/**
+ * @testname    roundUpToPowerOf2_zero_GeneratePower
+ * @testcase    @ref roundUpToPowerOf2 returns the next power of two for zero.
+ * @testvalues
+ * | Argument   |
+ * | ---------- |
+ * | 0x00000000 |
+ */
+TEST
+roundUpToPowerOf2_zero_GeneratePower()
+{
+    uint8_t i;
+    for (i = 1; i < 32; i++) {
+        GREATEST_ASSERT_EQ(0x00000001, roundUpToPowerOf2(0x00000000));
     }
 
     PASS();
@@ -1864,7 +1886,7 @@ SUITE(BitOperations)
     RUN_TEST(bitGetm_multipleRandomClearedBitsUpTo64Bit_Generated);
     RUN_TEST(bitGet_singleSetBitsUpTo64Bit_Generated);
     RUN_TEST(bitGet_singleClearedBitsUpTo64Bit_Generated);
-    RUN_TEST(isPositive_maximumPoitiveAndNegativeNumber_SignGenerated);
+    RUN_TEST(isPositive_maximumPositiveAndNegativeNumber_SignGenerated);
     RUN_TEST(isPositive_minimumPoitiveAndNegativeNumber_SignGenerated);
     RUN_TEST(isOdd_positivePowersOfTwoUpTo64Bit_ParityGenerated);
     RUN_TEST(isOdd_positiveMaximum64Bit_ParityGenerated);
@@ -1910,6 +1932,7 @@ SUITE(BitOperations)
     RUN_TEST(roundUpToPowerOf2_powersOfTwoUpTo32Bit_ShouldReturnTheSamePower);
     RUN_TEST(roundUpToPowerOf2_powersOfTwoUpTo32BitMinusOne_GeneratePower);
     RUN_TEST(roundUpToPowerOf2_powersOfTwoUpTo32BitPlusOne_GeneratePower);
+    RUN_TEST(roundUpToPowerOf2_zero_GeneratePower);
 }
 
 /*******************************************************************************

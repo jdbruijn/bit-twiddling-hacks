@@ -39,6 +39,14 @@ extern "C" {
 #endif
 
 /*******************************************************************************
+ * BitOperations version
+ ******************************************************************************/
+/* 0.1.0 */
+#define BITOPERATIONS_VERSION_MAJOR 0   /**< Major version number. */
+#define BITOPERATIONS_VERSION_MINOR 1   /**< Minor version number. */
+#define BITOPERATIONS_VERSION_PATCH 0   /**< Patch version number. */
+
+/*******************************************************************************
  * Includes
  ******************************************************************************/
 //#include <xc.h>                       /* Include for PIC microcontrollers. */
