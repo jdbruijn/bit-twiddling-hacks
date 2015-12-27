@@ -25,5 +25,5 @@ after_test:
 artifacts:
   - path: projects\bitoperations\UnitTest\Debug\UnitTest.log
     name: UnitTest
-  - path: c:\projects\bitoperations\UnitTest\Debug\UnitTest.log
+  - path: bitoperations\UnitTest\Debug\UnitTest.log
     name: UnitTest_c
