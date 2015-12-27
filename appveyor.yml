@@ -17,6 +17,8 @@ build_script:
 
 test_script:
   - BitOperations_UnitTest.exe -v | tee UnitTest.log
+  - dir
+  - tee --version
 
 after_test:
   - gcov src\BitOperations
