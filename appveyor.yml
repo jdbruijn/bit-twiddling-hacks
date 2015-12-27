@@ -21,11 +21,7 @@ test_script:
 
 after_test:
   - gcov src\BitOperations
-  - 7z a log.zip *.log
-  - dir %APPVEYOR_BUILD_FOLDER%
 
 artifacts:
-  - path: UnitTest\Debug\log.zip
-    name: log.zip
   - path: UnitTest\Debug\UnitTest.log
     name: UnitTest.log
