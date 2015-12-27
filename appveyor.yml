@@ -1,4 +1,5 @@
 version: '{build}'
+skip_tags: true
 
 branches:
   only:
@@ -26,5 +27,3 @@ artifacts:
     name: UnitTest
   - path: c:\projects\bitoperations\UnitTest\Debug\UnitTest.log
     name: UnitTest_c
-  - path: bitoperations/UnitTest/Debug/UnitTest.log
-    name: UnitTest_forward
