@@ -47,7 +47,7 @@
  ******************************************************************************/
 /**
  * @testname    bitMask32_masksUpTo32Bit_Generated
- * @testcase    @ref @ref BIT_MASK32(n) creates the correct bit mask for n is 0
+ * @testcase    @ref BIT_MASK32(n) creates the correct bit mask for n is 0
  * to 31.
  * @testvalues
  * | Argument |
