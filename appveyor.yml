@@ -17,12 +17,16 @@ build_script:
 
 test_script:
   - BitOperations_UnitTest.exe -v | tee UnitTest.log
-  - dir
-  - tee --version
 
 after_test:
   - gcov src\BitOperations
 
 artifacts:
-  - path: bitoperations\UnitTest\Debug\UnitTest.log
+  - path: projects\bitoperations\UnitTest\Debug\UnitTest.log
     name: UnitTest.log
+    
+  - path: c:\projects\bitoperations\UnitTest\Debug\UnitTest.log
+    name: UnitTest_c
+    
+  - path: bitoperations/UnitTest/Debug/UnitTest.log
+    name: UnitTest_forward
