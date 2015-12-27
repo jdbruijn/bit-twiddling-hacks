@@ -21,7 +21,7 @@ test_script:
 
 after_test:
   - gcov src\BitOperations
-  - 7za log.zip *.log
+  - 7z a log.zip *.log
   - dir %APPVEYOR_BUILD_FOLDER%
 
 artifacts:
