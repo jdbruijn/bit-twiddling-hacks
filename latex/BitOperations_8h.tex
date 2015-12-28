@@ -1,0 +1,748 @@
+\hypertarget{BitOperations_8h}{}\section{source/\+Bit\+Operations.h File Reference}
+\label{BitOperations_8h}\index{source/\+Bit\+Operations.\+h@{source/\+Bit\+Operations.\+h}}
+
+
+Several bit operations and manipulations, also known as \textquotesingle{}bit hacks\textquotesingle{}.  
+
+
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+{\ttfamily \#include $<$stdbool.\+h$>$}\\*
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{BitOperations_8h_a056d17144f69271b2aa329032c7f9e7f}{B\+I\+T\+O\+P\+E\+R\+A\+T\+I\+O\+N\+S\+\_\+\+V\+E\+R\+S\+I\+O\+N\+\_\+\+M\+A\+J\+O\+R}~0
+\item 
+\#define \hyperlink{BitOperations_8h_a0662a620fa595727abc0bcf0db3ae5cd}{B\+I\+T\+O\+P\+E\+R\+A\+T\+I\+O\+N\+S\+\_\+\+V\+E\+R\+S\+I\+O\+N\+\_\+\+M\+I\+N\+O\+R}~1
+\item 
+\#define \hyperlink{BitOperations_8h_ab5cd9a68155ad43531661b80970f95fe}{B\+I\+T\+O\+P\+E\+R\+A\+T\+I\+O\+N\+S\+\_\+\+V\+E\+R\+S\+I\+O\+N\+\_\+\+P\+A\+T\+C\+H}~0
+\item 
+\#define \hyperlink{BitOperations_8h_aa0223944b260ae81d105f2b4645596aa}{B\+I\+T\+O\+P\+E\+R\+A\+T\+I\+O\+N\+S\+\_\+\+N\+C\+H\+A\+R\+\_\+\+B\+I\+T\+S}~8
+\item 
+\#define \hyperlink{BitOperations_8h_a9467842eca4347af92c15c020c1edb33}{B\+I\+T\+\_\+\+M\+A\+S\+K32}(n)~(1\+U $<$$<$ (n))
+\begin{DoxyCompactList}\small\item\em Create a bit mask for a 32-\/bit variable. \end{DoxyCompactList}\item 
+\#define \hyperlink{BitOperations_8h_a1d49978a2c60e8a4934cf1ffd7de10e2}{B\+I\+T\+\_\+\+M\+A\+S\+K64}(n)~(1\+U\+L\+L $<$$<$ (n))
+\begin{DoxyCompactList}\small\item\em Create a bit mask for a 64-\/bit variable. \end{DoxyCompactList}\item 
+\#define \hyperlink{BitOperations_8h_a9bf93119c89d79e3ffa9d67bf19b5d5c}{B\+I\+T\+\_\+\+S\+E\+Tm}(v,  mask)~((v) $\vert$= (mask))
+\begin{DoxyCompactList}\small\item\em Set a bit or bits according to a mask. \end{DoxyCompactList}\item 
+\#define \hyperlink{BitOperations_8h_aae31c62a25721099d6308eb3735cb149}{B\+I\+T\+\_\+\+S\+E\+T}(v,  n)~\hyperlink{BitOperations_8h_a9bf93119c89d79e3ffa9d67bf19b5d5c}{B\+I\+T\+\_\+\+S\+E\+Tm}((v), (1\+U\+L\+L $<$$<$ (n)))
+\begin{DoxyCompactList}\small\item\em Set a single bit. \end{DoxyCompactList}\item 
+\#define \hyperlink{BitOperations_8h_a1385855dd46cfc36602a44c8eba486e9}{B\+I\+T\+\_\+\+C\+L\+E\+A\+Rm}(v,  mask)~((v) \&= ($\sim$(mask)))
+\begin{DoxyCompactList}\small\item\em Clear a bit or bits according to a mask. \end{DoxyCompactList}\item 
+\#define \hyperlink{BitOperations_8h_a79f36506106b778382cb3a4f2be441d1}{B\+I\+T\+\_\+\+C\+L\+E\+A\+R}(v,  n)~\hyperlink{BitOperations_8h_a1385855dd46cfc36602a44c8eba486e9}{B\+I\+T\+\_\+\+C\+L\+E\+A\+Rm}((v), (1\+U\+L\+L $<$$<$ (n)))
+\begin{DoxyCompactList}\small\item\em Clear a single bit. \end{DoxyCompactList}\item 
+\#define \hyperlink{BitOperations_8h_ae2eb09a5bd082b9e431177d03c0e8fac}{B\+I\+T\+\_\+\+F\+L\+I\+Pm}(v,  mask)~((v) $^\wedge$= (mask))
+\begin{DoxyCompactList}\small\item\em Flip/toggle a bit or bits according to a mask. \end{DoxyCompactList}\item 
+\#define \hyperlink{BitOperations_8h_a0ed3ea6b26db588a2c5e1d868d27a962}{B\+I\+T\+\_\+\+F\+L\+I\+P}(v,  n)~\hyperlink{BitOperations_8h_ae2eb09a5bd082b9e431177d03c0e8fac}{B\+I\+T\+\_\+\+F\+L\+I\+Pm}((v), (1\+U\+L\+L $<$$<$ (n)))
+\begin{DoxyCompactList}\small\item\em Flip/toggle a single bit. \end{DoxyCompactList}\item 
+\#define \hyperlink{BitOperations_8h_ac1a7df9f1265b508535d69fdd70b4c7c}{S\+H\+I\+F\+T\+\_\+\+L\+E\+F\+T}(v,  n)~((v) $<$$<$= (n))
+\begin{DoxyCompactList}\small\item\em Shift a variable n places left. \end{DoxyCompactList}\item 
+\#define \hyperlink{BitOperations_8h_acc1b598e656cff9c2c7f563a32d0a3ab}{S\+H\+I\+F\+T\+\_\+\+R\+I\+G\+H\+T}(v,  n)~((v) $>$$>$= (n))
+\begin{DoxyCompactList}\small\item\em Shift a variable n places right. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+uint64\+\_\+t \hyperlink{BitOperations_8h_ab630b54931c5b5bb83cb9c24687f881b}{bit\+Getm} (uint64\+\_\+t \+\_\+v, uint64\+\_\+t \+\_\+mask)
+\begin{DoxyCompactList}\small\item\em Get the value of a bit or bits according to a mask. \end{DoxyCompactList}\item 
+bool \hyperlink{BitOperations_8h_aceacd30a5f69a402340dce032e9a7ca2}{bit\+Get} (uint64\+\_\+t \+\_\+var, uint8\+\_\+t \+\_\+n)
+\begin{DoxyCompactList}\small\item\em Get the value of a single bit. \end{DoxyCompactList}\item 
+bool \hyperlink{BitOperations_8h_a8498303fa2475f5c04212f1269ca2e38}{is\+Positive} (int32\+\_\+t const \+\_\+var)
+\begin{DoxyCompactList}\small\item\em Compute the sign of an integer. \end{DoxyCompactList}\item 
+bool \hyperlink{BitOperations_8h_a2b8e2c9fe69e2a83cd8357f310f4057a}{is\+Odd} (int64\+\_\+t const \+\_\+v)
+\begin{DoxyCompactList}\small\item\em Compute parity of a variable to see if it is odd. \end{DoxyCompactList}\item 
+bool \hyperlink{BitOperations_8h_a0eb28ee6ed78e623fd2d1480c06ed671}{is\+Even} (int64\+\_\+t const \+\_\+v)
+\begin{DoxyCompactList}\small\item\em Compute parity of a variable to see if it is even. \end{DoxyCompactList}\item 
+bool \hyperlink{BitOperations_8h_a5a16a55c4150b94d46a15bb4bdb16ab8}{have\+Opposite\+Signs} (int32\+\_\+t const \+\_\+x, int32\+\_\+t const \+\_\+y)
+\begin{DoxyCompactList}\small\item\em Detect if two integers have opposite signs. \end{DoxyCompactList}\item 
+int32\+\_\+t \hyperlink{BitOperations_8h_a2a80e0c1b11281eedafad0691563e986}{min} (int32\+\_\+t const \+\_\+x, int32\+\_\+t const \+\_\+y)
+\begin{DoxyCompactList}\small\item\em Compute the minimum of two integers without branching. \end{DoxyCompactList}\item 
+int32\+\_\+t \hyperlink{BitOperations_8h_a98b24b67752cb7a65d0bf14efd403a72}{max} (int32\+\_\+t const \+\_\+x, int32\+\_\+t const \+\_\+y)
+\begin{DoxyCompactList}\small\item\em Compute the maximum of two integers without branching. \end{DoxyCompactList}\item 
+bool \hyperlink{BitOperations_8h_ac5c1620193273b5d6bc97d18b5b94a33}{is\+Power\+Of2} (uint64\+\_\+t const \+\_\+var)
+\begin{DoxyCompactList}\small\item\em Determining if an integer is a power of 2. \end{DoxyCompactList}\item 
+void \hyperlink{BitOperations_8h_a6c611cfb3747d5d8adb868840060c1bc}{modify\+Bits} (uint32\+\_\+t $\ast$const \+\_\+var, uint32\+\_\+t const \+\_\+mask, bool const \+\_\+f)
+\begin{DoxyCompactList}\small\item\em Conditionally set or clear bits without branching. \end{DoxyCompactList}\item 
+uint32\+\_\+t \hyperlink{BitOperations_8h_ac10caf47473a5d1c6b3cfd6808d61d9e}{merge\+Bits} (uint32\+\_\+t const \+\_\+x, uint32\+\_\+t const \+\_\+y, uint32\+\_\+t const \+\_\+mask)
+\begin{DoxyCompactList}\small\item\em Merge bits from two values according to a mask. \end{DoxyCompactList}\item 
+uint8\+\_\+t \hyperlink{BitOperations_8h_a6c1510fc2d41e804ab05585b66cc59cd}{n\+Bits\+Set} (uint32\+\_\+t const \+\_\+var)
+\begin{DoxyCompactList}\small\item\em Counting bits set. \end{DoxyCompactList}\item 
+bool \hyperlink{BitOperations_8h_afbf3c541fcc9a3a38f94df4c91ccf320}{is\+Odd\+Parity} (uint64\+\_\+t const \+\_\+var)
+\begin{DoxyCompactList}\small\item\em Compute parity of word with a multiply. \end{DoxyCompactList}\item 
+bool \hyperlink{BitOperations_8h_ac63a832fbfb6cb6ead061652cc5ff9d6}{is\+Even\+Parity} (uint64\+\_\+t const \+\_\+var)
+\begin{DoxyCompactList}\small\item\em Compute parity of word with a multiply. \end{DoxyCompactList}\item 
+uint8\+\_\+t \hyperlink{BitOperations_8h_a242b4cdc0b8cdfd70d599a5d0a90e1ae}{reverse\+Bit\+Order\+Byte} (uint8\+\_\+t const \+\_\+var)
+\begin{DoxyCompactList}\small\item\em Reverse the order of bits in a byte. \end{DoxyCompactList}\item 
+uint32\+\_\+t \hyperlink{BitOperations_8h_a0fa8743f9d90ab9f3d5aa5f6d85296b9}{reverse\+Bit\+Order} (uint32\+\_\+t const \+\_\+var)
+\begin{DoxyCompactList}\small\item\em Reverse an N-\/bit quantity in parallel in 5 $\ast$ lg(\+N) operations. \end{DoxyCompactList}\item 
+uint32\+\_\+t \hyperlink{BitOperations_8h_a2f1e70109083749542e415d9a91f8d8b}{round\+Up\+To\+Power\+Of2} (uint32\+\_\+t const \+\_\+var)
+\begin{DoxyCompactList}\small\item\em Round up to the next highest power of 2 by float casting. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Several bit operations and manipulations, also known as \textquotesingle{}bit hacks\textquotesingle{}. 
+
+\begin{DoxyNote}{Note}
+Most functions below are based on Sean Eron Anderson\textquotesingle{}s Bit Twiddling Hacks. 
+\end{DoxyNote}
+\begin{DoxySeeAlso}{See also}
+\href{https://graphics.stanford.edu/~seander/bithacks.html}{\tt https\+://graphics.\+stanford.\+edu/$\sim$seander/bithacks.\+html} 
+
+\href{https://github.com/gibsjose/BitHacks/blob/master/BitHacks.md}{\tt https\+://github.\+com/gibsjose/\+Bit\+Hacks/blob/master/\+Bit\+Hacks.\+md} 
+\end{DoxySeeAlso}
+
+
+\subsection{Macro Definition Documentation}
+\hypertarget{BitOperations_8h_a79f36506106b778382cb3a4f2be441d1}{}\index{Bit\+Operations.\+h@{Bit\+Operations.\+h}!B\+I\+T\+\_\+\+C\+L\+E\+A\+R@{B\+I\+T\+\_\+\+C\+L\+E\+A\+R}}
+\index{B\+I\+T\+\_\+\+C\+L\+E\+A\+R@{B\+I\+T\+\_\+\+C\+L\+E\+A\+R}!Bit\+Operations.\+h@{Bit\+Operations.\+h}}
+\subsubsection[{B\+I\+T\+\_\+\+C\+L\+E\+A\+R}]{\setlength{\rightskip}{0pt plus 5cm}\#define B\+I\+T\+\_\+\+C\+L\+E\+A\+R(
+\begin{DoxyParamCaption}
+\item[{}]{v, }
+\item[{}]{n}
+\end{DoxyParamCaption}
+)~{\bf B\+I\+T\+\_\+\+C\+L\+E\+A\+Rm}((v), (1\+U\+L\+L $<$$<$ (n)))}\label{BitOperations_8h_a79f36506106b778382cb3a4f2be441d1}
+
+
+Clear a single bit. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em v} & Variable to clear a bit in. \\
+\hline
+{\em n} & Number of the bit to clear where 0 is the rightmost bit. \\
+\hline
+\end{DoxyParams}
+\hypertarget{BitOperations_8h_a1385855dd46cfc36602a44c8eba486e9}{}\index{Bit\+Operations.\+h@{Bit\+Operations.\+h}!B\+I\+T\+\_\+\+C\+L\+E\+A\+Rm@{B\+I\+T\+\_\+\+C\+L\+E\+A\+Rm}}
+\index{B\+I\+T\+\_\+\+C\+L\+E\+A\+Rm@{B\+I\+T\+\_\+\+C\+L\+E\+A\+Rm}!Bit\+Operations.\+h@{Bit\+Operations.\+h}}
+\subsubsection[{B\+I\+T\+\_\+\+C\+L\+E\+A\+Rm}]{\setlength{\rightskip}{0pt plus 5cm}\#define B\+I\+T\+\_\+\+C\+L\+E\+A\+Rm(
+\begin{DoxyParamCaption}
+\item[{}]{v, }
+\item[{}]{mask}
+\end{DoxyParamCaption}
+)~((v) \&= ($\sim$(mask)))}\label{BitOperations_8h_a1385855dd46cfc36602a44c8eba486e9}
+
+
+Clear a bit or bits according to a mask. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em v} & Variable to clear the bit(s) in. \\
+\hline
+{\em mask} & Mask for clearing the bit(s). \\
+\hline
+\end{DoxyParams}
+\hypertarget{BitOperations_8h_a0ed3ea6b26db588a2c5e1d868d27a962}{}\index{Bit\+Operations.\+h@{Bit\+Operations.\+h}!B\+I\+T\+\_\+\+F\+L\+I\+P@{B\+I\+T\+\_\+\+F\+L\+I\+P}}
+\index{B\+I\+T\+\_\+\+F\+L\+I\+P@{B\+I\+T\+\_\+\+F\+L\+I\+P}!Bit\+Operations.\+h@{Bit\+Operations.\+h}}
+\subsubsection[{B\+I\+T\+\_\+\+F\+L\+I\+P}]{\setlength{\rightskip}{0pt plus 5cm}\#define B\+I\+T\+\_\+\+F\+L\+I\+P(
+\begin{DoxyParamCaption}
+\item[{}]{v, }
+\item[{}]{n}
+\end{DoxyParamCaption}
+)~{\bf B\+I\+T\+\_\+\+F\+L\+I\+Pm}((v), (1\+U\+L\+L $<$$<$ (n)))}\label{BitOperations_8h_a0ed3ea6b26db588a2c5e1d868d27a962}
+
+
+Flip/toggle a single bit. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em v} & Variable to flip a bit in. \\
+\hline
+{\em n} & Number of the bit to flip where 0 is the rightmost bit. \\
+\hline
+\end{DoxyParams}
+\hypertarget{BitOperations_8h_ae2eb09a5bd082b9e431177d03c0e8fac}{}\index{Bit\+Operations.\+h@{Bit\+Operations.\+h}!B\+I\+T\+\_\+\+F\+L\+I\+Pm@{B\+I\+T\+\_\+\+F\+L\+I\+Pm}}
+\index{B\+I\+T\+\_\+\+F\+L\+I\+Pm@{B\+I\+T\+\_\+\+F\+L\+I\+Pm}!Bit\+Operations.\+h@{Bit\+Operations.\+h}}
+\subsubsection[{B\+I\+T\+\_\+\+F\+L\+I\+Pm}]{\setlength{\rightskip}{0pt plus 5cm}\#define B\+I\+T\+\_\+\+F\+L\+I\+Pm(
+\begin{DoxyParamCaption}
+\item[{}]{v, }
+\item[{}]{mask}
+\end{DoxyParamCaption}
+)~((v) $^\wedge$= (mask))}\label{BitOperations_8h_ae2eb09a5bd082b9e431177d03c0e8fac}
+
+
+Flip/toggle a bit or bits according to a mask. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em v} & Variable to flip the bit(s) in. \\
+\hline
+{\em mask} & Mask for flipping the bit(s). \\
+\hline
+\end{DoxyParams}
+\hypertarget{BitOperations_8h_a9467842eca4347af92c15c020c1edb33}{}\index{Bit\+Operations.\+h@{Bit\+Operations.\+h}!B\+I\+T\+\_\+\+M\+A\+S\+K32@{B\+I\+T\+\_\+\+M\+A\+S\+K32}}
+\index{B\+I\+T\+\_\+\+M\+A\+S\+K32@{B\+I\+T\+\_\+\+M\+A\+S\+K32}!Bit\+Operations.\+h@{Bit\+Operations.\+h}}
+\subsubsection[{B\+I\+T\+\_\+\+M\+A\+S\+K32}]{\setlength{\rightskip}{0pt plus 5cm}\#define B\+I\+T\+\_\+\+M\+A\+S\+K32(
+\begin{DoxyParamCaption}
+\item[{}]{n}
+\end{DoxyParamCaption}
+)~(1\+U $<$$<$ (n))}\label{BitOperations_8h_a9467842eca4347af92c15c020c1edb33}
+
+
+Create a bit mask for a 32-\/bit variable. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em n} & Number of the bit to create the mask for (0-\/31). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+uint32\+\_\+t The created bit mask. 
+\end{DoxyReturn}
+\hypertarget{BitOperations_8h_a1d49978a2c60e8a4934cf1ffd7de10e2}{}\index{Bit\+Operations.\+h@{Bit\+Operations.\+h}!B\+I\+T\+\_\+\+M\+A\+S\+K64@{B\+I\+T\+\_\+\+M\+A\+S\+K64}}
+\index{B\+I\+T\+\_\+\+M\+A\+S\+K64@{B\+I\+T\+\_\+\+M\+A\+S\+K64}!Bit\+Operations.\+h@{Bit\+Operations.\+h}}
+\subsubsection[{B\+I\+T\+\_\+\+M\+A\+S\+K64}]{\setlength{\rightskip}{0pt plus 5cm}\#define B\+I\+T\+\_\+\+M\+A\+S\+K64(
+\begin{DoxyParamCaption}
+\item[{}]{n}
+\end{DoxyParamCaption}
+)~(1\+U\+L\+L $<$$<$ (n))}\label{BitOperations_8h_a1d49978a2c60e8a4934cf1ffd7de10e2}
+
+
+Create a bit mask for a 64-\/bit variable. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em n} & Number of the bit to create the mask for (0-\/63). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+uint64\+\_\+t The created bit mask. 
+\end{DoxyReturn}
+\hypertarget{BitOperations_8h_aae31c62a25721099d6308eb3735cb149}{}\index{Bit\+Operations.\+h@{Bit\+Operations.\+h}!B\+I\+T\+\_\+\+S\+E\+T@{B\+I\+T\+\_\+\+S\+E\+T}}
+\index{B\+I\+T\+\_\+\+S\+E\+T@{B\+I\+T\+\_\+\+S\+E\+T}!Bit\+Operations.\+h@{Bit\+Operations.\+h}}
+\subsubsection[{B\+I\+T\+\_\+\+S\+E\+T}]{\setlength{\rightskip}{0pt plus 5cm}\#define B\+I\+T\+\_\+\+S\+E\+T(
+\begin{DoxyParamCaption}
+\item[{}]{v, }
+\item[{}]{n}
+\end{DoxyParamCaption}
+)~{\bf B\+I\+T\+\_\+\+S\+E\+Tm}((v), (1\+U\+L\+L $<$$<$ (n)))}\label{BitOperations_8h_aae31c62a25721099d6308eb3735cb149}
+
+
+Set a single bit. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em v} & Variable to set a bit in. \\
+\hline
+{\em n} & Number of the bit to set where 0 is the rightmost bit. \\
+\hline
+\end{DoxyParams}
+\hypertarget{BitOperations_8h_a9bf93119c89d79e3ffa9d67bf19b5d5c}{}\index{Bit\+Operations.\+h@{Bit\+Operations.\+h}!B\+I\+T\+\_\+\+S\+E\+Tm@{B\+I\+T\+\_\+\+S\+E\+Tm}}
+\index{B\+I\+T\+\_\+\+S\+E\+Tm@{B\+I\+T\+\_\+\+S\+E\+Tm}!Bit\+Operations.\+h@{Bit\+Operations.\+h}}
+\subsubsection[{B\+I\+T\+\_\+\+S\+E\+Tm}]{\setlength{\rightskip}{0pt plus 5cm}\#define B\+I\+T\+\_\+\+S\+E\+Tm(
+\begin{DoxyParamCaption}
+\item[{}]{v, }
+\item[{}]{mask}
+\end{DoxyParamCaption}
+)~((v) $\vert$= (mask))}\label{BitOperations_8h_a9bf93119c89d79e3ffa9d67bf19b5d5c}
+
+
+Set a bit or bits according to a mask. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em v} & Variable to set the bit(s) in. \\
+\hline
+{\em mask} & Mask for setting the bit(s). \\
+\hline
+\end{DoxyParams}
+\hypertarget{BitOperations_8h_aa0223944b260ae81d105f2b4645596aa}{}\index{Bit\+Operations.\+h@{Bit\+Operations.\+h}!B\+I\+T\+O\+P\+E\+R\+A\+T\+I\+O\+N\+S\+\_\+\+N\+C\+H\+A\+R\+\_\+\+B\+I\+T\+S@{B\+I\+T\+O\+P\+E\+R\+A\+T\+I\+O\+N\+S\+\_\+\+N\+C\+H\+A\+R\+\_\+\+B\+I\+T\+S}}
+\index{B\+I\+T\+O\+P\+E\+R\+A\+T\+I\+O\+N\+S\+\_\+\+N\+C\+H\+A\+R\+\_\+\+B\+I\+T\+S@{B\+I\+T\+O\+P\+E\+R\+A\+T\+I\+O\+N\+S\+\_\+\+N\+C\+H\+A\+R\+\_\+\+B\+I\+T\+S}!Bit\+Operations.\+h@{Bit\+Operations.\+h}}
+\subsubsection[{B\+I\+T\+O\+P\+E\+R\+A\+T\+I\+O\+N\+S\+\_\+\+N\+C\+H\+A\+R\+\_\+\+B\+I\+T\+S}]{\setlength{\rightskip}{0pt plus 5cm}\#define B\+I\+T\+O\+P\+E\+R\+A\+T\+I\+O\+N\+S\+\_\+\+N\+C\+H\+A\+R\+\_\+\+B\+I\+T\+S~8}\label{BitOperations_8h_aa0223944b260ae81d105f2b4645596aa}
+Number of bits in a byte. \hypertarget{BitOperations_8h_a056d17144f69271b2aa329032c7f9e7f}{}\index{Bit\+Operations.\+h@{Bit\+Operations.\+h}!B\+I\+T\+O\+P\+E\+R\+A\+T\+I\+O\+N\+S\+\_\+\+V\+E\+R\+S\+I\+O\+N\+\_\+\+M\+A\+J\+O\+R@{B\+I\+T\+O\+P\+E\+R\+A\+T\+I\+O\+N\+S\+\_\+\+V\+E\+R\+S\+I\+O\+N\+\_\+\+M\+A\+J\+O\+R}}
+\index{B\+I\+T\+O\+P\+E\+R\+A\+T\+I\+O\+N\+S\+\_\+\+V\+E\+R\+S\+I\+O\+N\+\_\+\+M\+A\+J\+O\+R@{B\+I\+T\+O\+P\+E\+R\+A\+T\+I\+O\+N\+S\+\_\+\+V\+E\+R\+S\+I\+O\+N\+\_\+\+M\+A\+J\+O\+R}!Bit\+Operations.\+h@{Bit\+Operations.\+h}}
+\subsubsection[{B\+I\+T\+O\+P\+E\+R\+A\+T\+I\+O\+N\+S\+\_\+\+V\+E\+R\+S\+I\+O\+N\+\_\+\+M\+A\+J\+O\+R}]{\setlength{\rightskip}{0pt plus 5cm}\#define B\+I\+T\+O\+P\+E\+R\+A\+T\+I\+O\+N\+S\+\_\+\+V\+E\+R\+S\+I\+O\+N\+\_\+\+M\+A\+J\+O\+R~0}\label{BitOperations_8h_a056d17144f69271b2aa329032c7f9e7f}
+Major version number. \hypertarget{BitOperations_8h_a0662a620fa595727abc0bcf0db3ae5cd}{}\index{Bit\+Operations.\+h@{Bit\+Operations.\+h}!B\+I\+T\+O\+P\+E\+R\+A\+T\+I\+O\+N\+S\+\_\+\+V\+E\+R\+S\+I\+O\+N\+\_\+\+M\+I\+N\+O\+R@{B\+I\+T\+O\+P\+E\+R\+A\+T\+I\+O\+N\+S\+\_\+\+V\+E\+R\+S\+I\+O\+N\+\_\+\+M\+I\+N\+O\+R}}
+\index{B\+I\+T\+O\+P\+E\+R\+A\+T\+I\+O\+N\+S\+\_\+\+V\+E\+R\+S\+I\+O\+N\+\_\+\+M\+I\+N\+O\+R@{B\+I\+T\+O\+P\+E\+R\+A\+T\+I\+O\+N\+S\+\_\+\+V\+E\+R\+S\+I\+O\+N\+\_\+\+M\+I\+N\+O\+R}!Bit\+Operations.\+h@{Bit\+Operations.\+h}}
+\subsubsection[{B\+I\+T\+O\+P\+E\+R\+A\+T\+I\+O\+N\+S\+\_\+\+V\+E\+R\+S\+I\+O\+N\+\_\+\+M\+I\+N\+O\+R}]{\setlength{\rightskip}{0pt plus 5cm}\#define B\+I\+T\+O\+P\+E\+R\+A\+T\+I\+O\+N\+S\+\_\+\+V\+E\+R\+S\+I\+O\+N\+\_\+\+M\+I\+N\+O\+R~1}\label{BitOperations_8h_a0662a620fa595727abc0bcf0db3ae5cd}
+Minor version number. \hypertarget{BitOperations_8h_ab5cd9a68155ad43531661b80970f95fe}{}\index{Bit\+Operations.\+h@{Bit\+Operations.\+h}!B\+I\+T\+O\+P\+E\+R\+A\+T\+I\+O\+N\+S\+\_\+\+V\+E\+R\+S\+I\+O\+N\+\_\+\+P\+A\+T\+C\+H@{B\+I\+T\+O\+P\+E\+R\+A\+T\+I\+O\+N\+S\+\_\+\+V\+E\+R\+S\+I\+O\+N\+\_\+\+P\+A\+T\+C\+H}}
+\index{B\+I\+T\+O\+P\+E\+R\+A\+T\+I\+O\+N\+S\+\_\+\+V\+E\+R\+S\+I\+O\+N\+\_\+\+P\+A\+T\+C\+H@{B\+I\+T\+O\+P\+E\+R\+A\+T\+I\+O\+N\+S\+\_\+\+V\+E\+R\+S\+I\+O\+N\+\_\+\+P\+A\+T\+C\+H}!Bit\+Operations.\+h@{Bit\+Operations.\+h}}
+\subsubsection[{B\+I\+T\+O\+P\+E\+R\+A\+T\+I\+O\+N\+S\+\_\+\+V\+E\+R\+S\+I\+O\+N\+\_\+\+P\+A\+T\+C\+H}]{\setlength{\rightskip}{0pt plus 5cm}\#define B\+I\+T\+O\+P\+E\+R\+A\+T\+I\+O\+N\+S\+\_\+\+V\+E\+R\+S\+I\+O\+N\+\_\+\+P\+A\+T\+C\+H~0}\label{BitOperations_8h_ab5cd9a68155ad43531661b80970f95fe}
+Patch version number. \hypertarget{BitOperations_8h_ac1a7df9f1265b508535d69fdd70b4c7c}{}\index{Bit\+Operations.\+h@{Bit\+Operations.\+h}!S\+H\+I\+F\+T\+\_\+\+L\+E\+F\+T@{S\+H\+I\+F\+T\+\_\+\+L\+E\+F\+T}}
+\index{S\+H\+I\+F\+T\+\_\+\+L\+E\+F\+T@{S\+H\+I\+F\+T\+\_\+\+L\+E\+F\+T}!Bit\+Operations.\+h@{Bit\+Operations.\+h}}
+\subsubsection[{S\+H\+I\+F\+T\+\_\+\+L\+E\+F\+T}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+H\+I\+F\+T\+\_\+\+L\+E\+F\+T(
+\begin{DoxyParamCaption}
+\item[{}]{v, }
+\item[{}]{n}
+\end{DoxyParamCaption}
+)~((v) $<$$<$= (n))}\label{BitOperations_8h_ac1a7df9f1265b508535d69fdd70b4c7c}
+
+
+Shift a variable n places left. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em v} & Variable to shift n places left. \\
+\hline
+{\em n} & Number of positions to shift the variable left. \\
+\hline
+\end{DoxyParams}
+\hypertarget{BitOperations_8h_acc1b598e656cff9c2c7f563a32d0a3ab}{}\index{Bit\+Operations.\+h@{Bit\+Operations.\+h}!S\+H\+I\+F\+T\+\_\+\+R\+I\+G\+H\+T@{S\+H\+I\+F\+T\+\_\+\+R\+I\+G\+H\+T}}
+\index{S\+H\+I\+F\+T\+\_\+\+R\+I\+G\+H\+T@{S\+H\+I\+F\+T\+\_\+\+R\+I\+G\+H\+T}!Bit\+Operations.\+h@{Bit\+Operations.\+h}}
+\subsubsection[{S\+H\+I\+F\+T\+\_\+\+R\+I\+G\+H\+T}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+H\+I\+F\+T\+\_\+\+R\+I\+G\+H\+T(
+\begin{DoxyParamCaption}
+\item[{}]{v, }
+\item[{}]{n}
+\end{DoxyParamCaption}
+)~((v) $>$$>$= (n))}\label{BitOperations_8h_acc1b598e656cff9c2c7f563a32d0a3ab}
+
+
+Shift a variable n places right. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em v} & Variable to shift n places right. \\
+\hline
+{\em n} & Number of positions to shift the variable right. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Function Documentation}
+\hypertarget{BitOperations_8h_aceacd30a5f69a402340dce032e9a7ca2}{}\index{Bit\+Operations.\+h@{Bit\+Operations.\+h}!bit\+Get@{bit\+Get}}
+\index{bit\+Get@{bit\+Get}!Bit\+Operations.\+h@{Bit\+Operations.\+h}}
+\subsubsection[{bit\+Get(uint64\+\_\+t \+\_\+var, uint8\+\_\+t \+\_\+n)}]{\setlength{\rightskip}{0pt plus 5cm}bool bit\+Get (
+\begin{DoxyParamCaption}
+\item[{uint64\+\_\+t}]{\+\_\+var, }
+\item[{uint8\+\_\+t}]{\+\_\+n}
+\end{DoxyParamCaption}
+)}\label{BitOperations_8h_aceacd30a5f69a402340dce032e9a7ca2}
+
+
+Get the value of a single bit. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \+\_\+var} & Variable to get a from. \\
+\hline
+{\em \+\_\+n} & Number of the bit to get where 0 is the rightmost bit \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+bool True if the selected bit was set, false else. 
+\end{DoxyReturn}
+\hypertarget{BitOperations_8h_ab630b54931c5b5bb83cb9c24687f881b}{}\index{Bit\+Operations.\+h@{Bit\+Operations.\+h}!bit\+Getm@{bit\+Getm}}
+\index{bit\+Getm@{bit\+Getm}!Bit\+Operations.\+h@{Bit\+Operations.\+h}}
+\subsubsection[{bit\+Getm(uint64\+\_\+t \+\_\+v, uint64\+\_\+t \+\_\+mask)}]{\setlength{\rightskip}{0pt plus 5cm}uint64\+\_\+t bit\+Getm (
+\begin{DoxyParamCaption}
+\item[{uint64\+\_\+t}]{\+\_\+v, }
+\item[{uint64\+\_\+t}]{\+\_\+mask}
+\end{DoxyParamCaption}
+)}\label{BitOperations_8h_ab630b54931c5b5bb83cb9c24687f881b}
+
+
+Get the value of a bit or bits according to a mask. 
+
+\begin{DoxyNote}{Note}
+This will for example return 7 when all bits in a byte were set and the mask for getting the bits was 7. 
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em \+\_\+v} & The variable to get the bit(s) from. \\
+\hline
+{\em \+\_\+mask} & Mask for getting the bit(s). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+uint64\+\_\+t Value of the bits of v that where set according to the mask. 
+\end{DoxyReturn}
+\hypertarget{BitOperations_8h_a5a16a55c4150b94d46a15bb4bdb16ab8}{}\index{Bit\+Operations.\+h@{Bit\+Operations.\+h}!have\+Opposite\+Signs@{have\+Opposite\+Signs}}
+\index{have\+Opposite\+Signs@{have\+Opposite\+Signs}!Bit\+Operations.\+h@{Bit\+Operations.\+h}}
+\subsubsection[{have\+Opposite\+Signs(int32\+\_\+t const \+\_\+x, int32\+\_\+t const \+\_\+y)}]{\setlength{\rightskip}{0pt plus 5cm}bool have\+Opposite\+Signs (
+\begin{DoxyParamCaption}
+\item[{int32\+\_\+t const}]{\+\_\+x, }
+\item[{int32\+\_\+t const}]{\+\_\+y}
+\end{DoxyParamCaption}
+)}\label{BitOperations_8h_a5a16a55c4150b94d46a15bb4bdb16ab8}
+
+
+Detect if two integers have opposite signs. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \+\_\+x} & First variable of which the signs need to be compared. \\
+\hline
+{\em \+\_\+y} & Second variable of which the signs need to be compared. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+bool True if the variables have opposite signs, false else.
+\end{DoxyReturn}
+Based on Sean Eron Anderson\textquotesingle{}s Bit Twiddling Hacks.
+
+\begin{DoxySeeAlso}{See also}
+\href{https://graphics.stanford.edu/~seander/bithacks.html#DetectOppositeSigns}{\tt https\+://graphics.\+stanford.\+edu/$\sim$seander/bithacks.\+html\#\+Detect\+Opposite\+Signs} 
+
+\href{https://github.com/gibsjose/BitHacks/blob/master/BitHacks.md#detect-if-two-integers-have-opposite-signs}{\tt https\+://github.\+com/gibsjose/\+Bit\+Hacks/blob/master/\+Bit\+Hacks.\+md\#detect-\/if-\/two-\/integers-\/have-\/opposite-\/signs} 
+\end{DoxySeeAlso}
+\hypertarget{BitOperations_8h_a0eb28ee6ed78e623fd2d1480c06ed671}{}\index{Bit\+Operations.\+h@{Bit\+Operations.\+h}!is\+Even@{is\+Even}}
+\index{is\+Even@{is\+Even}!Bit\+Operations.\+h@{Bit\+Operations.\+h}}
+\subsubsection[{is\+Even(int64\+\_\+t const \+\_\+v)}]{\setlength{\rightskip}{0pt plus 5cm}bool is\+Even (
+\begin{DoxyParamCaption}
+\item[{int64\+\_\+t const}]{\+\_\+var}
+\end{DoxyParamCaption}
+)}\label{BitOperations_8h_a0eb28ee6ed78e623fd2d1480c06ed671}
+
+
+Compute parity of a variable to see if it is even. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \+\_\+var} & Variable of which to compute the parity \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+bool True if the variable is even, false else.
+\end{DoxyReturn}
+Use the is\+Odd function and inverse the outcome. \hypertarget{BitOperations_8h_ac63a832fbfb6cb6ead061652cc5ff9d6}{}\index{Bit\+Operations.\+h@{Bit\+Operations.\+h}!is\+Even\+Parity@{is\+Even\+Parity}}
+\index{is\+Even\+Parity@{is\+Even\+Parity}!Bit\+Operations.\+h@{Bit\+Operations.\+h}}
+\subsubsection[{is\+Even\+Parity(uint64\+\_\+t const \+\_\+var)}]{\setlength{\rightskip}{0pt plus 5cm}bool is\+Even\+Parity (
+\begin{DoxyParamCaption}
+\item[{uint64\+\_\+t const}]{\+\_\+var}
+\end{DoxyParamCaption}
+)}\label{BitOperations_8h_ac63a832fbfb6cb6ead061652cc5ff9d6}
+
+
+Compute parity of word with a multiply. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \+\_\+var} & Variable of which to compute the parity. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+bool True if the nuber of bits set in \+\_\+var is even, false else.
+\end{DoxyReturn}
+Based on Sean Eron Anderson\textquotesingle{}s Bit Twiddling Hacks.
+
+\begin{DoxySeeAlso}{See also}
+\href{https://graphics.stanford.edu/~seander/bithacks.html#ParityMultiply}{\tt https\+://graphics.\+stanford.\+edu/$\sim$seander/bithacks.\+html\#\+Parity\+Multiply} 
+
+\href{https://github.com/gibsjose/BitHacks/blob/master/BitHacks.md#compute-parity-of-word-with-a-multiply}{\tt https\+://github.\+com/gibsjose/\+Bit\+Hacks/blob/master/\+Bit\+Hacks.\+md\#compute-\/parity-\/of-\/word-\/with-\/a-\/multiply} 
+\end{DoxySeeAlso}
+\hypertarget{BitOperations_8h_a2b8e2c9fe69e2a83cd8357f310f4057a}{}\index{Bit\+Operations.\+h@{Bit\+Operations.\+h}!is\+Odd@{is\+Odd}}
+\index{is\+Odd@{is\+Odd}!Bit\+Operations.\+h@{Bit\+Operations.\+h}}
+\subsubsection[{is\+Odd(int64\+\_\+t const \+\_\+v)}]{\setlength{\rightskip}{0pt plus 5cm}bool is\+Odd (
+\begin{DoxyParamCaption}
+\item[{int64\+\_\+t const}]{\+\_\+var}
+\end{DoxyParamCaption}
+)}\label{BitOperations_8h_a2b8e2c9fe69e2a83cd8357f310f4057a}
+
+
+Compute parity of a variable to see if it is odd. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \+\_\+var} & Variable of which to compute the parity. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+bool True if the variable is odd, false else.
+\end{DoxyReturn}
+Use one A\+N\+D-\/operation to check whether the L\+S\+B (zeroth bit) is set. \hypertarget{BitOperations_8h_afbf3c541fcc9a3a38f94df4c91ccf320}{}\index{Bit\+Operations.\+h@{Bit\+Operations.\+h}!is\+Odd\+Parity@{is\+Odd\+Parity}}
+\index{is\+Odd\+Parity@{is\+Odd\+Parity}!Bit\+Operations.\+h@{Bit\+Operations.\+h}}
+\subsubsection[{is\+Odd\+Parity(uint64\+\_\+t const \+\_\+var)}]{\setlength{\rightskip}{0pt plus 5cm}bool is\+Odd\+Parity (
+\begin{DoxyParamCaption}
+\item[{uint64\+\_\+t const}]{\+\_\+var}
+\end{DoxyParamCaption}
+)}\label{BitOperations_8h_afbf3c541fcc9a3a38f94df4c91ccf320}
+
+
+Compute parity of word with a multiply. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \+\_\+var} & Variable of which to compute the parity. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+bool True if the nuber of bits set in \+\_\+v is odd, false else.
+\end{DoxyReturn}
+Based on Sean Eron Anderson\textquotesingle{}s Bit Twiddling Hacks.
+
+\begin{DoxySeeAlso}{See also}
+\href{https://graphics.stanford.edu/~seander/bithacks.html#ParityMultiply}{\tt https\+://graphics.\+stanford.\+edu/$\sim$seander/bithacks.\+html\#\+Parity\+Multiply} 
+
+\href{https://github.com/gibsjose/BitHacks/blob/master/BitHacks.md#compute-parity-of-word-with-a-multiply}{\tt https\+://github.\+com/gibsjose/\+Bit\+Hacks/blob/master/\+Bit\+Hacks.\+md\#compute-\/parity-\/of-\/word-\/with-\/a-\/multiply} 
+\end{DoxySeeAlso}
+\hypertarget{BitOperations_8h_a8498303fa2475f5c04212f1269ca2e38}{}\index{Bit\+Operations.\+h@{Bit\+Operations.\+h}!is\+Positive@{is\+Positive}}
+\index{is\+Positive@{is\+Positive}!Bit\+Operations.\+h@{Bit\+Operations.\+h}}
+\subsubsection[{is\+Positive(int32\+\_\+t const \+\_\+var)}]{\setlength{\rightskip}{0pt plus 5cm}bool is\+Positive (
+\begin{DoxyParamCaption}
+\item[{int32\+\_\+t const}]{\+\_\+var}
+\end{DoxyParamCaption}
+)}\label{BitOperations_8h_a8498303fa2475f5c04212f1269ca2e38}
+
+
+Compute the sign of an integer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \+\_\+var} & Variable of which to compute the sign \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+boolean value of 1 (true) if the variable is positive, 0 else.
+\end{DoxyReturn}
+Based on Sean Eron Anderson\textquotesingle{}s Bit Twiddling Hacks.
+
+\begin{DoxySeeAlso}{See also}
+\href{https://graphics.stanford.edu/~seander/bithacks.html#CopyIntegerSign}{\tt https\+://graphics.\+stanford.\+edu/$\sim$seander/bithacks.\+html\#\+Copy\+Integer\+Sign} 
+
+\href{https://github.com/gibsjose/BitHacks/blob/master/BitHacks.md#compute-the-sign-of-an-integer}{\tt https\+://github.\+com/gibsjose/\+Bit\+Hacks/blob/master/\+Bit\+Hacks.\+md\#compute-\/the-\/sign-\/of-\/an-\/integer} 
+\end{DoxySeeAlso}
+\hypertarget{BitOperations_8h_ac5c1620193273b5d6bc97d18b5b94a33}{}\index{Bit\+Operations.\+h@{Bit\+Operations.\+h}!is\+Power\+Of2@{is\+Power\+Of2}}
+\index{is\+Power\+Of2@{is\+Power\+Of2}!Bit\+Operations.\+h@{Bit\+Operations.\+h}}
+\subsubsection[{is\+Power\+Of2(uint64\+\_\+t const \+\_\+var)}]{\setlength{\rightskip}{0pt plus 5cm}bool is\+Power\+Of2 (
+\begin{DoxyParamCaption}
+\item[{uint64\+\_\+t const}]{\+\_\+var}
+\end{DoxyParamCaption}
+)}\label{BitOperations_8h_ac5c1620193273b5d6bc97d18b5b94a33}
+
+
+Determining if an integer is a power of 2. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \+\_\+var} & Variable of which to check if it is a power of two. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+bool True if \+\_\+v is a power of to, false else.
+\end{DoxyReturn}
+Based on Sean Eron Anderson\textquotesingle{}s Bit Twiddling Hacks.
+
+\begin{DoxySeeAlso}{See also}
+\href{https://graphics.stanford.edu/~seander/bithacks.html#DetermineIfPowerOf2}{\tt https\+://graphics.\+stanford.\+edu/$\sim$seander/bithacks.\+html\#\+Determine\+If\+Power\+Of2} 
+
+\href{https://github.com/gibsjose/BitHacks/blob/master/BitHacks.md#determining-if-an-integer-is-a-power-of-2}{\tt https\+://github.\+com/gibsjose/\+Bit\+Hacks/blob/master/\+Bit\+Hacks.\+md\#determining-\/if-\/an-\/integer-\/is-\/a-\/power-\/of-\/2} 
+\end{DoxySeeAlso}
+\hypertarget{BitOperations_8h_a98b24b67752cb7a65d0bf14efd403a72}{}\index{Bit\+Operations.\+h@{Bit\+Operations.\+h}!max@{max}}
+\index{max@{max}!Bit\+Operations.\+h@{Bit\+Operations.\+h}}
+\subsubsection[{max(int32\+\_\+t const \+\_\+x, int32\+\_\+t const \+\_\+y)}]{\setlength{\rightskip}{0pt plus 5cm}int32\+\_\+t max (
+\begin{DoxyParamCaption}
+\item[{int32\+\_\+t const}]{\+\_\+x, }
+\item[{int32\+\_\+t const}]{\+\_\+y}
+\end{DoxyParamCaption}
+)}\label{BitOperations_8h_a98b24b67752cb7a65d0bf14efd403a72}
+
+
+Compute the maximum of two integers without branching. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \+\_\+x} & First variable of which the maximum needs to be found. \\
+\hline
+{\em \+\_\+y} & Second variable of which the maximum needs to be found. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int32\+\_\+t The maximum value \+\_\+x or \+\_\+y.
+\end{DoxyReturn}
+Based on Sean Eron Anderson\textquotesingle{}s Bit Twiddling Hacks.
+
+\begin{DoxySeeAlso}{See also}
+\href{https://graphics.stanford.edu/~seander/bithacks.html#IntegerMinOrMax}{\tt https\+://graphics.\+stanford.\+edu/$\sim$seander/bithacks.\+html\#\+Integer\+Min\+Or\+Max} 
+
+\href{https://github.com/gibsjose/BitHacks/blob/master/BitHacks.md#compute-the-minimum-min-or-maximum-max-of-two-integers-without-branching}{\tt https\+://github.\+com/gibsjose/\+Bit\+Hacks/blob/master/\+Bit\+Hacks.\+md\#compute-\/the-\/minimum-\/min-\/or-\/maximum-\/max-\/of-\/two-\/integers-\/without-\/branching} 
+\end{DoxySeeAlso}
+\hypertarget{BitOperations_8h_ac10caf47473a5d1c6b3cfd6808d61d9e}{}\index{Bit\+Operations.\+h@{Bit\+Operations.\+h}!merge\+Bits@{merge\+Bits}}
+\index{merge\+Bits@{merge\+Bits}!Bit\+Operations.\+h@{Bit\+Operations.\+h}}
+\subsubsection[{merge\+Bits(uint32\+\_\+t const \+\_\+x, uint32\+\_\+t const \+\_\+y, uint32\+\_\+t const \+\_\+mask)}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t merge\+Bits (
+\begin{DoxyParamCaption}
+\item[{uint32\+\_\+t const}]{\+\_\+x, }
+\item[{uint32\+\_\+t const}]{\+\_\+y, }
+\item[{uint32\+\_\+t const}]{\+\_\+mask}
+\end{DoxyParamCaption}
+)}\label{BitOperations_8h_ac10caf47473a5d1c6b3cfd6808d61d9e}
+
+
+Merge bits from two values according to a mask. 
+
+\begin{DoxyNote}{Note}
+This does not change the variable! 
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em \+\_\+x} & Variable to merge in non-\/masked bits. \\
+\hline
+{\em \+\_\+y} & Variable to merge in masked bits. \\
+\hline
+{\em \+\_\+mask} & Bit mask for setting or clearing bits. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+uint32\+\_\+t Result of the merged variables \+\_\+x and \+\_\+y.
+\end{DoxyReturn}
+Based on Sean Eron Anderson\textquotesingle{}s Bit Twiddling Hacks.
+
+\begin{DoxySeeAlso}{See also}
+\href{https://graphics.stanford.edu/~seander/bithacks.html#MaskedMerge}{\tt https\+://graphics.\+stanford.\+edu/$\sim$seander/bithacks.\+html\#\+Masked\+Merge} 
+
+\href{https://github.com/gibsjose/BitHacks/blob/master/BitHacks.md#merge-bits-from-two-values-according-to-a-mask}{\tt https\+://github.\+com/gibsjose/\+Bit\+Hacks/blob/master/\+Bit\+Hacks.\+md\#merge-\/bits-\/from-\/two-\/values-\/according-\/to-\/a-\/mask} 
+\end{DoxySeeAlso}
+\hypertarget{BitOperations_8h_a2a80e0c1b11281eedafad0691563e986}{}\index{Bit\+Operations.\+h@{Bit\+Operations.\+h}!min@{min}}
+\index{min@{min}!Bit\+Operations.\+h@{Bit\+Operations.\+h}}
+\subsubsection[{min(int32\+\_\+t const \+\_\+x, int32\+\_\+t const \+\_\+y)}]{\setlength{\rightskip}{0pt plus 5cm}int32\+\_\+t min (
+\begin{DoxyParamCaption}
+\item[{int32\+\_\+t const}]{\+\_\+x, }
+\item[{int32\+\_\+t const}]{\+\_\+y}
+\end{DoxyParamCaption}
+)}\label{BitOperations_8h_a2a80e0c1b11281eedafad0691563e986}
+
+
+Compute the minimum of two integers without branching. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \+\_\+x} & First variable of which the minimum needs to be found. \\
+\hline
+{\em \+\_\+y} & Second variable of which the minimum needs to be found. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int32\+\_\+t The minimum value \+\_\+x or \+\_\+y.
+\end{DoxyReturn}
+Based on Sean Eron Anderson\textquotesingle{}s Bit Twiddling Hacks.
+
+\begin{DoxySeeAlso}{See also}
+\href{https://graphics.stanford.edu/~seander/bithacks.html#IntegerMinOrMax}{\tt https\+://graphics.\+stanford.\+edu/$\sim$seander/bithacks.\+html\#\+Integer\+Min\+Or\+Max} 
+
+\href{https://github.com/gibsjose/BitHacks/blob/master/BitHacks.md#compute-the-minimum-min-or-maximum-max-of-two-integers-without-branching}{\tt https\+://github.\+com/gibsjose/\+Bit\+Hacks/blob/master/\+Bit\+Hacks.\+md\#compute-\/the-\/minimum-\/min-\/or-\/maximum-\/max-\/of-\/two-\/integers-\/without-\/branching} 
+\end{DoxySeeAlso}
+\hypertarget{BitOperations_8h_a6c611cfb3747d5d8adb868840060c1bc}{}\index{Bit\+Operations.\+h@{Bit\+Operations.\+h}!modify\+Bits@{modify\+Bits}}
+\index{modify\+Bits@{modify\+Bits}!Bit\+Operations.\+h@{Bit\+Operations.\+h}}
+\subsubsection[{modify\+Bits(uint32\+\_\+t $\ast$const \+\_\+var, uint32\+\_\+t const \+\_\+mask, bool const \+\_\+f)}]{\setlength{\rightskip}{0pt plus 5cm}void modify\+Bits (
+\begin{DoxyParamCaption}
+\item[{uint32\+\_\+t $\ast$const}]{\+\_\+var, }
+\item[{uint32\+\_\+t const}]{\+\_\+mask, }
+\item[{bool const}]{\+\_\+f}
+\end{DoxyParamCaption}
+)}\label{BitOperations_8h_a6c611cfb3747d5d8adb868840060c1bc}
+
+
+Conditionally set or clear bits without branching. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \+\_\+var} & Pointer to the variable of which to set or clear bits. \\
+\hline
+{\em \+\_\+mask} & Bit mask for setting or clearing bits. \\
+\hline
+{\em \+\_\+f} & Flag whether the flag needs to be set or cleared (1 or 0).\\
+\hline
+\end{DoxyParams}
+Based on Sean Eron Anderson\textquotesingle{}s Bit Twiddling Hacks.
+
+\begin{DoxySeeAlso}{See also}
+\href{https://graphics.stanford.edu/~seander/bithacks.html#ConditionalSetOrClearBitsWithoutBranching}{\tt https\+://graphics.\+stanford.\+edu/$\sim$seander/bithacks.\+html\#\+Conditional\+Set\+Or\+Clear\+Bits\+Without\+Branching} 
+
+\href{https://github.com/gibsjose/BitHacks/blob/master/BitHacks.md#conditionally-set-or-clear-bits-without-branching}{\tt https\+://github.\+com/gibsjose/\+Bit\+Hacks/blob/master/\+Bit\+Hacks.\+md\#conditionally-\/set-\/or-\/clear-\/bits-\/without-\/branching} 
+\end{DoxySeeAlso}
+\hypertarget{BitOperations_8h_a6c1510fc2d41e804ab05585b66cc59cd}{}\index{Bit\+Operations.\+h@{Bit\+Operations.\+h}!n\+Bits\+Set@{n\+Bits\+Set}}
+\index{n\+Bits\+Set@{n\+Bits\+Set}!Bit\+Operations.\+h@{Bit\+Operations.\+h}}
+\subsubsection[{n\+Bits\+Set(uint32\+\_\+t const \+\_\+var)}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t n\+Bits\+Set (
+\begin{DoxyParamCaption}
+\item[{uint32\+\_\+t const}]{\+\_\+var}
+\end{DoxyParamCaption}
+)}\label{BitOperations_8h_a6c1510fc2d41e804ab05585b66cc59cd}
+
+
+Counting bits set. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \+\_\+var} & Variable of which to check how much bits are set. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+uint8\+\_\+t Number of bits set in \+\_\+var.
+\end{DoxyReturn}
+Based on Sean Eron Anderson\textquotesingle{}s Bit Twiddling Hacks.
+
+\begin{DoxySeeAlso}{See also}
+\href{https://graphics.stanford.edu/~seander/bithacks.html#CountBitsSet64}{\tt https\+://graphics.\+stanford.\+edu/$\sim$seander/bithacks.\+html\#\+Count\+Bits\+Set64} 
+
+\href{https://github.com/gibsjose/BitHacks/blob/master/BitHacks.md#counting-bits-set-in-14-24-or-32-bit-words-using-64-bit-instructions}{\tt https\+://github.\+com/gibsjose/\+Bit\+Hacks/blob/master/\+Bit\+Hacks.\+md\#counting-\/bits-\/set-\/in-\/14-\/24-\/or-\/32-\/bit-\/words-\/using-\/64-\/bit-\/instructions} 
+\end{DoxySeeAlso}
+\hypertarget{BitOperations_8h_a0fa8743f9d90ab9f3d5aa5f6d85296b9}{}\index{Bit\+Operations.\+h@{Bit\+Operations.\+h}!reverse\+Bit\+Order@{reverse\+Bit\+Order}}
+\index{reverse\+Bit\+Order@{reverse\+Bit\+Order}!Bit\+Operations.\+h@{Bit\+Operations.\+h}}
+\subsubsection[{reverse\+Bit\+Order(uint32\+\_\+t const \+\_\+var)}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t reverse\+Bit\+Order (
+\begin{DoxyParamCaption}
+\item[{uint32\+\_\+t const}]{\+\_\+var}
+\end{DoxyParamCaption}
+)}\label{BitOperations_8h_a0fa8743f9d90ab9f3d5aa5f6d85296b9}
+
+
+Reverse an N-\/bit quantity in parallel in 5 $\ast$ lg(\+N) operations. 
+
+\begin{DoxyNote}{Note}
+Now set to reverse the bit order of an 32 bit unsigned integer. 
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em \+\_\+var} & Variable of which the bit order needs to be reversed. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+uint32\+\_\+t The reversed variable.
+\end{DoxyReturn}
+Based on Sean Eron Anderson\textquotesingle{}s Bit Twiddling Hacks.
+
+\begin{DoxySeeAlso}{See also}
+\href{https://graphics.stanford.edu/~seander/bithacks.html#ReverseParallel}{\tt https\+://graphics.\+stanford.\+edu/$\sim$seander/bithacks.\+html\#\+Reverse\+Parallel} 
+
+\href{https://github.com/gibsjose/BitHacks/blob/master/BitHacks.md#reverse-an-n-bit-quantity-in-parallel-in-5&ndash;lgn-operations}{\tt https\+://github.\+com/gibsjose/\+Bit\+Hacks/blob/master/\+Bit\+Hacks.\+md\#reverse-\/an-\/n-\/bit-\/quantity-\/in-\/parallel-\/in-\/5--lgn-\/operations} 
+\end{DoxySeeAlso}
+\hypertarget{BitOperations_8h_a242b4cdc0b8cdfd70d599a5d0a90e1ae}{}\index{Bit\+Operations.\+h@{Bit\+Operations.\+h}!reverse\+Bit\+Order\+Byte@{reverse\+Bit\+Order\+Byte}}
+\index{reverse\+Bit\+Order\+Byte@{reverse\+Bit\+Order\+Byte}!Bit\+Operations.\+h@{Bit\+Operations.\+h}}
+\subsubsection[{reverse\+Bit\+Order\+Byte(uint8\+\_\+t const \+\_\+var)}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t reverse\+Bit\+Order\+Byte (
+\begin{DoxyParamCaption}
+\item[{uint8\+\_\+t const}]{\+\_\+var}
+\end{DoxyParamCaption}
+)}\label{BitOperations_8h_a242b4cdc0b8cdfd70d599a5d0a90e1ae}
+
+
+Reverse the order of bits in a byte. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \+\_\+var} & Variable which needs to be reversed. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+uint8\+\_\+t The reversed variable.
+\end{DoxyReturn}
+Based on Sean Eron Anderson\textquotesingle{}s Bit Twiddling Hacks.
+
+\begin{DoxySeeAlso}{See also}
+\href{https://graphics.stanford.edu/~seander/bithacks.html#ReverseByteWith64BitsDiv}{\tt https\+://graphics.\+stanford.\+edu/$\sim$seander/bithacks.\+html\#\+Reverse\+Byte\+With64\+Bits\+Div} 
+
+\href{https://github.com/gibsjose/BitHacks/blob/master/BitHacks.md#reverse-the-bits-in-a-byte-with-3-operations-64-bit-multiply-and-modulus-division}{\tt https\+://github.\+com/gibsjose/\+Bit\+Hacks/blob/master/\+Bit\+Hacks.\+md\#reverse-\/the-\/bits-\/in-\/a-\/byte-\/with-\/3-\/operations-\/64-\/bit-\/multiply-\/and-\/modulus-\/division} 
+\end{DoxySeeAlso}
+\hypertarget{BitOperations_8h_a2f1e70109083749542e415d9a91f8d8b}{}\index{Bit\+Operations.\+h@{Bit\+Operations.\+h}!round\+Up\+To\+Power\+Of2@{round\+Up\+To\+Power\+Of2}}
+\index{round\+Up\+To\+Power\+Of2@{round\+Up\+To\+Power\+Of2}!Bit\+Operations.\+h@{Bit\+Operations.\+h}}
+\subsubsection[{round\+Up\+To\+Power\+Of2(uint32\+\_\+t const \+\_\+var)}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t round\+Up\+To\+Power\+Of2 (
+\begin{DoxyParamCaption}
+\item[{uint32\+\_\+t const}]{\+\_\+var}
+\end{DoxyParamCaption}
+)}\label{BitOperations_8h_a2f1e70109083749542e415d9a91f8d8b}
+
+
+Round up to the next highest power of 2 by float casting. 
+
+\begin{DoxyNote}{Note}
+This does not change the variable! 
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em \+\_\+var} & Variable of which needs to be rounded up to the next highest power of 2. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+uint32\+\_\+t The next highest power of 2.
+\end{DoxyReturn}
+Based on Sean Eron Anderson\textquotesingle{}s Bit Twiddling Hacks.
+
+\begin{DoxySeeAlso}{See also}
+\href{https://graphics.stanford.edu/~seander/bithacks.html#RoundUpPowerOf2Float}{\tt https\+://graphics.\+stanford.\+edu/$\sim$seander/bithacks.\+html\#\+Round\+Up\+Power\+Of2\+Float} 
+
+\href{https://github.com/gibsjose/BitHacks/blob/master/BitHacks.md#round-up-to-the-next-highest-power-of-2-by-float-casting}{\tt https\+://github.\+com/gibsjose/\+Bit\+Hacks/blob/master/\+Bit\+Hacks.\+md\#round-\/up-\/to-\/the-\/next-\/highest-\/power-\/of-\/2-\/by-\/float-\/casting} 
+\end{DoxySeeAlso}
