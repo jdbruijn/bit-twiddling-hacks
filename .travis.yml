@@ -2,37 +2,37 @@ language: c
 sudo: false
 compiler: gcc
 
-# whitelist
+# blacklist
 branches:
-  only:
-    - master
+  except:
+    - gh-pages
 
 # install dependencies
 addons:
- apt:
-  packages:
-   - lcov
+  apt:
+    packages:
+      - lcov
 
 # install coveralls
 install:
- - lcov --version
- - gem install coveralls-lcov
+  - lcov --version
+  - gem install coveralls-lcov
 
 before_script:
- - cd ${TRAVIS_BUILD_DIR}
- - chmod +x source/copy_sources_to_unit_test.sh
- - cd source/Debug
+  - cd ${TRAVIS_BUILD_DIR}
+  - chmod +x source/copy_sources_to_unit_test.sh
+  - cd source/Debug
 
 script:
- - make
- - cd ${TRAVIS_BUILD_DIR}/UnitTest/Debug
- - make
+  - make
+  - cd ${TRAVIS_BUILD_DIR}/UnitTest/Debug
+  - make
 
 # run the unit tests and upload the coverage result to Coveralls
 after_success:
- - ./BitOperations_UnitTest.exe -v
- - cd ${TRAVIS_BUILD_DIR}
- - lcov --directory . --capture -b UnitTest/src --output-file coverage.info
- - lcov --remove coverage.info '*BitOperations_UnitTest*' --output-file coverage.info
- - lcov --list coverage.info
- - coveralls-lcov --repo-token ${COVERALLS_TOKEN} coverage.info
+  - ./BitOperations_UnitTest.exe -v
+  - cd ${TRAVIS_BUILD_DIR}
+  - lcov --directory . --capture -b UnitTest/src --output-file coverage.info
+  - lcov --remove coverage.info '*BitOperations_UnitTest*' --output-file coverage.info
+  - lcov --list coverage.info
+  - coveralls-lcov --repo-token ${COVERALLS_TOKEN} coverage.info
