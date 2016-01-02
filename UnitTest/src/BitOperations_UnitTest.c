@@ -61,8 +61,7 @@
 TEST
 bitMask32_masksUpTo32Bit_Generated()
 {
-    uint8_t i;
-    for (i = 0; i < 32; i++) {
+    for (uint8_t i = 0; i < 32; i++) {
         GREATEST_ASSERT_EQ(correctBitMasksUpTo64Bit[i], BIT_MASK32(i));
     }
 
@@ -85,8 +84,7 @@ bitMask32_masksUpTo32Bit_Generated()
 TEST
 bitMask32_masksBetween32And64Bit_ShouldFail()
 {
-    uint8_t i;
-    for (i = 32; i < 64; i++) {
+    for (uint8_t i = 32; i < 64; i++) {
         GREATEST_ASSERT_FALSE(correctBitMasksUpTo64Bit[i] == BIT_MASK32(i));
     }
 
@@ -109,8 +107,7 @@ bitMask32_masksBetween32And64Bit_ShouldFail()
 TEST
 bitMask64_masksUpTo64Bit_Generated()
 {
-    uint8_t i;
-    for (i = 0; i < 64; i++) {
+    for (uint8_t i = 0; i < 64; i++) {
         GREATEST_ASSERT_EQ(correctBitMasksUpTo64Bit[i], BIT_MASK64(i));
     }
 
@@ -132,9 +129,9 @@ bitMask64_masksUpTo64Bit_Generated()
 TEST
 bitSetm_singleBitsUpTo64Bit_Set()
 {
-    uint8_t i;
     uint64_t v;
-    for (i = 0; i < 64; i++) {
+
+    for (uint8_t i = 0; i < 64; i++) {
         v = 0;
         BIT_SETm(v, (1ULL << i));
         GREATEST_ASSERT_EQ(correctBitMasksUpTo64Bit[i], v);
@@ -180,9 +177,9 @@ bitSetm_multipleBitsUpTo64Bit_Set()
 TEST
 bitSet_singleBitsUpTo64Bit_Set()
 {
-    uint8_t i;
     uint64_t v;
-    for (i = 0; i < 64; i++) {
+
+    for (uint8_t i = 0; i < 64; i++) {
         v = 0;
         BIT_SET(v, i);
         GREATEST_ASSERT_EQ(correctBitMasksUpTo64Bit[i], v);
@@ -206,9 +203,9 @@ bitSet_singleBitsUpTo64Bit_Set()
 TEST
 bitClearm_singleBitsUpTo64Bit_Cleared()
 {
-    uint8_t i;
     uint64_t v;
-    for (i = 0; i < 64; i++) {
+
+    for (uint8_t i = 0; i < 64; i++) {
         v = 0xFFFFFFFFFFFFFFFF;
         BIT_CLEARm(v, (1ULL << i));
         GREATEST_ASSERT_EQ(~correctBitMasksUpTo64Bit[i], v);
@@ -254,9 +251,9 @@ bitClearm_multipleBitsUpTo64Bit_Cleared()
 TEST
 bitClear_singleBitsUpTo64Bit_Cleared()
 {
-    uint8_t i;
     uint64_t v;
-    for (i = 0; i < 64; i++) {
+
+    for (uint8_t i = 0; i < 64; i++) {
         v = 0xFFFFFFFFFFFFFFFF;
         BIT_CLEAR(v, i);
         GREATEST_ASSERT_EQ(~correctBitMasksUpTo64Bit[i], v);
@@ -280,9 +277,9 @@ bitClear_singleBitsUpTo64Bit_Cleared()
 TEST
 bitFlipm_singleSetBitsUpTo64Bit_Flipped()
 {
-    uint8_t i;
     uint64_t v;
-    for (i = 0; i < 64; i++) {
+
+    for (uint8_t i = 0; i < 64; i++) {
         v = 0xFFFFFFFFFFFFFFFF;
         BIT_FLIPm(v, (1ULL << i));
         GREATEST_ASSERT_EQ(~correctBitMasksUpTo64Bit[i], v);
@@ -307,9 +304,9 @@ bitFlipm_singleSetBitsUpTo64Bit_Flipped()
 TEST
 bitFlipm_singleClearedBitsUpTo64Bit_Flipped()
 {
-    uint8_t i;
     uint64_t v;
-    for (i = 0; i < 64; i++) {
+
+    for (uint8_t i = 0; i < 64; i++) {
         v = 0;
         BIT_FLIPm(v, (1ULL << i));
         GREATEST_ASSERT_EQ(correctBitMasksUpTo64Bit[i], v);
@@ -377,9 +374,9 @@ bitFlipm_multipleClearedBitsUpTo64Bit_Flipped()
 TEST
 bitFlip_singleSetBitsUpTo64Bit_Flipped()
 {
-    uint8_t i;
     uint64_t v;
-    for (i = 0; i < 64; i++) {
+
+    for (uint8_t i = 0; i < 64; i++) {
         v = 0xFFFFFFFFFFFFFFFF;
         BIT_FLIP(v, i);
         GREATEST_ASSERT_EQ(~correctBitMasksUpTo64Bit[i], v);
@@ -403,9 +400,9 @@ bitFlip_singleSetBitsUpTo64Bit_Flipped()
 TEST
 bitFlip_singleClearedBitsUpTo64Bit_Flipped()
 {
-    uint8_t i;
     uint64_t v;
-    for (i = 0; i < 64; i++) {
+
+    for (uint8_t i = 0; i < 64; i++) {
         v = 0;
         BIT_FLIP(v, i);
         GREATEST_ASSERT_EQ(correctBitMasksUpTo64Bit[i], v);
@@ -430,9 +427,9 @@ bitFlip_singleClearedBitsUpTo64Bit_Flipped()
 TEST
 shiftLeft_singleSetBitUpTo64_Shifted()
 {
-    uint8_t i;
     uint64_t v;
-    for (i = 0; i < 64; i++) {
+
+    for (uint8_t i = 0; i < 64; i++) {
         v = 0x0000000000000001;
         SHIFT_LEFT(v, i);
         GREATEST_ASSERT_EQ(correctBitMasksUpTo64Bit[i], v);
@@ -458,9 +455,9 @@ shiftLeft_singleSetBitUpTo64_Shifted()
 TEST
 shiftLeft_multipleSetBitsUpTo64_Shifted()
 {
-    uint8_t i;
     uint64_t v;
-    for (i = 0; i < 64; i++) {
+
+    for (uint8_t i = 0; i < 64; i++) {
         v = 0x0000000000000001 | 0x0000000000007070;
         SHIFT_LEFT(v, i);
         GREATEST_ASSERT_EQ(correctBitMasksUpTo64Bit[i] |
@@ -486,9 +483,9 @@ shiftLeft_multipleSetBitsUpTo64_Shifted()
 TEST
 shiftRight_singleSetBitUpTo64_Shifted()
 {
-    uint8_t i;
     uint64_t v;
-    for (i = 0; i < 64; i++) {
+
+    for (uint8_t i = 0; i < 64; i++) {
         v = 0x8000000000000000;
         SHIFT_RIGHT(v, i);
         GREATEST_ASSERT_EQ(correctBitMasksUpTo64Bit[63-i], v);
@@ -514,9 +511,9 @@ shiftRight_singleSetBitUpTo64_Shifted()
 TEST
 shiftRight_multipleSetBitsUpTo64_Shifted()
 {
-    uint8_t i;
     uint64_t v;
-    for (i = 0; i < 64; i++) {
+
+    for (uint8_t i = 0; i < 64; i++) {
         v = 0x8000000000000000 | 0x7070000000000000;
         SHIFT_RIGHT(v, i);
         GREATEST_ASSERT_EQ(correctBitMasksUpTo64Bit[63-i] |
@@ -544,8 +541,8 @@ TEST
 bitGetm_multipleRandomSetBitsUpTo64Bit_Generated()
 {
     uint64_t r;
-    uint8_t i;
-    for (i = 0; i < 64; i++) {
+
+    for (uint8_t i = 0; i < 64; i++) {
         r = rand64();
         GREATEST_ASSERT_EQ(correctBitMasksUpTo64Bit[i] | r,
                            bitGetm(correctBitMasksUpTo64Bit[i] | r,
@@ -572,8 +569,8 @@ TEST
 bitGetm_multipleRandomClearedBitsUpTo64Bit_Generated()
 {
     uint64_t r;
-    uint8_t i;
-    for (i = 0; i < 64; i++) {
+
+    for (uint8_t i = 0; i < 64; i++) {
         r = rand64();
         GREATEST_ASSERT_EQ(0,
             bitGetm(correctBitMasksUpTo64Bit[i] | r, ~((1ULL << i) | r)));
@@ -598,8 +595,7 @@ bitGetm_multipleRandomClearedBitsUpTo64Bit_Generated()
 TEST
 bitGet_singleSetBitsUpTo64Bit_Generated()
 {
-    uint8_t i;
-    for (i = 0; i < 64; i++) {
+    for (uint8_t i = 0; i < 64; i++) {
         GREATEST_ASSERT_EQ(1, bitGet(correctBitMasksUpTo64Bit[i], i));
     }
 
@@ -622,8 +618,7 @@ bitGet_singleSetBitsUpTo64Bit_Generated()
 TEST
 bitGet_singleClearedBitsUpTo64Bit_Generated()
 {
-    uint8_t i;
-    for (i = 0; i < 64; i++) {
+    for (uint8_t i = 0; i < 64; i++) {
         GREATEST_ASSERT_EQ(0, bitGet(~correctBitMasksUpTo64Bit[i], i));
     }
 
@@ -727,8 +722,7 @@ isOdd_positiveMaximum64Bit_ParityGenerated()
 TEST
 isOdd_negativePowersOfTwoUpTo64Bit_ParityGenerated()
 {
-    uint8_t i;
-    for (i = 1; i < 64; i++) {
+    for (uint8_t i = 1; i < 64; i++) {
         GREATEST_ASSERT_EQ(0, isOdd(-(int64_t)correctBitMasksUpTo64Bit[i]));
     }
 
@@ -751,8 +745,7 @@ isOdd_negativePowersOfTwoUpTo64Bit_ParityGenerated()
 TEST
 isOdd_positivePowersOfTwoUpTo64BitMinusOne_ParityGenerated()
 {
-    uint8_t i;
-    for (i = 1; i < 64; i++) {
+    for (uint8_t i = 1; i < 64; i++) {
         GREATEST_ASSERT_EQ(1, isOdd((int64_t)correctBitMasksUpTo64Bit[i] - 1));
     }
 
@@ -775,8 +768,7 @@ isOdd_positivePowersOfTwoUpTo64BitMinusOne_ParityGenerated()
 TEST
 isOdd_negativePowersOfTwoUpTo64BitPlusOne_ParityGenerated()
 {
-    uint8_t i;
-    for (i = 1; i < 64; i++) {
+    for (uint8_t i = 1; i < 64; i++) {
         GREATEST_ASSERT_EQ(1, isOdd(-(int64_t)correctBitMasksUpTo64Bit[i] + 1));
     }
 
@@ -799,8 +791,7 @@ isOdd_negativePowersOfTwoUpTo64BitPlusOne_ParityGenerated()
 TEST
 isEven_positivePowersOfTwoUpTo64Bit_ParityGenerated()
 {
-    uint8_t i;
-    for (i = 1; i < 63; i++) {
+    for (uint8_t i = 1; i < 63; i++) {
         GREATEST_ASSERT_EQ(1, isEven((int64_t)correctBitMasksUpTo64Bit[i]));
     }
 
@@ -840,8 +831,7 @@ isEven_positiveMaximum64Bit_ParityGenerated()
 TEST
 isEven_negativePowersOfTwoUpTo64Bit_ParityGenerated()
 {
-    uint8_t i;
-    for (i = 1; i < 64; i++) {
+    for (uint8_t i = 1; i < 64; i++) {
         GREATEST_ASSERT_EQ(1, isEven(-(int64_t)correctBitMasksUpTo64Bit[i]));
     }
 
@@ -864,8 +854,7 @@ isEven_negativePowersOfTwoUpTo64Bit_ParityGenerated()
 TEST
 isEven_positivePowersOfTwoUpTo64BitMinusOne_ParityGenerated()
 {
-    uint8_t i;
-    for (i = 1; i < 64; i++) {
+    for (uint8_t i = 1; i < 64; i++) {
         GREATEST_ASSERT_EQ(0, isEven((int64_t)correctBitMasksUpTo64Bit[i] - 1));
     }
 
@@ -888,8 +877,7 @@ isEven_positivePowersOfTwoUpTo64BitMinusOne_ParityGenerated()
 TEST
 isEven_negativePowersOfTwoUpTo64BitPlusOne_ParityGenerated()
 {
-    uint8_t i;
-    for (i = 1; i < 64; i++) {
+    for (uint8_t i = 1; i < 64; i++) {
         GREATEST_ASSERT_EQ(0,
                            isEven(-(int64_t)correctBitMasksUpTo64Bit[i] + 1));
     }
@@ -1203,8 +1191,7 @@ max_minimumEqual32BitPositiveAndNegativeNumber_MaxFound()
 TEST
 isPowerOf2_powersUpTo64Bit_ArePowers()
 {
-    uint8_t i;
-    for (i = 0; i < 64; i++) {
+    for (uint8_t i = 0; i < 64; i++) {
         GREATEST_ASSERT_EQ(1, isPowerOf2(correctBitMasksUpTo64Bit[i]));
     }
 
@@ -1222,8 +1209,7 @@ isPowerOf2_powersUpTo64Bit_ArePowers()
 TEST
 isPowerOf2_zero_isNotAPower()
 {
-    uint8_t i;
-    for (i = 0; i < 64; i++) {
+    for (uint8_t i = 0; i < 64; i++) {
         GREATEST_ASSERT_EQ(0, isPowerOf2(0));
     }
 
@@ -1246,8 +1232,7 @@ isPowerOf2_zero_isNotAPower()
 TEST
 isPowerOf2_powersUpTo64BitMinusAndPlusOne_AreNotPowers()
 {
-    uint8_t i;
-    for (i = 2; i < 64; i++) {
+    for (uint8_t i = 2; i < 64; i++) {
         GREATEST_ASSERT_EQ(0, isPowerOf2(correctBitMasksUpTo64Bit[i] - 1));
         GREATEST_ASSERT_EQ(0, isPowerOf2(correctBitMasksUpTo64Bit[i] + 1));
     }
@@ -1271,9 +1256,9 @@ isPowerOf2_powersUpTo64BitMinusAndPlusOne_AreNotPowers()
 TEST
 modifyBits_setBitsUpTo32Bit_SingleBitCleared()
 {
-    uint8_t i;
     uint32_t v;
-    for (i = 0; i < 32; i++) {
+
+    for (uint8_t i = 0; i < 32; i++) {
         v = 0xFFFFFFFF;
         modifyBits(&v, (1UL << i), 0);
         GREATEST_ASSERT_EQ(~(uint32_t)correctBitMasksUpTo64Bit[i], v);
@@ -1298,9 +1283,9 @@ modifyBits_setBitsUpTo32Bit_SingleBitCleared()
 TEST
 modifyBits_clearedBitsUpTo32Bit_SingleBitSet()
 {
-    uint8_t i;
     uint32_t v;
-    for (i = 0; i < 32; i++) {
+
+    for (uint8_t i = 0; i < 32; i++) {
         v = 0;
         modifyBits(&v, (1UL << i), 1);
         GREATEST_ASSERT_EQ(correctBitMasksUpTo64Bit[i], v);
@@ -1451,8 +1436,7 @@ nBitsSet_magic32BitNumbers_Generated()
 TEST
 isOddParity_powersOfTwoUpTo64Bit_ParityGenerated()
 {
-    uint8_t i;
-    for (i = 0; i < 64; i++) {
+    for (uint8_t i = 0; i < 64; i++) {
         GREATEST_ASSERT_EQ(1, isOddParity(correctBitMasksUpTo64Bit[i]));
     }
 
@@ -1567,8 +1551,7 @@ isOddParity_magig64BitNumbersMinusOne_ParityGenerated()
 TEST
 isEvenParity_powersOfTwoUpTo64Bit_ParityGenerated()
 {
-    uint8_t i;
-    for (i = 0; i < 64; i++) {
+    for (uint8_t i = 0; i < 64; i++) {
         GREATEST_ASSERT_EQ(0, isEvenParity(correctBitMasksUpTo64Bit[i]));
     }
 
@@ -1775,8 +1758,7 @@ reverseBitOrder_macic32BitNumbers_Reversed()
 TEST
 roundUpToPowerOf2_powersOfTwoUpTo32Bit_ShouldReturnTheSamePower()
 {
-    uint8_t i;
-    for (i = 1; i < 32; i++) {
+    for (uint8_t i = 1; i < 32; i++) {
         GREATEST_ASSERT_EQ((uint32_t)correctBitMasksUpTo64Bit[i],
             roundUpToPowerOf2((uint32_t)correctBitMasksUpTo64Bit[i]));
     }
@@ -1801,8 +1783,7 @@ roundUpToPowerOf2_powersOfTwoUpTo32Bit_ShouldReturnTheSamePower()
 TEST
 roundUpToPowerOf2_powersOfTwoUpTo32BitMinusOne_GeneratePower()
 {
-    uint8_t i;
-    for (i = 2; i < 32; i++) {
+    for (uint8_t i = 2; i < 32; i++) {
         GREATEST_ASSERT_EQ((uint32_t)correctBitMasksUpTo64Bit[i],
             roundUpToPowerOf2((uint32_t)correctBitMasksUpTo64Bit[i] - 1));
     }
@@ -1827,8 +1808,7 @@ roundUpToPowerOf2_powersOfTwoUpTo32BitMinusOne_GeneratePower()
 TEST
 roundUpToPowerOf2_powersOfTwoUpTo32BitPlusOne_GeneratePower()
 {
-    uint8_t i;
-    for (i = 1; i < 32; i++) {
+    for (uint8_t i = 1; i < 32; i++) {
         GREATEST_ASSERT_EQ((uint32_t)correctBitMasksUpTo64Bit[i+1],
             roundUpToPowerOf2((uint32_t)correctBitMasksUpTo64Bit[i] + 1));
     }
@@ -1847,8 +1827,7 @@ roundUpToPowerOf2_powersOfTwoUpTo32BitPlusOne_GeneratePower()
 TEST
 roundUpToPowerOf2_zero_GeneratePower()
 {
-    uint8_t i;
-    for (i = 1; i < 32; i++) {
+    for (uint8_t i = 1; i < 32; i++) {
         GREATEST_ASSERT_EQ(0x00000001, roundUpToPowerOf2(0x00000000));
     }
 
@@ -1973,9 +1952,7 @@ rand64() {
 void
 putBits(uint64_t const _num, uint8_t const _nBits)
 {
-    uint8_t i;
-
-    for( i = _nBits; i > 0; i-- ) {
+    for (uint8_t i = _nBits; i > 0; i--) {
         /* Output plus 48, since character '0' is in the 48th place of the
          * ASCII table.
          */
