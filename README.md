@@ -1,4 +1,5 @@
 # BitOperations
+[![License GPLv3][badge-license]][license]
 [![AppVeyor build status][badge-appveyor]][appveyor]
 [![Travis build status][badge-travis]][travis]
 [![Coveralls coverage][badge-coveralls]][coveralls]
@@ -17,6 +18,8 @@ The unit tests use [greatest](https://github.com/silentbicycle/greatest/) by Sco
 All the functions and function macros are tested by the unit tests, of which the log can be found in every [travis build](https://travis-ci.org/vidavidorra/BitOperations#L169-L243) or in every [AppVeyor build](https://ci.appveyor.com/project/vidavidorra/bitoperations/build/artifacts).
 
 
+[badge-license]:            https://img.shields.io/badge/license-GPLv3-blue.svg
+[license]:                  https://github.com/vidavidorra/BitOperations/blob/master/LICENSE
 [badge-appveyor]:           https://ci.appveyor.com/api/projects/status/730ef5s733aaoyyp?svg=true
 [appveyor]:                 https://ci.appveyor.com/project/vidavidorra/bitoperations
 [badge-travis]:             https://travis-ci.org/vidavidorra/BitOperations.svg
