@@ -2,8 +2,8 @@ version: '{build}'
 clone_folder: C:\projects\bitoperations
 
 branches:
-  only:
-    - master
+  except:
+    - gh-pages
 
 install:
   - SET PATH=%PATH%;C:\cygwin\bin
