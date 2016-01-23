@@ -1936,8 +1936,7 @@ main(int argc, char **argv)
     srand(time(NULL));
 
     RUN_SUITE(BitOperations);
-    printf("\n\n");
-    printf("min: %d\nmax: %d", INT32_MIN, INT32_MAX);
+
     GREATEST_MAIN_END();
     return EXIT_SUCCESS;
 }
