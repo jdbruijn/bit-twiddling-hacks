@@ -1,0 +1,17 @@
+/** @mainpage BitOperations Index
+ * 
+ * @section intro_sec Introduction
+ * The BitOperations project contains several bit operations and manipulations, also known as 'bit hacks'. These functions and function
+ * macros can be used in code to easily perform operations on variables. A complete list of these functons and function macros can be found
+ * on the [BitOperations.h](BitOperations_8h.html) documentation page.
+ * 
+ * @note Some of the functions used in this project are based on <a target="_blank" href="https://graphics.stanford.edu/~seander/bithacks.html">
+ * Sean Eron Anderson's Bit Twiddling Hacks.</a>
+ * See <a href="https://github.com/gibsjose/BitHacks/blob/master/BitHacks.md">Joe Gibson's Markdown version</a> for more information about the
+ * oparations and, for example, the amount of instructions needed for those functions.
+ * A full list of those functions can be found in the <a href="BitOperations_8h.html#details">Detailed description of BitOperations.h</a>.
+ * 
+ * @section unit_test Unit test
+ * The purpose of this unit test is not to verify that the arithmetic is correct, because Sean Eron Anderson already tested that thoroughly.
+ * This unit test verifies that the implementation is correct.
+ */

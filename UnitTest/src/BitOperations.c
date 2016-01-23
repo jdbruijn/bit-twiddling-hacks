@@ -46,13 +46,6 @@ bitGet(uint64_t _var, uint8_t _n)
     return (bitGetm(_var >> _n, 1ULL));
 }
 
-/**
- * Based on Sean Eron Anderson's Bit Twiddling Hacks.
- *
- * @see https://graphics.stanford.edu/~seander/bithacks.html#CopyIntegerSign
- * @see https://github.com/gibsjose/BitHacks/blob/master/BitHacks.md#compute-the-sign-of-an-integer
- *
- */
 bool
 isPositive(int32_t const _var)
 {
@@ -62,7 +55,6 @@ isPositive(int32_t const _var)
 
 /**
  * Use one AND-operation to check whether the LSB (zeroth bit) is set.
- *
  */
 bool
 isOdd(int64_t const _var)
@@ -70,75 +62,36 @@ isOdd(int64_t const _var)
     return (_var & 1LL);
 }
 
-/**
- * Use the isOdd function and inverse the outcome.
- *
- */
 bool
 isEven(int64_t const _var)
 {
     return (!isOdd(_var));
 }
 
-/**
- * Based on Sean Eron Anderson's Bit Twiddling Hacks.
- *
- * @see https://graphics.stanford.edu/~seander/bithacks.html#DetectOppositeSigns
- * @see https://github.com/gibsjose/BitHacks/blob/master/BitHacks.md#detect-if-two-integers-have-opposite-signs
- *
- */
 bool
 haveOppositeSigns(int32_t const _x, int32_t const _y)
 {
     return ((_x ^ _y) < 0);
 }
 
-/**
- * Based on Sean Eron Anderson's Bit Twiddling Hacks.
- *
- * @see https://graphics.stanford.edu/~seander/bithacks.html#IntegerMinOrMax
- * @see https://github.com/gibsjose/BitHacks/blob/master/BitHacks.md#compute-the-minimum-min-or-maximum-max-of-two-integers-without-branching
- *
- */
 int32_t
 min(int32_t const _x, int32_t const _y)
 {
     return (_y ^ ((_x ^ _y) & -(_x < _y)));
 }
 
-/**
- * Based on Sean Eron Anderson's Bit Twiddling Hacks.
- *
- * @see https://graphics.stanford.edu/~seander/bithacks.html#IntegerMinOrMax
- * @see https://github.com/gibsjose/BitHacks/blob/master/BitHacks.md#compute-the-minimum-min-or-maximum-max-of-two-integers-without-branching
- *
- */
 int32_t
 max(int32_t const _x, int32_t const _y)
 {
     return( _x ^ ((_x ^ _y) & -(_x < _y)) );
 }
 
-/**
- * Based on Sean Eron Anderson's Bit Twiddling Hacks.
- *
- * @see https://graphics.stanford.edu/~seander/bithacks.html#DetermineIfPowerOf2
- * @see https://github.com/gibsjose/BitHacks/blob/master/BitHacks.md#determining-if-an-integer-is-a-power-of-2
- *
- */
 bool
 isPowerOf2(uint64_t const _var)
 {
     return (_var && !(_var & (_var - 1)));
 }
 
-/**
- * Based on Sean Eron Anderson's Bit Twiddling Hacks.
- *
- * @see https://graphics.stanford.edu/~seander/bithacks.html#ConditionalSetOrClearBitsWithoutBranching
- * @see https://github.com/gibsjose/BitHacks/blob/master/BitHacks.md#conditionally-set-or-clear-bits-without-branching
- *
- */
 void
 modifyBits(uint32_t *const _var, uint32_t const _mask, bool const _f)
 {
@@ -147,26 +100,12 @@ modifyBits(uint32_t *const _var, uint32_t const _mask, bool const _f)
     return;
 }
 
-/**
- * Based on Sean Eron Anderson's Bit Twiddling Hacks.
- *
- * @see https://graphics.stanford.edu/~seander/bithacks.html#MaskedMerge
- * @see https://github.com/gibsjose/BitHacks/blob/master/BitHacks.md#merge-bits-from-two-values-according-to-a-mask
- *
- */
 uint32_t
 mergeBits(uint32_t const _x, uint32_t const _y, uint32_t const _mask)
 {
     return (_x ^ ((_x ^ _y) & _mask));
 }
 
-/**
- * Based on Sean Eron Anderson's Bit Twiddling Hacks.
- *
- * @see https://graphics.stanford.edu/~seander/bithacks.html#CountBitsSet64
- * @see https://github.com/gibsjose/BitHacks/blob/master/BitHacks.md#counting-bits-set-in-14-24-or-32-bit-words-using-64-bit-instructions
- *
- */
 uint8_t
 nBitsSet(uint32_t const _var)
 {
@@ -179,13 +118,6 @@ nBitsSet(uint32_t const _var)
     return (result);
 }
 
-/**
- * Based on Sean Eron Anderson's Bit Twiddling Hacks.
- *
- * @see https://graphics.stanford.edu/~seander/bithacks.html#ParityMultiply
- * @see https://github.com/gibsjose/BitHacks/blob/master/BitHacks.md#compute-parity-of-word-with-a-multiply
- *
- */
 bool
 isOddParity(uint64_t const _var)
 {
@@ -197,39 +129,18 @@ isOddParity(uint64_t const _var)
     return (v >> 60) & 1;
 }
 
-/**
- * Based on Sean Eron Anderson's Bit Twiddling Hacks.
- *
- * @see https://graphics.stanford.edu/~seander/bithacks.html#ParityMultiply
- * @see https://github.com/gibsjose/BitHacks/blob/master/BitHacks.md#compute-parity-of-word-with-a-multiply
- *
- */
 bool
 isEvenParity(uint64_t const _var)
 {
     return (!isOddParity(_var));
 }
 
-/**
- * Based on Sean Eron Anderson's Bit Twiddling Hacks.
- *
- * @see https://graphics.stanford.edu/~seander/bithacks.html#ReverseByteWith64BitsDiv
- * @see https://github.com/gibsjose/BitHacks/blob/master/BitHacks.md#reverse-the-bits-in-a-byte-with-3-operations-64-bit-multiply-and-modulus-division
- *
- */
 uint8_t
 reverseBitOrderByte(uint8_t const _var)
 {
     return (((_var * 0x0202020202ULL & 0x010884422010ULL) % 1023) & 0xFF);
 }
 
-/**
- * Based on Sean Eron Anderson's Bit Twiddling Hacks.
- *
- * @see https://graphics.stanford.edu/~seander/bithacks.html#ReverseParallel
- * @see https://github.com/gibsjose/BitHacks/blob/master/BitHacks.md#reverse-an-n-bit-quantity-in-parallel-in-5--lgn-operations
- *
- */
 uint32_t
 reverseBitOrder(uint32_t const _var)
 {
@@ -248,13 +159,6 @@ reverseBitOrder(uint32_t const _var)
     return (v);
 }
 
-/**
- * Based on Sean Eron Anderson's Bit Twiddling Hacks.
- *
- * @see https://graphics.stanford.edu/~seander/bithacks.html#RoundUpPowerOf2Float
- * @see https://github.com/gibsjose/BitHacks/blob/master/BitHacks.md#round-up-to-the-next-highest-power-of-2-by-float-casting
- *
- */
 uint32_t
 roundUpToPowerOf2(uint32_t const _var)
 {
