@@ -25,9 +25,12 @@
  * @brief Unit test for the BitOperations project.
  *
  * The purpose of this unit test is not to verify that the arithmetic is
- * correct, because Sean Eron Anderson already tested that thoroughly. The
- * purpose of this unit test is to verify that the implementation of the code
- * is correct.
+ * correct, because Sean Eron Anderson already tested that thoroughly.
+ * This unit test verifies that the implementation is correct.
+ *
+ * @note
+ * The INT32_MIN and INT32_MAX that are used for the tests are originated in
+ * stdint.h and they have the values -2147483648 and 2147483647, respectively.
  *
  ******************************************************************************/
 

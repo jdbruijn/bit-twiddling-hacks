@@ -24,10 +24,52 @@
 /** @file
  * @brief Several bit operations and manipulations, also known as 'bit hacks'.
  *
- * @note Most functions below are based on Sean Eron Anderson's Bit Twiddling
- * Hacks.
- * @see https://graphics.stanford.edu/~seander/bithacks.html
- * @see https://github.com/gibsjose/BitHacks/blob/master/BitHacks.md
+ * @note Some functions below are based on
+ * <a href="https://graphics.stanford.edu/~seander/bithacks.html">Sean Eron
+ * Anderson's Bit Twiddling Hacks.</a> Those functions are shown in the table
+ * below with links to their documentation.
+ * <table class="doxtable">
+ * <tr><th>Function                </th><th>Documentation</th></tr>
+ * <tr><td>@ref isPositive         </td>
+ * <td><a href="https://github.com/gibsjose/BitHacks/blob/master/BitHacks.md#compute-the-sign-of-an-integer">
+ * Compute the sign of an integer</a></td></tr>
+ * <tr><td>@ref haveOppositeSigns  </td>
+ * <td><a href="https://github.com/gibsjose/BitHacks/blob/master/BitHacks.md#detect-if-two-integers-have-opposite-signs">
+ * Detect if two integers have opposite signs</a></td></tr>
+ * <tr><td>@ref min                </td>
+ * <td><a href="https://github.com/gibsjose/BitHacks/blob/master/BitHacks.md#compute-the-minimum-min-or-maximum-max-of-two-integers-without-branching">
+ * Compute the minimum (min) or maximum (max) of two integers without branching</a></td></tr>
+ * <tr><td>@ref max                </td>
+ * <td><a href="https://github.com/gibsjose/BitHacks/blob/master/BitHacks.md#compute-the-minimum-min-or-maximum-max-of-two-integers-without-branching">
+ * Compute the minimum (min) or maximum (max) of two integers without branching</a></td></tr>
+ * <tr><td>@ref isPowerOf2         </td>
+ * <td><a href="https://github.com/gibsjose/BitHacks/blob/master/BitHacks.md#determining-if-an-integer-is-a-power-of-2">
+ * Determining if an integer is a power of 2</a></td></tr>
+ * <tr><td>@ref modifyBits         </td>
+ * <td><a href="https://github.com/gibsjose/BitHacks/blob/master/BitHacks.md#conditionally-set-or-clear-bits-without-branching">
+ * Conditionally set or clear bits without branching</a></td></tr>
+ * <tr><td>@ref mergeBits          </td>
+ * <td><a href="https://github.com/gibsjose/BitHacks/blob/master/BitHacks.md#merge-bits-from-two-values-according-to-a-mask">
+ * Merge bits from two values according to a mask</a></td></tr>
+ * <tr><td>@ref nBitsSet           </td>
+ * <td><a href="https://github.com/gibsjose/BitHacks/blob/master/BitHacks.md#counting-bits-set-in-14-24-or-32-bit-words-using-64-bit-instructions">
+ * Counting bits set in 14, 24, or 32-bit words using 64-bit instructions</a></td></tr>
+ * <tr><td>@ref isOddParity        </td>
+ * <td><a href="https://github.com/gibsjose/BitHacks/blob/master/BitHacks.md#compute-parity-of-word-with-a-multiply">
+ * Compute parity of word with a multiply</a></td></tr>
+ * <tr><td>@ref isEvenParity       </td>
+ * <td><a href="https://github.com/gibsjose/BitHacks/blob/master/BitHacks.md#compute-parity-of-word-with-a-multiply">
+ * Compute parity of word with a multiply</a></td></tr>
+ * <tr><td>@ref reverseBitOrderByte</td>
+ * <td><a href="https://github.com/gibsjose/BitHacks/blob/master/BitHacks.md#reverse-the-bits-in-a-byte-with-3-operations-64-bit-multiply-and-modulus-division">
+ * Reverse the bits in a byte with 3 operations (64-bit multiply and modulus division)</a></td></tr>
+ * <tr><td>@ref reverseBitOrder    </td>
+ * <td><a href="https://github.com/gibsjose/BitHacks/blob/master/BitHacks.md#reverse-an-n-bit-quantity-in-parallel-in-5--lgn-operations">
+ * Reverse an N-bit quantity in parallel in 5 * lg(N) operations</a></td></tr>
+ * <tr><td>@ref roundUpToPowerOf2  </td>
+ * <td><a href="https://github.com/gibsjose/BitHacks/blob/master/BitHacks.md#round-up-to-the-next-highest-power-of-2-by-float-casting">
+ * Round up to the next highest power of 2 by float casting</a></td></tr>
+ * </table>
  *
  ******************************************************************************/
 
@@ -188,7 +230,7 @@ isOdd(int64_t const _v);
 /**
  * @brief   Compute parity of a variable to see if it is even.
  *
- * @param   _var Variable of which to compute the parity
+ * @param   _v Variable of which to compute the parity
  * @return  bool True if the variable is even, false else.
  */
 bool
