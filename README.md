@@ -15,7 +15,7 @@ For the functions that are based on Sean Eron Andersons [Bit Twiddling Hacks](ht
 ## Unit test
 The unit tests use [greatest](https://github.com/silentbicycle/greatest/) by Scott Vokes. Greatest is licensed under a [custom license](https://github.com/silentbicycle/greatest/blob/master/LICENSE).  
 
-All the functions and function macros are tested by the unit tests, of which the log can be found in every [travis build](https://travis-ci.org/vidavidorra/BitOperations#L169-L243) or in every [AppVeyor build](https://ci.appveyor.com/project/vidavidorra/bitoperations/build/artifacts).
+All the functions and function macros are tested by the unit tests, of which the log can be found in every [travis build](https://travis-ci.org/vidavidorra/BitOperations#L179-L257) or in every [AppVeyor build](https://ci.appveyor.com/project/vidavidorra/bitoperations/build/artifacts).
 
 
 [badge-license]:            https://img.shields.io/badge/license-GPLv3-blue.svg
