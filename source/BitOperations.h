@@ -83,9 +83,9 @@ extern "C" {
 /*******************************************************************************
  * BitOperations version
  ******************************************************************************/
-/* 0.1.0 */
-#define BITOPERATIONS_VERSION_MAJOR 0   /**< Major version number. */
-#define BITOPERATIONS_VERSION_MINOR 1   /**< Minor version number. */
+/* 1.0.0 */
+#define BITOPERATIONS_VERSION_MAJOR 1   /**< Major version number. */
+#define BITOPERATIONS_VERSION_MINOR 0   /**< Minor version number. */
 #define BITOPERATIONS_VERSION_PATCH 0   /**< Patch version number. */
 
 /*******************************************************************************
