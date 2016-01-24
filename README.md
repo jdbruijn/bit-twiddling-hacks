@@ -24,6 +24,8 @@ include `BitOperations.h` in the files where you intend to use the BitOperations
 ## Unit test
 The unit tests use [greatest](https://github.com/silentbicycle/greatest/) by Scott Vokes. Greatest is licensed under a [custom
 license](https://github.com/silentbicycle/greatest/blob/master/LICENSE).  
+The purpose of this unit test is not to verify that the arithmetic is correct, because Sean Eron Anderson already tested that thoroughly.
+This unit test verifies that the implementation is correct.  
 
 All the functions and function macros are tested by the unit tests, of which the log can be found in every [travis
 build](https://travis-ci.org/vidavidorra/BitOperations#L179-L257) or in every [AppVeyor

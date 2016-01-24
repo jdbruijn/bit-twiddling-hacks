@@ -11,7 +11,18 @@
  * oparations and, for example, the amount of instructions needed for those functions.
  * A full list of those functions can be found in the <a href="BitOperations_8h.html#details">Detailed description of BitOperations.h</a>.
  * 
+ * @section usage Usage
+ * In order to use this code the only thing that you need to do is copy `BitOperations.h` and `BitOperations.c` to your project and
+ * include `BitOperations.h` in the files where you intend to use the BitOperations. These two files can be found in every
+ * [release](https://github.com/vidavidorra/BitOperations/releases) in the `source` and `source/src` folders respectively.
+ * 
  * @section unit_test Unit test
  * The purpose of this unit test is not to verify that the arithmetic is correct, because Sean Eron Anderson already tested that thoroughly.
  * This unit test verifies that the implementation is correct.
+ * Please refer to the <a href="https://github.com/vidavidorra/BitOperations">GitHub repo</a> for results on the coverage and unit tests.
+ * 
+ * @section licensing Licensing
+ * GNU General Public License version 3 or later, as published by the Free Software Foundation.  
+ * Modification and redistribution are permitted according to the terms of the GPL.  
+ * The license can be found in the `LICENSE` file.  
  */
